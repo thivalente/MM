@@ -1,0 +1,40 @@
+html { font-size: 14px; font-family: "Roboto,Helvetica Neue,sans-serif"; overflow: hidden; }
+body { background-color: #f5f5f5; }
+@media (min-width: 768px) { html { font-size: 16px; } }
+
+input, select, file, textarea { max-width: 400px; }
+
+a.navbar-brand      { text-align: center; white-space: normal; word-break: break-all; }
+.main-container     { margin-left: auto; margin-right: auto; overflow: hidden; padding-bottom: 100px; padding-left: 15px; padding-right: 15px; padding-top: 25px; }
+
+div.site-container                          { height: calc(100vh - 90px); padding-left: 20px; padding-right: 20px; }
+div.site-container .page-header             { border-bottom-color: #e4eaec; }
+div.site-container .panel                   { background-color: #fff;}
+div.site-container .panel .panel-heading    { border-bottom: solid 1px #ccc; }
+div.site-container .panel .panel-heading h3 { font-size: 1.1rem; font-weight: normal; }
+div.site-container .panel.panel-default     { border-color: transparent; border-radius: 8px; border-top-width: 3px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); padding: 10px; -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
+
+.body-container { height: calc(100vh - 110px); padding-top: 10px; }
+
+.border-top     { border-top: 1px solid #e5e5e5; }
+.border-bottom  { border-bottom: 1px solid #e5e5e5; }
+.box-shadow     { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+button.accept-policy    { font-size: 1rem; line-height: inherit; }
+
+.header     { background-color: #fafbfc; border-bottom: solid 1px #cfdbe2;color: #929292; display: flex; justify-content: left; margin-left: -20px; margin-right: -20px; padding: 10px; }
+.header h4  { font-size: 1.2rem; font-weight: 400; margin-bottom: 0; }
+
+.nav-link         { border: none !important; }
+.nav-link.active  { border-bottom: solid 2px #10174C !important; }
+.nav-link .tab-label-content { color: rgba(0,0,0,.87); display: inline-flex; justify-content: center; align-items: center; white-space: nowrap; }
+
+.dashboard .tab-pane  { height: calc(100vh - 330px); }
+
+@media (max-width: 992px)
+{
+    .dashboard .tab-pane  { height: 350px; padding-top: 10px; }
+}
+
+/* ******* Footer ******* */
+.footer       { background-color: #fff; bottom: 0; color: #2C3E50 !important; font-size: 0.6rem; height: 20px; line-height: 20px; position: fixed; width: 100%; white-space: nowrap; }
+.footer > div { margin-top: -1px; }

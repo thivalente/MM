@@ -1,0 +1,31 @@
+.body-container .cards                      { margin-bottom: 10px; }
+.body-container .cards h4                   { font-size: 1rem; margin-bottom: 0; }
+.body-container .dados                      { margin-left: 0px; }
+.body-container .dados .panel.panel-default { height: calc(100vh - 240px); }
+.body-container .dados .panel-body          { height: calc(100vh - 300px); }
+.body-container .dados .panel.panel-default .chart-container { height: 300px; left: 50%; margin-top: 10px; position: relative; transform: translateX(-50%); width: 614px; }
+
+.body-container .dados .extrato fieldset            { margin-top: 10px; }
+.body-container .dados .extrato fieldset legend     { border-bottom: dashed 1px #ddd; font-size: 14px; text-align: center; }
+.body-container .dados .extrato fieldset tr td      { padding-bottom: 0; }
+
+.body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 370px); }
+.body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 400px); }
+
+tr.table-row-header             { background-color: transparent; font-size: 10px; line-height: 10px; text-align: center; }
+tr.table-row-header > td > span { background-color: lavender; border: solid 1px transparent; border-radius: 10px; padding: 3px; }
+
+
+@media (max-width: 992px)
+{
+    .body-container .cards h4                   { font-size: 0.8rem; }
+    .body-container .dados > div                { margin-bottom: 10px; }
+    .body-container .dados .panel.panel-default { height: 400px; }
+    .body-container .dados .panel.panel-default .chart-container { width: 450px; }
+}
+
+@media (max-width: 450px)
+{
+    .body-container .dados .panel.panel-default .chart-container    { height: 150px; width: 250px; }
+    .body-container .dados .chart                                   { display: none; }
+}

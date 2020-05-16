@@ -1,0 +1,9 @@
+.menu                     { background-color: #2C3E50; border: 0; border-bottom: 3px solid #3291D1; display: flex; align-items: center; }
+.menu .navbar             { width: 100%; }
+.menu .navbar .container  { margin: 0px; }
+.menu a                   { align-items: center; color: #FFF; display: flex; font-size: 0.8rem; text-decoration: none; text-transform: uppercase; }
+.menu a:active,
+.menu a:hover             { color: #5d9cec!important; } 
+.menu .logo               { max-height: 32px; }
+
+.nav-link.active          { border-bottom: solid 2px #FFF !important; }

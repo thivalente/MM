@@ -1,0 +1,188 @@
+import { Component, OnInit } from '@angular/core';
+
+import { ChartDataSets } from 'chart.js';
+import { Label } from 'ng2-charts';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+import { ClienteService } from './../cliente.service';
+import { ContaService } from 'src/app/conta/conta.service';
+import { DashboardService } from './dashboard.service';
+
+declare const isEmpty: any;
+declare const obterAnoMes: any;
+declare const obterNomeMesAno: any;
+declare const obterNomeMesAnoReduzido: any;
+declare const obterDataFormatada_ddMMyyyy: any;
+declare const sortByKey: any;
+declare const sortByKey_Date: any;
+
+@Component({ selector: 'app-dashboard', templateUrl: './dashboard.component.html', styleUrls: ['./dashboard.component.css'] })
+
+export class DashboardComponent implements OnInit
+{
+  private cdiChartLine: ChartDataSets;
+  private poupancaChartLine: ChartDataSets;
+  private userChartLine: ChartDataSets;
+
+  public lineChartData: ChartDataSets[];
+  public lineChartLabels: Label[];
+  public lineChartType = 'line';
+  public lineChartOptions;
+
+  public cards: any;
+  public extratos = [];
+  public listaPeriodos = [];
+  public periodoSelecionado: string;
+  public saldo: number;
+  public taxa_di_mensal: number;
+
+  constructor(private contaService: ContaService, private clienteService: ClienteService, private dashboardService: DashboardService, private ngxLoader: NgxUiLoaderService) { }
+
+  ngOnInit(): void 
+  {
+    // Inicializa o gráfico
+    this.lineChartOptions = { responsive: true, 
+      elements: { line: { fill: false } },
+      scales:
+      {
+        yAxes:
+        [
+          { ticks: { callback: function(value, index, values) { return 'R$ ' + Intl.NumberFormat().format((value)); } } }
+        ]
+      },
+      tooltips:
+      {
+        callbacks: {
+          label: function(tooltipItem, chart)
+          {
+              var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+              return datasetLabel + ': R$ ' + Intl.NumberFormat().format((tooltipItem.yLabel));
+          }
+        }
+      }
+    };
+
+    this.lineChartLabels = [];
+    this.userChartLine = { data: [], label: this.contaService.usuarioLogado.primeiro_nome, borderColor: '#10174C', pointBackgroundColor: '#10174C' };
+    this.cdiChartLine = { data: [], label: 'CDI', borderColor: '#7F92FF', pointBackgroundColor: '#7F92FF' };
+    this.poupancaChartLine = { data: [], label: 'Poupança', borderColor: '#9FA2B7', pointBackgroundColor: '#9FA2B7' };
+    this.lineChartData = [ this.userChartLine, this.cdiChartLine, this.poupancaChartLine ];
+
+    this.cards = { hoje: 0, primeiro: 0, segundo: 0 };
+    this.taxa_di_mensal = 0;
+    this.carregarTela(0);
+  }
+
+  montarMovimentacoesMensais(movimentacoes)
+  {
+      var result = [];
+
+      if (movimentacoes.length === 0)
+        return result;
+
+      let movimentacoesOrdenadas = sortByKey_Date(movimentacoes.map(m => Object.assign({}, m)), 'data', true);
+
+      let pm = movimentacoesOrdenadas[0];
+      let acumulado = 0;
+      let acumulado_di = 0;
+      let acumulado_poupanca = 0;
+      result.push({ serieCliente: 0, serieDI: 0, seriePoupanca: 0, label: obterNomeMesAnoReduzido(pm.periodo), periodo: pm.periodo });
+
+      movimentacoesOrdenadas.forEach(element =>
+      {
+          // Se não tiver o período, adiciona com o acumulado atual
+          if (result.filter(r => r.periodo === element.periodo).length <= 0)
+          {
+            result.push({ serieCliente: acumulado, serieDI: acumulado_di, seriePoupanca: acumulado_poupanca, label: obterNomeMesAnoReduzido(element.periodo), periodo: element.periodo });
+          }
+
+          if (element.rendimento)
+          {
+            acumulado += element.valor;
+            acumulado_di += element.valor_di;
+            acumulado_poupanca += element.valor_poupanca;
+          }
+      });
+
+      return result;
+  }
+
+  carregarTela(nAttempts: number): void
+  {
+    this.ngxLoader.startLoader('loader-principal');
+
+    var taxa_di_mensal = 3/(12*100);
+    this.dashboardService.obter().subscribe(response =>
+      {
+          if (response != null)
+          {
+            var listaMovimentacoes = response;
+            this.taxa_di_mensal = taxa_di_mensal;
+
+            this.extratos = sortByKey_Date(listaMovimentacoes, 'data', false);
+            this.saldo = this.extratos.map(e => e.valor).reduce((total, item) => total + item);
+        
+            this.montarCards();
+        
+            this.periodoSelecionado = Math.max.apply(Math, this.extratos.map(function(e) { return e.periodo; })).toString();
+            this.listaPeriodos = this.montarPeriodos(this.extratos.map(e => e.periodo).filter((value, index, self) => self.indexOf(value) === index));
+        
+            this.montarSeries(listaMovimentacoes);
+          }
+
+          this.ngxLoader.stopLoader('loader-principal');
+      },
+      error =>
+      {
+        nAttempts = nAttempts || 1;
+        console.log(error, nAttempts);
+
+        if (nAttempts >= 5)
+        {
+            this.ngxLoader.stopLoader('loader-principal');
+            return;
+        }
+
+        this.carregarTela(++nAttempts);
+      });
+  }
+
+  montarCards(): void
+  {
+    var taxa_cliente = this.taxa_di_mensal * 2;
+    this.cards.hoje = this.saldo;
+    this.cards.primeiro = this.cards.hoje * Math.pow((1 + taxa_cliente), 3); // 90 dias
+    this.cards.segundo = this.cards.hoje * Math.pow((1 + taxa_cliente), 6); // 180 dias
+  }
+
+  montarPeriodos(periodos): Array<any>
+  {
+    var lista = [];
+
+    periodos.forEach(p =>
+      {
+        var ano = p.toString().substring(0, 4);
+        var mes = { ano_mes: p, nome: obterNomeMesAno(p) };
+
+        var itemLista = lista.filter(l => l.ano.toString() === ano);
+
+        // Se não existir este ano na lista, adiciona o ano. Se não, apenas atualiza o mês
+        if (itemLista.length === 0)
+          lista.push({ ano: ano, meses: [mes] });
+        else // Se existir, adiciona o mês
+          itemLista.map(l => l.meses.push(mes));
+      });
+
+    return lista;
+  }
+
+  montarSeries(movimentacoes: Array<any>) : void
+  {
+    var result = sortByKey(this.montarMovimentacoesMensais(movimentacoes), 'periodo', true);
+    
+    this.userChartLine.data = result.map(r => r.serieCliente);
+    this.cdiChartLine.data = result.map(r => r.serieDI);
+    this.poupancaChartLine.data = result.map(r => r.seriePoupanca);
+    this.lineChartLabels = result.map(r => r.label);
+  }
+}
