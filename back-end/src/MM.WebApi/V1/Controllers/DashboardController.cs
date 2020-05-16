@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace MM.WebApi.V1.Controllers
 {
     //[Authorize]
+    [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/dashboard")]
     public class DashboardController : Controller
@@ -23,7 +24,11 @@ namespace MM.WebApi.V1.Controllers
         [HttpGet("{usuario_id:guid}")]
         public async Task<IEnumerable<MovimentacaoDiariaViewModel>> Obter(Guid usuario_id)
         {
-            // Atualiza a taxa DI
+            // Atualiza a taxa DI (verifica se é necessário e chama a api)
+            await this._movimentacaoService.AtualizarTaxaDI();
+
+            // Atualiza os dados do usuário
+            await this._movimentacaoService.AtualizarMovimentacoesUsuario(usuario_id);
 
             // Monta a lista 
             var lista = await this._movimentacaoService.Obter(usuario_id);

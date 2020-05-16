@@ -9,7 +9,5 @@ export class SettingsService
 
     getApiUrl() { return environment.apiUrlv1;; }
 
-    getCaptchaData() { return { sitekey: '6LdNuj8UAAAAACATXK6oD6DvOUXnIdSC8VPBh7Sa', secretkey: '6LdNuj8UAAAAAIxW19wu6pDgFHgn6xIvnIIggU-G', theme: 'light' }; }
-
     getLocale() { return 'pt-BR'; }
 }

@@ -11,9 +11,12 @@ namespace MM.WebApi.Setup
         {
             // Repositórios
             //services.AddScoped<CotacaoContext>();
+            services.AddScoped<ILogErroRepository, LogErroRepository>();
             services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
 
             // Services
+            //services.AddScoped<IApiLoggingService, ApiLoggingService>();
+            services.AddScoped<ILogErroService, LogErroService>();
             services.AddScoped<IMovimentacaoService, MovimentacaoService>();
         }
     }

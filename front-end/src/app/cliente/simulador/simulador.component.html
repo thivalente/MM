@@ -1,1 +1,55 @@
-<p>Em Desenvolvimento!</p>
+<div class="simulador" ngxUiLoaderBlurred [loaderId]="'loader-principal'">
+    <div class="row header">
+        <h4>Simulador</h4>
+    </div>
+
+    <perfect-scrollbar>
+        <div class="body-container">
+            <div class="dados col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Simule Abaixo Seus Investimentos</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            Aporte Inicial
+                        </div>
+                        <div class="row">
+                            Aplicação Mensal
+                        </div>
+                        <div class="row">
+                            Tempo de Investimento
+                        </div>
+                        <div class="row">
+                            Calcular!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cards col-md-12" *ngIf="cards?.visivel">
+                <div class="row panel panel-default">
+                    <div class="col text-center">
+                        <i class="fa fa-usd text-primary"></i>
+                        <h4>Valor Total Investido</h4>
+                        <small>{{ cards?.investido | currency:'R$ ':true }}</small>
+                    </div>
+                    <div class="col text-center">
+                        <i class="fa fa-line-chart text-success" aria-hidden="true"></i>
+                        <h4>Total Acumulado</h4>
+                        <small>{{ cards?.acumulado | currency:'R$ ':true }}</small>
+                    </div>
+                    <div class="col text-center">
+                        <i class="fa fa-angle-double-up text-success" aria-hidden="true"></i>
+                        <h4>CDI</h4>
+                        <small>{{ cards?.cdi | currency:'R$ ':true }}</small>
+                    </div>
+                    <div class="col text-center">
+                        <i class="fa fa-angle-double-up text-success" aria-hidden="true"></i>
+                        <h4>Poupança</h4>
+                        <small>{{ cards?.poupanca | currency:'R$ ':true }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </perfect-scrollbar>
+</div>

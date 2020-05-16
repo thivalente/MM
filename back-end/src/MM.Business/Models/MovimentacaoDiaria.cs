@@ -8,10 +8,10 @@ namespace MM.Business.Models
 
         public MovimentacaoDiaria() { }
 
-        public MovimentacaoDiaria(Guid id, Guid user_id, DateTime data, bool entrada, bool rendimento, decimal valor, decimal valor_di, decimal valor_poupanca)
+        public MovimentacaoDiaria(Guid id, Guid usuario_id, DateTime data, bool entrada, bool rendimento, decimal valor, decimal valor_di, decimal valor_poupanca)
         {
             this.id = id;
-            this.usuario_id = user_id;
+            this.usuario_id = usuario_id;
             this.data_criacao = data;
             this.entrada = entrada;
             this.rendimento = rendimento;

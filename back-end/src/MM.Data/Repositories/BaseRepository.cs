@@ -27,8 +27,11 @@ namespace MM.Data.Repositories
 
         private string GetSqlConnectionStringDapper()
         {
-            string connStringCripto = _config.GetConnectionString("MMEntities");
-            string connString = connStringCripto.Descriptografar(ParametroSistema);
+            // Verifica se está criptografada
+            bool isEncripted = _config.GetSection("Criptografada").Exists() ? _config.GetSection("Criptografada").Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) : false;
+
+            string connStringCripto = _config.GetConnectionString("MMConnString");
+            string connString = isEncripted ? connStringCripto.Descriptografar(ParametroSistema) : connStringCripto;
 
             if (!String.IsNullOrEmpty(connString))
             {
@@ -40,10 +43,10 @@ namespace MM.Data.Repositories
 
             var dbSettings = Options.Create<DataBaseSettings>(_config.GetSection("DataBaseSettings").Get<DataBaseSettings>());
 
-            string serverName = dbSettings.Value.DB_ServerName;
-            string databaseName = dbSettings.Value.DB_DatabaseName;
-            string userId = dbSettings.Value.DB_UserId;
-            string password = dbSettings.Value.DB_Password;
+            string serverName = isEncripted ? dbSettings.Value.DB_ServerName.Descriptografar(ParametroSistema) : dbSettings.Value.DB_ServerName; ;
+            string databaseName = isEncripted ? dbSettings.Value.DB_DatabaseName.Descriptografar(ParametroSistema) : dbSettings.Value.DB_DatabaseName;
+            string userId = isEncripted ? dbSettings.Value.DB_UserId.Descriptografar(ParametroSistema) : dbSettings.Value.DB_UserId;
+            string password = isEncripted ? dbSettings.Value.DB_Password.Descriptografar(ParametroSistema) : dbSettings.Value.DB_Password;
 
             return GetSqlConnectionStringDapper(serverName, databaseName, userId, password);
         }

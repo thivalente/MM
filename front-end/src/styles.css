@@ -4,6 +4,19 @@ body { background-color: #f5f5f5; }
 
 input, select, file, textarea { max-width: 400px; }
 
+.app-loading                { align-items: center; background-color: #2C3E50 !important; display: flex; flex-direction: column; height: calc(100vh); justify-content: center; position: relative; width: calc(100vw); z-index: 100; }
+.app-loading .logo          { animation: fadein 2s linear infinite; max-height: 25px; }
+.app-loading .spinner       { animation: rotate 2s linear infinite; bottom: 0; height: 200px; left: 0; margin: auto; position: absolute; right: 0; transform-origin: center center; top: 0; width: 200px; }
+.app-loading .spinner .path { animation: dash 1.5s ease-in-out infinite; stroke: #ddd; stroke-dasharray: 1, 200; stroke-dashoffset: 0; stroke-linecap: round; }
+@keyframes rotate           { 100% { transform: rotate(360deg); } }
+@keyframes dash             { 0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; } 50% { stroke-dasharray: 89, 200; stroke-dashoffset: -35px; } 100% { stroke-dasharray: 89, 200; stroke-dashoffset: -124px; } }
+@keyframes fadein           { from { opacity: 0; } to { opacity: 1; } }
+@-moz-keyframes fadein      { from { opacity: 0; } to { opacity: 1; } }
+@-webkit-keyframes fadein   { from { opacity: 0; } to { opacity: 1; } }
+@-ms-keyframes fadein       { from { opacity: 0; } to { opacity: 1; } }
+@-o-keyframes fadein        { from { opacity: 0; } to { opacity: 1; } }
+
+
 a.navbar-brand      { text-align: center; white-space: normal; word-break: break-all; }
 .main-container     { margin-left: auto; margin-right: auto; overflow: hidden; padding-bottom: 100px; padding-left: 15px; padding-right: 15px; padding-top: 25px; }
 

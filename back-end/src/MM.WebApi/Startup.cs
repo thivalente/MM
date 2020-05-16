@@ -74,6 +74,25 @@ namespace MM.WebApi
                             .AllowAnyHeader());
             });
 
+            services.AddApiConfig();
+
+            services.AddSwaggerGen(c => {
+
+                c.SwaggerDoc("v1",
+                    new Microsoft.OpenApi.Models.OpenApiInfo
+                    {
+                        Title = "MM Investimentos",
+                        Version = "v1",
+                        Description = "API Rest para MM Investimentos",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Thiago Valente",
+                            Email = "thiago.valente@fitideias.com.br"
+                        }
+                    });
+            });
+
+
             services.RegisterServices();
         }
 
@@ -81,8 +100,6 @@ namespace MM.WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             app.UseApiConfig(env);
-
-            app.UseSwaggerConfig(provider);
         }
     }
 }

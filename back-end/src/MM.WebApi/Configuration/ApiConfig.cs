@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MM.WebApi.Helpers;
+using MM.WebApi.Middlewares;
 
 namespace MM.WebApi.Configuration
 {
@@ -32,26 +32,6 @@ namespace MM.WebApi.Configuration
 
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Development",
-                    builder =>
-                        builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
-
-
-                //options.AddPolicy("Production",
-                //    builder =>
-                //        builder
-                //            .WithMethods("GET")
-                //            .WithOrigins("http://desenvolvedor.io")
-                //            .SetIsOriginAllowedToAllowWildcardSubdomains()
-                //            //.WithHeaders(HeaderNames.ContentType, "x-custom-header")
-                //            .AllowAnyHeader());
-            });
-
             //services.AddHealthChecksUI();
 
             return services;
@@ -70,6 +50,13 @@ namespace MM.WebApi.Configuration
                 app.UseHsts();
             }
 
+            // Ativando middlewares para uso do Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MM Investimentos V1");
+            });
+
+            //app.UseMiddleware<ApiLoggingMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
