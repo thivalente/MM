@@ -1,0 +1,47 @@
+.simulador .header      { align-items: center; }
+.simulador .header .fa  { margin-right: 5px; }
+.simulador .box-white   { align-items: center; display: flex; justify-content: space-between; padding: 10px 40px; }
+
+.simulador .box-white .s-esq .config .item-config               { margin-bottom: 14px; }
+.simulador .box-white .s-esq .config .item-config label         { color: #313442; display: inline-block; font-size: 1rem; font-weight: 600; line-height: 1.13; margin-bottom: 16px; }
+.simulador .box-white .s-esq .config .item-config .valor        { align-items: flex-end; display: flex; margin-bottom: 19px; }
+.simulador .box-white .s-esq .config .item-config .valor span   { bottom: 10px; color: #313442; font-size: 0.8rem; margin-right: 5px; position: relative; width: 25px; }
+
+.simulador .box-white .s-esq .config .item-config .valor input[name="aporte"],
+.simulador .box-white .s-esq .config .item-config .valor input[name="capInicial"],
+.simulador .box-white .s-esq .config .item-config .valor input[type="text"],
+.simulador .box-white .s-esq .config .item-config .valor input[type="number"] { color: #313442; flex: 1 1 auto; font-family: 'Roboto',sans-serif; font-weight: 500; line-height: 1; transition: all .3s; }
+
+.simulador .box-white .s-esq .config .item-config .valor > span         { align-items: center; background-color: whitesmoke; border: solid 1px #CCC; border-radius: 7px; bottom: 0 !important; display: flex; height: 40px; padding-left: 5px; }
+.simulador .box-white .s-esq .config .item-config .valor > span.esq     { border-right: none; border-bottom-right-radius: 0 !important; border-top-right-radius: 0 !important; margin-right: 0; width: 35px; }
+.simulador .box-white .s-esq .config .item-config .valor > span.dir     { border-left: none; border-bottom-left-radius: 0 !important; border-top-left-radius: 0 !important; margin-left: 0 !important; width: 47px; }
+.simulador .box-white .s-esq .config .item-config .valor > input.esq    { border-left: none !important; border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important; }
+.simulador .box-white .s-esq .config .item-config .valor > input.dir    { border-right: none !important; border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+
+.simulador .box-white .s-esq .config .item-config .valor .input-valor   { background-color: #fff; border: solid 1px rgba(117,117,124,.38); border-radius: 7px; font-family: 'Roboto',sans-serif; font-size: 1.5rem !important; height: 40px; padding: 0 16px; width: 200px; }
+.simulador .box-white .s-esq .config .item-config .valor.prazo > span   { margin-left: 5px; }
+.simulador .box-white .s-esq .config .item-config .valor.prazo > input  { text-align: right; }
+.simulador .box-white .s-esq .config .item-config.taxa .porcent         { margin-left: 5px; margin-right: 5px;}
+
+.simulador .box-white .s-dir .box-calculo                   { border-radius: 15px; overflow: hidden; }
+.simulador .box-white .s-dir .box-calculo .topo             { align-items: center; background-image: linear-gradient(77deg,#f9844b,#f4324e); display: flex; flex-direction: column; justify-content: center; width: 100%; }
+.simulador .box-white .s-dir .box-calculo .topo label.taxa  { color: #FFF; font-size: 0.8rem; margin-bottom: 10px; margin-top: 10px; }
+.simulador .box-white .s-dir .box-calculo .topo span        { color: #fff; font-size: 1rem; font-weight: 600; height: 20px !important; line-height: 1.13; margin-bottom: 10px; margin-top: 10px; text-align: center; }
+.simulador .box-white .s-dir .box-calculo .topo .valor      { align-items: flex-end; display: flex; }
+.simulador .box-white .s-dir .box-calculo .topo .valor span { font-size: 1rem; font-weight: 600; height: 66px; line-height: 1; margin: 0; margin-bottom: 7px; padding-right: 10px; }
+.simulador .box-white .s-dir .box-calculo .topo .valor h1   { color: #fff; font-family: 'Roboto',sans-serif; font-size: 3rem; font-weight: 900; letter-spacing: -1.3px; line-height: .8; }
+
+.simulador .box-white .s-dir .box-calculo .info-geral                   { padding: 26px 39px; }
+.simulador .box-white .s-dir .box-calculo .info-geral .item             { align-items: center; border-bottom: solid 1px rgba(151,151,151,.21); display: flex; justify-content: space-between; margin-bottom: 15px; padding-bottom: 9px; }
+.simulador .box-white .s-dir .box-calculo .info-geral .item h3          { color: #313442; font-size: 1rem; font-weight: 600; line-height: 1.13; }
+.simulador .box-white .s-dir .box-calculo .info-geral .item .valor      { align-items: center; display: flex; width: 60%; }
+.simulador .box-white .s-dir .box-calculo .info-geral .item .valor span { color: #75757c; font-size: 0.9rem; margin-right: 5px; width: 26px; }
+.simulador .box-white .s-dir .box-calculo .info-geral .item .valor h2   { color: #313442; font-family: 'Roboto',sans-serif; font-size: 2rem; font-weight: 500; letter-spacing: -.7px; line-height: 1.2; }
+.simulador .box-white .s-dir .box-calculo .info-geral .item.last        { border-bottom: 0; margin: 0; padding: 0; }
+
+.simulador .box-white .s-dir ul                 { align-items: center; display: flex; justify-content: center; list-style: none; margin-top: 19px; }
+.simulador .box-white .s-dir ul li:first-child  { margin-left: 0; }
+.simulador .box-white .s-dir ul li              { margin-left: 43px; }
+.simulador .box-white .s-dir ul li span         { color: #75757c; font-family: 'Roboto',sans-serif; font-size: 0.9rem; }
+.simulador .box-white .s-dir ul li span strong  { color: #75757c; font-family: 'Roboto',sans-serif; font-weight: 500; }
+.simulador .box-white .s-dir ul li .traco       { border: solid 1px #f8774c; height: 1px; margin-top: 7.6px; width: 100%; }

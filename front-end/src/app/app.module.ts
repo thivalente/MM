@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,14 +11,9 @@ import { ChartsModule } from 'ng2-charts';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { NavegacaoModule } from './navegacao/navegacao.module';
-import { SimuladorComponent } from './cliente/simulador/simulador.component';
+import { ClienteModule } from './cliente/cliente.module';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './cliente/dashboard/dashboard.component';
-
-import { PeriodoCabecalhoFilterPipe } from './utils/pipes/periodoCabecalhoFilter.pipe';
-import { PeriodoHistoricoFilterPipe } from './utils/pipes/periodoHistoricoFilter.pipe';
-import { PeriodoPorMesFilterPipe } from './utils/pipes/periodoPorMesFilter.pipe';
 
 import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
@@ -26,16 +22,11 @@ import { registerLocaleData } from '@angular/common';
 import { SettingsService } from './_services/settings.service';
 
 registerLocaleData(localePt, 'pt');
+export const customCurrencyMaskConfig = { align: "right", allowNegative: true, allowZero: true, decimal: ",", precision: 2, prefix: "R$ ", suffix: "", thousands: ".", nullable: true, min: null, max: null, inputMode: CurrencyMaskInputMode.FINANCIAL };
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DashboardComponent,
-    SimuladorComponent,
-
-    PeriodoCabecalhoFilterPipe,
-    PeriodoHistoricoFilterPipe,
-    PeriodoPorMesFilterPipe
+    AppComponent
   ],
   imports: [
     AppRoutingModule,
@@ -45,9 +36,11 @@ registerLocaleData(localePt, 'pt');
 
     ChartsModule,
     NgbModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     NgxUiLoaderModule,
     PerfectScrollbarModule,
-
+    
+    ClienteModule,
     NavegacaoModule
   ],
   providers: 

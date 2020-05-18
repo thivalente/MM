@@ -1,52 +1,89 @@
 <div class="simulador" ngxUiLoaderBlurred [loaderId]="'loader-principal'">
     <div class="row header">
-        <h4>Simulador</h4>
+        <i class="fa fa-line-chart text-success" aria-hidden="true"></i>
+        <h4>Simule Aqui Seus Investimentos!</h4>
     </div>
 
     <perfect-scrollbar>
         <div class="body-container">
             <div class="dados col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>Simule Abaixo Seus Investimentos</h3>
-                    </div>
                     <div class="panel-body">
-                        <div class="row">
-                            Aporte Inicial
+                        <div class="box-white">
+                            <div class="col s-esq">
+                                <div class="config">
+                                    <div class="item-config">
+                                        <label for="">Valor inicial:</label>
+                                        <div class="valor">
+                                            <span class="esq">R$:</span>
+                                            <input type="text" class="input-valor esq" name="capInicial" [(ngModel)]="dados.inicial" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="10" />
+                                        </div>
+                                    </div>
+                                    <div class="item-config">
+                                        <label for="">Aporte mensal:</label>
+                                        <div class="valor">
+                                            <span class="esq">R$:</span>
+                                            <input type="text" class="input-valor esq" name="aporte" [(ngModel)]="dados.mensal" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="10" />
+                                        </div>
+                                    </div>
+                                    <div class="item-config">
+                                        <label for="">Prazo</label>
+                                        <div class="valor prazo">
+                                            <input type="text" class="input-valor dir" name="prazo" [(ngModel)]="dados.prazo" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ precision: 0, prefix: '', allowNegative: false, nullable: false }" maxlength="3" />
+                                            <span class="dir">meses</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s-dir">
+                                <div class="box-calculo">
+                                    <div class="topo">
+                                        <span>Total Acumulado</span>
+                                        <div class="valor">
+                                            <span>R$:</span>
+                                            <h1 class="aptot">{{ dados?.acumulado | currency:' ':true }}</h1>
+                                        </div>
+                                        <label class="taxa">Taxa de <span>{{ dados?.porcentagem_cdi | currency:' ':true }}%</span> do CDI</label>
+                                    </div>
+                                    <div class="info-geral">
+                                        <div class="item">
+                                            <h3>Aplicaçao inicial:</h3>
+                                            <div class="valor">
+                                                <span>R$:</span>
+                                                <h2 class="apin">{{ dados?.inicial | currency:' ':true }}</h2>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <h3>Soma aplicações:</h3>
+                                            <div class="valor">
+                                                <span>R$:</span>
+                                                <h2 class="apout">{{ dados?.aplicado_total | currency:' ':true }}</h2>
+                                            </div>
+                                        </div>
+                                        <div class="item last">
+                                            <h3>Rendimento total:</h3>
+                                            <div class="valor">
+                                                <span>R$:</span>
+                                                <h2 class="apju">{{ dados?.rendimento?.total | currency:' ':true }}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <span>Rendimento</span>
+                                    </li>
+                                    <li>
+                                        <span>Cdi: <strong>{{ dados?.rendimento?.cdi | currency:'R$ ':true }}</strong></span>
+                                        <div class="traco"></div>
+                                    </li>
+                                    <li>
+                                        <span>Poupança: <strong class="diano">{{ dados?.rendimento?.poupanca | currency:'R$ ':true }}</strong></span>
+                                        <div class="traco"></div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="row">
-                            Aplicação Mensal
-                        </div>
-                        <div class="row">
-                            Tempo de Investimento
-                        </div>
-                        <div class="row">
-                            Calcular!
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cards col-md-12" *ngIf="cards?.visivel">
-                <div class="row panel panel-default">
-                    <div class="col text-center">
-                        <i class="fa fa-usd text-primary"></i>
-                        <h4>Valor Total Investido</h4>
-                        <small>{{ cards?.investido | currency:'R$ ':true }}</small>
-                    </div>
-                    <div class="col text-center">
-                        <i class="fa fa-line-chart text-success" aria-hidden="true"></i>
-                        <h4>Total Acumulado</h4>
-                        <small>{{ cards?.acumulado | currency:'R$ ':true }}</small>
-                    </div>
-                    <div class="col text-center">
-                        <i class="fa fa-angle-double-up text-success" aria-hidden="true"></i>
-                        <h4>CDI</h4>
-                        <small>{{ cards?.cdi | currency:'R$ ':true }}</small>
-                    </div>
-                    <div class="col text-center">
-                        <i class="fa fa-angle-double-up text-success" aria-hidden="true"></i>
-                        <h4>Poupança</h4>
-                        <small>{{ cards?.poupanca | currency:'R$ ':true }}</small>
                     </div>
                 </div>
             </div>

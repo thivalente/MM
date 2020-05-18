@@ -57,8 +57,14 @@ namespace MM.Business.Services
                 return;
 
             int totalDiasUteisAno = FeriadosHelper.GetTotalWorkingDaysInAYear(hoje.Year);
-
             var diModel = await this._movimentacaoRepository.ObterTaxaDIDoDia();
+
+            // Remove da lista de dias úteis, os dias em que ainda não foi atualizada a taxa di
+            workingDays.RemoveAll(wd => wd.Date > diModel.creation_date.Date);
+
+            if (workingDays.Count == 0)
+                return;
+
             var taxa_diaria_di = diModel.cdi_daily / totalDiasUteisAno;
             var taxa_diaria_selic = diModel.selic_daily / totalDiasUteisAno;
             var taxa_diaria_poupanca = diModel.selic_daily > 8.5m ? taxa_diaria_selic * 0.5m : taxa_diaria_selic * 0.7m;

@@ -179,7 +179,7 @@ export class DashboardComponent implements OnInit
   montarSeries(movimentacoes: Array<any>) : void
   {
     var result = sortByKey(this.montarMovimentacoesMensais(movimentacoes), 'periodo', true);
-    
+
     this.userChartLine.data = result.map(r => r.serieCliente);
     this.cdiChartLine.data = result.map(r => r.serieDI);
     this.poupancaChartLine.data = result.map(r => r.seriePoupanca);
