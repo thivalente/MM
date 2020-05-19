@@ -1,7 +1,9 @@
 .simulador .header      { align-items: center; }
 .simulador .header .fa  { margin-right: 5px; }
-.simulador .box-white   { align-items: center; display: flex; justify-content: space-between; padding: 10px 40px; }
 
+.simulador .dados > .panel  { margin-bottom: 20px; }
+
+.simulador .box-white .s-esq .config                            { padding: 30px; }
 .simulador .box-white .s-esq .config .item-config               { margin-bottom: 14px; }
 .simulador .box-white .s-esq .config .item-config label         { color: #313442; display: inline-block; font-size: 1rem; font-weight: 600; line-height: 1.13; margin-bottom: 16px; }
 .simulador .box-white .s-esq .config .item-config .valor        { align-items: flex-end; display: flex; margin-bottom: 19px; }
@@ -45,3 +47,19 @@
 .simulador .box-white .s-dir ul li span         { color: #75757c; font-family: 'Roboto',sans-serif; font-size: 0.9rem; }
 .simulador .box-white .s-dir ul li span strong  { color: #75757c; font-family: 'Roboto',sans-serif; font-weight: 500; }
 .simulador .box-white .s-dir ul li .traco       { border: solid 1px #f8774c; height: 1px; margin-top: 7.6px; width: 100%; }
+
+
+@media (max-width: 992px)
+{
+    .simulador .box-white                               { padding: 10px; }
+    .simulador .box-white .s-esq,
+    .simulador .box-white .s-dir                        { height: 370px; }
+    .simulador .box-white .s-esq .config .item-config   { margin-right: 10px; }
+
+    .simulador .box-white .s-dir .box-calculo .info-geral                   { padding: 10px; }
+    .simulador .box-white .s-dir .box-calculo .info-geral .item .valor      { width: 50%; }
+    .simulador .box-white .s-dir .box-calculo .info-geral .item .valor h2   { font-size: 1rem; }
+    .simulador .box-white .s-dir .box-calculo .topo .valor h1               { font-size: 1.8rem; }
+
+    .simulador .box-white .s-dir ul                      { display: none; }
+}

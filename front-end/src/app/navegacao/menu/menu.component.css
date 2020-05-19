@@ -7,3 +7,8 @@
 .menu .logo               { max-height: 32px; }
 
 .nav-link.active          { border-bottom: solid 2px #FFF !important; }
+
+@media (max-width: 450px)
+{
+    .nav-link.active      { width: 20%; }
+}

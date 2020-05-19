@@ -20,12 +20,18 @@ tr.table-row-header > td > span { background-color: lavender; border: solid 1px 
 {
     .body-container .cards h4                   { font-size: 0.8rem; }
     .body-container .dados > div                { margin-bottom: 10px; }
-    .body-container .dados .panel.panel-default { height: 400px; }
-    .body-container .dados .panel.panel-default .chart-container { width: 450px; }
+    .body-container .dados .panel.panel-default { height: calc(100vh - 220px); min-height: 400px; }
+    .body-container .dados .chart perfect-scrollbar    { min-height: 360px; }
+    .body-container .dados .extrato .historico perfect-scrollbar    { min-height: 250px; }
+    .body-container .dados .extrato .mensal perfect-scrollbar       { min-height: 230px; }
+    .body-container .dados .panel.panel-default .chart-container    { width: 450px; }
 }
 
 @media (max-width: 450px)
 {
     .body-container .dados .panel.panel-default .chart-container    { height: 150px; width: 250px; }
     .body-container .dados .chart                                   { display: none; }
+    .body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 370px); }
+    .body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 400px); }
+    .body-container .dados .extrato perfect-scrollbar table         { width: 90%; }
 }

@@ -6,7 +6,7 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuLoginComponent } from './menu-login/menu-login.component';
 // import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
-// import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
@@ -17,7 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         MenuLoginComponent,
         // HomeComponent,
         FooterComponent,
-        // NotFoundComponent,
+        NotFoundComponent,
         // AcessoNegadoComponent
     ],
     imports: [
@@ -30,7 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         MenuLoginComponent,
         // HomeComponent,
         FooterComponent,
-        // NotFoundComponent,
+        NotFoundComponent,
         // AcessoNegadoComponent
     ]
 })
