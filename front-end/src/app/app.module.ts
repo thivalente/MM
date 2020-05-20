@@ -10,8 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
-import { NavegacaoModule } from './navegacao/navegacao.module';
+import { AdminModule } from './admin/admin.module';
 import { ClienteModule } from './cliente/cliente.module';
+import { NavegacaoModule } from './navegacao/navegacao.module';
 
 import { AppComponent } from './app.component';
 
@@ -20,6 +21,7 @@ import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 
 import { SettingsService } from './_services/settings.service';
+
 
 registerLocaleData(localePt, 'pt');
 export const customCurrencyMaskConfig = { align: "right", allowNegative: true, allowZero: true, decimal: ",", precision: 2, prefix: "R$ ", suffix: "", thousands: ".", nullable: true, min: null, max: null, inputMode: CurrencyMaskInputMode.FINANCIAL };
@@ -40,13 +42,14 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
     NgxUiLoaderModule,
     PerfectScrollbarModule,
     
+    AdminModule,
     ClienteModule,
     NavegacaoModule
   ],
   providers: 
   [
-    SettingsService,
-    { provide: LOCALE_ID, deps: [SettingsService], useFactory: (settingsService) => settingsService.getLocale() }
+    SettingsService
+    //{ provide: LOCALE_ID, deps: [SettingsService], useFactory: (settingsService) => settingsService.getLocale() }
   ],
   bootstrap: [AppComponent]
 })

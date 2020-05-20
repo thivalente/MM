@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ContaService } from 'src/app/conta/conta.service';
 
+import { ChartDataSets } from 'chart.js';
+import { Label } from 'ng2-charts';
+
 @Component({ selector: 'app-simulador', templateUrl: './simulador.component.html', styleUrls: ['./simulador.component.css'] })
 
 export class SimuladorComponent implements OnInit
@@ -8,6 +11,7 @@ export class SimuladorComponent implements OnInit
   public taxa_cdi: number;
   public taxa_poupanca: number;
   public dados: any;
+
   constructor(private contaService: ContaService) { }
 
   ngOnInit(): void
@@ -18,7 +22,7 @@ export class SimuladorComponent implements OnInit
       mensal: 0,
       prazo: 0,
       aplicado_total: 0,
-      acumulado: 0,
+      acumulado: { total: 0, cdi: 0, poupanca: 0 },
       porcentagem_cdi: this.contaService.usuarioLogado.taxa_acima_cdi * 100,
       rendimento: { total: 0, cdi: 0, poupanca: 0 }
     };
@@ -40,8 +44,10 @@ export class SimuladorComponent implements OnInit
     let poupanca_futuro = this.calcular_valor_futuro(this.dados.inicial, aporte_mensal, taxa_poupanca, periodo);
 
     this.dados.aplicado_total = this.dados.inicial + (aporte_mensal * periodo);
-    this.dados.acumulado = valor_futuro;
-    this.dados.rendimento.total = this.dados.acumulado - this.dados.aplicado_total;
+    this.dados.acumulado.total = valor_futuro;
+    this.dados.acumulado.cdi = cdi_futuro;
+    this.dados.acumulado.poupanca = poupanca_futuro;
+    this.dados.rendimento.total = this.dados.acumulado.total - this.dados.aplicado_total;
     this.dados.rendimento.cdi = cdi_futuro - this.dados.aplicado_total;
     this.dados.rendimento.poupanca = poupanca_futuro - this.dados.aplicado_total;
   }

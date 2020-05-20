@@ -1,15 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './cliente/dashboard/dashboard.component';
 import { NotFoundComponent } from './navegacao/not-found/not-found.component';
-import { SimuladorComponent } from './cliente/simulador/simulador.component';
+
+import { AdminGuard } from './admin/_services/admin.guard';
+import { ClienteGuard } from './cliente/_services/cliente.guard';
 
 const routes: Routes = 
 [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'simulador', component: SimuladorComponent },
+  
+  {
+    path: '',
+      loadChildren: () => import ('./cliente/cliente.module')
+      .then(m => m.ClienteModule),
+      canActivate: [ClienteGuard]
+  },
+
+  {
+    path: 'admin',
+      loadChildren: () => import ('./admin/admin.module')
+      .then(m => m.AdminModule),
+      canLoad: [AdminGuard]
+  },
 
 	{ path: '**', component: NotFoundComponent }
 ];

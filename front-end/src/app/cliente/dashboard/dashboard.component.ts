@@ -4,15 +4,12 @@ import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
-import { ClienteService } from './../cliente.service';
+import { ClienteService } from '../_services/cliente.service';
 import { ContaService } from 'src/app/conta/conta.service';
 import { DashboardService } from './dashboard.service';
 
-declare const isEmpty: any;
-declare const obterAnoMes: any;
 declare const obterNomeMesAno: any;
 declare const obterNomeMesAnoReduzido: any;
-declare const obterDataFormatada_ddMMyyyy: any;
 declare const sortByKey: any;
 declare const sortByKey_Date: any;
 
@@ -63,48 +60,14 @@ export class DashboardComponent implements OnInit
     };
 
     this.lineChartLabels = [];
-    this.userChartLine = { data: [], label: this.contaService.usuarioLogado.primeiro_nome, borderColor: '#10174C', pointBackgroundColor: '#10174C' };
-    this.cdiChartLine = { data: [], label: 'CDI', borderColor: '#7F92FF', pointBackgroundColor: '#7F92FF' };
+    this.userChartLine = { data: [], label: this.contaService.usuarioLogado.primeiro_nome, borderColor: '#2D003E', pointBackgroundColor: '#2D003E' };
+    this.cdiChartLine = { data: [], label: 'CDI', borderColor: '#742688', pointBackgroundColor: '#742688' };
     this.poupancaChartLine = { data: [], label: 'Poupança', borderColor: '#9FA2B7', pointBackgroundColor: '#9FA2B7' };
     this.lineChartData = [ this.userChartLine, this.cdiChartLine, this.poupancaChartLine ];
 
     this.cards = { hoje: 0, primeiro: 0, segundo: 0 };
     this.taxa_di_mensal = 0;
     this.carregarTela(0);
-  }
-
-  montarMovimentacoesMensais(movimentacoes)
-  {
-      var result = [];
-
-      if (movimentacoes.length === 0)
-        return result;
-
-      let movimentacoesOrdenadas = sortByKey_Date(movimentacoes.map(m => Object.assign({}, m)), 'data', true);
-
-      let pm = movimentacoesOrdenadas[0];
-      let acumulado = 0;
-      let acumulado_di = 0;
-      let acumulado_poupanca = 0;
-      result.push({ serieCliente: 0, serieDI: 0, seriePoupanca: 0, label: obterNomeMesAnoReduzido(pm.periodo), periodo: pm.periodo });
-
-      movimentacoesOrdenadas.forEach(element =>
-      {
-          // Se não tiver o período, adiciona com o acumulado atual
-          if (result.filter(r => r.periodo === element.periodo).length <= 0)
-          {
-            result.push({ serieCliente: acumulado, serieDI: acumulado_di, seriePoupanca: acumulado_poupanca, label: obterNomeMesAnoReduzido(element.periodo), periodo: element.periodo });
-          }
-
-          if (element.rendimento)
-          {
-            acumulado += element.valor;
-            acumulado_di += element.valor_di;
-            acumulado_poupanca += element.valor_poupanca;
-          }
-      });
-
-      return result;
   }
 
   carregarTela(nAttempts: number): void
@@ -184,5 +147,39 @@ export class DashboardComponent implements OnInit
     this.cdiChartLine.data = result.map(r => r.serieDI);
     this.poupancaChartLine.data = result.map(r => r.seriePoupanca);
     this.lineChartLabels = result.map(r => r.label);
+  }
+
+  montarMovimentacoesMensais(movimentacoes)
+  {
+      var result = [];
+
+      if (movimentacoes.length === 0)
+        return result;
+
+      let movimentacoesOrdenadas = sortByKey_Date(movimentacoes.map(m => Object.assign({}, m)), 'data', true);
+
+      let pm = movimentacoesOrdenadas[0];
+      let acumulado = 0;
+      let acumulado_di = 0;
+      let acumulado_poupanca = 0;
+      result.push({ serieCliente: 0, serieDI: 0, seriePoupanca: 0, label: obterNomeMesAnoReduzido(pm.periodo), periodo: pm.periodo });
+
+      movimentacoesOrdenadas.forEach(element =>
+      {
+          // Se não tiver o período, adiciona com o acumulado atual
+          if (result.filter(r => r.periodo === element.periodo).length <= 0)
+          {
+            result.push({ serieCliente: acumulado, serieDI: acumulado_di, seriePoupanca: acumulado_poupanca, label: obterNomeMesAnoReduzido(element.periodo), periodo: element.periodo });
+          }
+
+          if (element.rendimento)
+          {
+            acumulado += element.valor;
+            acumulado_di += element.valor_di;
+            acumulado_poupanca += element.valor_poupanca;
+          }
+      });
+
+      return result;
   }
 }

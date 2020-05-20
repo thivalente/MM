@@ -4,7 +4,7 @@ body { background-color: #f5f5f5; }
 
 input, select, file, textarea { max-width: 400px; }
 
-.app-loading                { align-items: center; background-color: #2C3E50 !important; display: flex; flex-direction: column; height: calc(100vh); justify-content: center; position: relative; width: calc(100vw); z-index: 100; }
+.app-loading                { align-items: center; background-color: #742688 !important; display: flex; flex-direction: column; height: calc(100vh); justify-content: center; position: relative; width: calc(100vw); z-index: 100; }
 .app-loading .logo          { animation: fadein 2s linear infinite; max-height: 25px; }
 .app-loading .spinner       { animation: rotate 2s linear infinite; bottom: 0; height: 200px; left: 0; margin: auto; position: absolute; right: 0; transform-origin: center center; top: 0; width: 200px; }
 .app-loading .spinner .path { animation: dash 1.5s ease-in-out infinite; stroke: #ddd; stroke-dasharray: 1, 200; stroke-dashoffset: 0; stroke-linecap: round; }
@@ -49,5 +49,5 @@ button.accept-policy    { font-size: 1rem; line-height: inherit; }
 }
 
 /* ******* Footer ******* */
-.footer       { background-color: #fff; bottom: 0; color: #2C3E50 !important; font-size: 0.6rem; height: 20px; line-height: 20px; position: fixed; width: 100%; white-space: nowrap; }
+.footer       { background-color: #fff; bottom: 0; color: #2D003E !important; font-size: 0.6rem; height: 20px; line-height: 20px; position: fixed; width: 100%; white-space: nowrap; }
 .footer > div { margin-top: -1px; }

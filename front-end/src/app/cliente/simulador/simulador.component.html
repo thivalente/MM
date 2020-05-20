@@ -12,78 +12,84 @@
                         <div class="box-white row">
                             <div class="col col-md-6 s-esq">
                                 <div class="config">
-                                    <div class="item-config">
-                                        <label for="">Valor inicial:</label>
-                                        <div class="valor">
-                                            <span class="esq">R$:</span>
-                                            <input type="text" class="input-valor esq" name="capInicial" [(ngModel)]="dados.inicial" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="10" />
+                                    <perfect-scrollbar>
+                                        <div class="item-config">
+                                            <label for="">Valor inicial:</label>
+                                            <div class="valor">
+                                                <span class="esq">R$:</span>
+                                                <input type="text" class="input-valor esq" name="capInicial" [(ngModel)]="dados.inicial" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="10" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="item-config">
-                                        <label for="">Aporte mensal:</label>
-                                        <div class="valor">
-                                            <span class="esq">R$:</span>
-                                            <input type="text" class="input-valor esq" name="aporte" [(ngModel)]="dados.mensal" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="10" />
+                                        <div class="item-config">
+                                            <label for="">Aporte mensal:</label>
+                                            <div class="valor">
+                                                <span class="esq">R$:</span>
+                                                <input type="text" class="input-valor esq" name="aporte" [(ngModel)]="dados.mensal" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="10" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="item-config">
-                                        <label for="">Prazo</label>
-                                        <div class="valor prazo">
-                                            <input type="text" class="input-valor dir" name="prazo" [(ngModel)]="dados.prazo" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ precision: 0, prefix: '', allowNegative: false, nullable: false }" maxlength="3" />
-                                            <span class="dir">meses</span>
+                                        <div class="item-config">
+                                            <label for="">Prazo</label>
+                                            <div class="valor prazo">
+                                                <input type="text" class="input-valor dir" name="prazo" [(ngModel)]="dados.prazo" (ngModelChange)="atualizarCalculos()" currencyMask [options]="{ precision: 0, prefix: '', allowNegative: false, nullable: false }" maxlength="3" />
+                                                <span class="dir">meses</span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </perfect-scrollbar>
                                 </div>
                             </div>
                             <div class="col col-md-6 s-dir">
                                 <div class="box-calculo">
-                                    <div class="topo">
-                                        <span>Total Acumulado</span>
-                                        <div class="valor">
-                                            <span>R$:</span>
-                                            <h1 class="aptot">{{ dados?.acumulado | currency:' ':true }}</h1>
-                                        </div>
-                                        <label class="taxa">Taxa de <span>{{ dados?.porcentagem_cdi | currency:' ':true }}%</span> do CDI</label>
-                                    </div>
-                                    <div class="info-geral">
-                                        <div class="item">
-                                            <h3>Aplicaçao inicial:</h3>
+                                    <perfect-scrollbar>
+                                        <div class="topo">
+                                            <span>Total Acumulado</span>
                                             <div class="valor">
                                                 <span>R$:</span>
-                                                <h2 class="apin">{{ dados?.inicial | currency:' ':true }}</h2>
+                                                <h1 class="aptot">{{ dados?.acumulado.total | currency:' ':true }}</h1>
+                                            </div>
+                                            <label class="taxa">Taxa de <span>{{ dados?.porcentagem_cdi | currency:' ':true }}%</span> do CDI</label>
+                                        </div>
+                                        <div class="info-geral">
+                                            <div class="item">
+                                                <h3>Aplicaçao inicial:</h3>
+                                                <div class="valor">
+                                                    <span>R$:</span>
+                                                    <h2 class="apin">{{ dados?.inicial | currency:' ':true }}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <h3>Soma aplicações:</h3>
+                                                <div class="valor">
+                                                    <span>R$:</span>
+                                                    <h2 class="apout">{{ dados?.aplicado_total | currency:' ':true }}</h2>
+                                                </div>
+                                            </div>
+                                            <div class="item last">
+                                                <h3>Rendimento total:</h3>
+                                                <div class="valor">
+                                                    <span>R$:</span>
+                                                    <h2 class="apju">{{ dados?.rendimento?.total | currency:' ':true }}</h2>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="item">
-                                            <h3>Soma aplicações:</h3>
-                                            <div class="valor">
-                                                <span>R$:</span>
-                                                <h2 class="apout">{{ dados?.aplicado_total | currency:' ':true }}</h2>
-                                            </div>
-                                        </div>
-                                        <div class="item last">
-                                            <h3>Rendimento total:</h3>
-                                            <div class="valor">
-                                                <span>R$:</span>
-                                                <h2 class="apju">{{ dados?.rendimento?.total | currency:' ':true }}</h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </perfect-scrollbar>
                                 </div>
-                                <ul>
-                                    <li>
-                                        <span>Rendimento</span>
-                                    </li>
-                                    <li>
-                                        <span>Cdi: <strong>{{ dados?.rendimento?.cdi | currency:'R$ ':true }}</strong></span>
-                                        <div class="traco"></div>
-                                    </li>
-                                    <li>
-                                        <span>Poupança: <strong class="diano">{{ dados?.rendimento?.poupanca | currency:'R$ ':true }}</strong></span>
-                                        <div class="traco"></div>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
+                    </div>
+                    <div class="panel-footer">
+                        <ul>
+                            <li>
+                                <span>Rendimento</span>
+                            </li>
+                            <li>
+                                <span>Cdi: <strong>{{ dados?.rendimento?.cdi | currency:'R$ ':true }}</strong></span>
+                                <div class="traco"></div>
+                            </li>
+                            <li>
+                                <span>Poupança: <strong class="diano">{{ dados?.rendimento?.poupanca | currency:'R$ ':true }}</strong></span>
+                                <div class="traco"></div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

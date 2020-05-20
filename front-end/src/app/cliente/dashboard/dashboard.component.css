@@ -3,18 +3,24 @@
 .body-container .dados                      { margin-left: 0px; }
 .body-container .dados .panel.panel-default { height: calc(100vh - 240px); }
 .body-container .dados .panel-body          { height: calc(100vh - 300px); }
-.body-container .dados .panel.panel-default .chart-container { height: 300px; left: 50%; margin-top: 10px; position: relative; transform: translateX(-50%); width: 614px; }
+.body-container .dados .panel.panel-default .chart-container { left: 50%; margin-top: 10px; position: absolute; top: 50%; transform: translate(-50%, -50%); width: calc(90vh); }
 
 .body-container .dados .extrato fieldset            { margin-top: 10px; }
 .body-container .dados .extrato fieldset legend     { border-bottom: dashed 1px #ddd; font-size: 14px; text-align: center; }
 .body-container .dados .extrato fieldset tr td      { padding-bottom: 0; }
 
-.body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 370px); }
-.body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 400px); }
+.body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 385px); }
+.body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 415px); }
 
-tr.table-row-header             { background-color: transparent; font-size: 10px; line-height: 10px; text-align: center; }
-tr.table-row-header > td > span { background-color: lavender; border: solid 1px transparent; border-radius: 10px; padding: 3px; }
+tr.table-row-header                                 { background-color: transparent; font-size: 10px; line-height: 10px; text-align: center; }
+tr.table-row-header > td > span                     { background-color: lavender; border: solid 1px transparent; border-radius: 10px; padding: 3px; }
 
+.body-container .dados .extrato section .row                                { display: flex; line-height: 40px; margin-left: 0px; margin-right: 0px; width: 99%; }
+.body-container .dados .extrato section .row.table-row-header               { background-color: transparent; font-size: 10px; line-height: 20px; text-align: center; }
+.body-container .dados .extrato section .row.table-row-header > .col > span { background-color: lavender; border: solid 1px transparent; border-radius: 10px; padding: 3px; }
+.body-container .dados .extrato section .row .col                           { flex: 1; }
+.body-container .dados .extrato section .row .col.first                     { max-width: 10%; }
+.body-container .dados .extrato section .row .col.text-right                { white-space: nowrap; }
 
 @media (max-width: 992px)
 {
@@ -22,6 +28,7 @@ tr.table-row-header > td > span { background-color: lavender; border: solid 1px 
     .body-container .dados > div                { margin-bottom: 10px; }
     .body-container .dados .panel.panel-default { height: calc(100vh - 220px); min-height: 400px; }
     .body-container .dados .chart perfect-scrollbar    { min-height: 360px; }
+    .body-container .dados .extrato { flex: 100%; max-width: 100%; }
     .body-container .dados .extrato .historico perfect-scrollbar    { min-height: 250px; }
     .body-container .dados .extrato .mensal perfect-scrollbar       { min-height: 230px; }
     .body-container .dados .panel.panel-default .chart-container    { width: 450px; }

@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="extrato col">
+                <div class="extrato col col-md-4 col-lg-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3>Extrato</h3>
@@ -60,20 +60,14 @@
                                             Seu saldo em conta é de: <span class="text-success">{{ saldo | currency:'R$ ':true }}</span>
                                         </legend>
                                         <perfect-scrollbar>
-                                            <table class="table table-borderless">
-                                                <tbody>
-                                                    <tr *ngFor="let extrato of extratos | periodoHistoricoFilter | periodoCabecalhoFilter" [ngClass]="extrato.cabecalho ? 'table-row-header' : ''">
-                                                        <td *ngIf="extrato.cabecalho" colspan="3">
-                                                            <span>{{ extrato.data }}</span>
-                                                        </td>
-                                                        <td *ngIf="!extrato.cabecalho">
-                                                            <i class="fa" [ngClass]="extrato.entrada ? (extrato.rendimento ? 'fa-usd text-success' : 'fa-arrow-up text-success') : 'fa-arrow-down text-danger'"></i>
-                                                        </td>
-                                                        <td *ngIf="!extrato.cabecalho">{{ extrato.entrada ? (extrato.rendimento ? 'Rendimento' : 'Aporte') : 'Retirada' }}</td>
-                                                        <td *ngIf="!extrato.cabecalho" class="text-right"><span [ngClass]="extrato.entrada ? 'text-success' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true }}</span></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <section>
+                                                <div class="row" *ngFor="let extrato of extratos | periodoHistoricoFilter | periodoCabecalhoFilter" [ngClass]="extrato.cabecalho ? 'table-row-header' : ''">
+                                                  <div class="col" *ngIf="extrato.cabecalho"><span>{{ extrato.data }}</span></div>
+                                                  <div class="col first" *ngIf="!extrato.cabecalho"><i class="fa" [ngClass]="extrato.entrada ? (extrato.rendimento ? 'fa-usd text-success' : 'fa-arrow-up text-success') : 'fa-arrow-down text-danger'"></i></div>
+                                                  <div class="col" *ngIf="!extrato.cabecalho">{{ extrato.entrada ? (extrato.rendimento ? 'Rendimento' : 'Aporte') : 'Retirada' }}</div>
+                                                  <div class="col text-right" *ngIf="!extrato.cabecalho"><span [ngClass]="extrato.entrada ? 'text-success' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true }}</span></div>
+                                                </div>
+                                              </section>
                                         </perfect-scrollbar>
                                     </fieldset>
                                 </ng-template>
@@ -97,20 +91,14 @@
                                             </div>
                                         </legend>
                                         <perfect-scrollbar>
-                                            <table class="table table-borderless">
-                                                <tbody>
-                                                    <tr *ngFor="let extrato of extratos | periodoPorMesFilter:periodoSelecionado | periodoCabecalhoFilter" [ngClass]="extrato.cabecalho ? 'table-row-header' : ''">
-                                                        <td *ngIf="extrato.cabecalho" colspan="3">
-                                                            <span>{{ extrato.data }}</span>
-                                                        </td>
-                                                        <td *ngIf="!extrato.cabecalho">
-                                                            <i class="fa" [ngClass]="extrato.entrada ? (extrato.rendimento ? 'fa-usd text-success' : 'fa-arrow-up text-success') : 'fa-arrow-down text-danger'"></i>
-                                                        </td>
-                                                        <td *ngIf="!extrato.cabecalho">{{ extrato.entrada ? (extrato.rendimento ? 'Rendimento' : 'Aporte') : 'Retirada' }}</td>
-                                                        <td *ngIf="!extrato.cabecalho" class="text-right"><span [ngClass]="extrato.entrada ? 'text-success' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true }}</span></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <section>
+                                                <div class="row" *ngFor="let extrato of extratos | periodoPorMesFilter:periodoSelecionado | periodoCabecalhoFilter" [ngClass]="extrato.cabecalho ? 'table-row-header' : ''">
+                                                  <div class="col" *ngIf="extrato.cabecalho"><span>{{ extrato.data }}</span></div>
+                                                  <div class="col first" *ngIf="!extrato.cabecalho"><i class="fa" [ngClass]="extrato.entrada ? (extrato.rendimento ? 'fa-usd text-success' : 'fa-arrow-up text-success') : 'fa-arrow-down text-danger'"></i></div>
+                                                  <div class="col" *ngIf="!extrato.cabecalho">{{ extrato.entrada ? (extrato.rendimento ? 'Rendimento' : 'Aporte') : 'Retirada' }}</div>
+                                                  <div class="col text-right" *ngIf="!extrato.cabecalho"><span [ngClass]="extrato.entrada ? 'text-success' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true }}</span></div>
+                                                </div>
+                                              </section>
                                         </perfect-scrollbar>
                                     </fieldset>
                                 </ng-template>
