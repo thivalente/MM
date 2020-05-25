@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router, CanDeactivate } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router, CanDeactivate, Route } from '@angular/router';
 
 import { BaseGuard } from 'src/app/_services/base.guard';
 
@@ -20,5 +20,20 @@ export class ClienteGuard extends BaseGuard implements CanActivate //, CanDeacti
     canActivate(routeAc: ActivatedRouteSnapshot)
     {
         return super.validarClaims(routeAc);
-    }  
+    }
+
+    canLoad(route: Route)
+    {
+        this.verificarLogado();
+
+        return true;
+    }
+
+    private verificarLogado()
+    {
+        let user = this.localStorageUtils.obterUsuario();
+
+        if (!user)
+            this.navegarAcessoNegado();
+    }
 }

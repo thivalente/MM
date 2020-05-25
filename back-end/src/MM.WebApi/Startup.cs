@@ -35,6 +35,8 @@ namespace MM.WebApi
         {
             services.AddControllers();
 
+            services.AddIdentitySetup(Configuration);
+
             services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;

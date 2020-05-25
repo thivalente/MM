@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageUtils } from 'src/app/utils/localstorage';
 
-@Component({ selector: 'app-menu-login', templateUrl: './menu-login.component.html' })
-
+@Component({ selector: 'app-menu-login', templateUrl: './menu-login.component.html', styleUrls:['./menu-login.component.css'] })
 export class MenuLoginComponent
 {
   token: string = "";
   user: any;
-  email: string = "";
+  primeiro_nome: string = "";
   localStorageUtils = new LocalStorageUtils();
 
   constructor(private router: Router) {  }
@@ -19,7 +18,7 @@ export class MenuLoginComponent
     this.user = this.localStorageUtils.obterUsuario();
 
     if (this.user)
-      this.email = this.user.email;
+      this.primeiro_nome = this.user.primeiro_nome;
 
     return this.token !== null;
   }
@@ -27,6 +26,6 @@ export class MenuLoginComponent
   logout()
   {
     this.localStorageUtils.limparDadosLocaisUsuario();
-    this.router.navigate(['/home']);
+    this.router.navigate(['/conta/login']);
   }
 }

@@ -4,10 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgBrazil } from 'ng-brazil'
 import { NgxCurrencyModule } from 'ngx-currency';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TextMaskModule } from 'angular2-text-mask';
 
-import { AdminGuard } from './_services/admin.guard';
 import { AdminRoutingModule } from './admin-routing.module';
+import { NavegacaoModule } from '../navegacao/navegacao.module';
+
+import { AdminGuard } from './_services/admin.guard';
+import { AdminUsuarioService } from './usuario/usuario.service';
+
+import { AdminComponent } from './admin.component';
 import { AdminUsuarioCadastroComponent } from './usuario/cadastro/cadastro.component';
 import { AdminUsuarioListaComponent } from './usuario/lista/lista.component';
 
@@ -15,6 +23,7 @@ import { AdminUsuarioListaComponent } from './usuario/lista/lista.component';
     {
         declarations:
         [
+            AdminComponent,
             AdminUsuarioCadastroComponent,
             AdminUsuarioListaComponent
         ],
@@ -24,15 +33,21 @@ import { AdminUsuarioListaComponent } from './usuario/lista/lista.component';
            FormsModule,
            NgBrazil,
            NgxCurrencyModule,
+           NgxPaginationModule,
+           NgxUiLoaderModule,
+           PerfectScrollbarModule,
            ReactiveFormsModule,
            TextMaskModule,
 
-           AdminRoutingModule
+           AdminRoutingModule,
+           NavegacaoModule
         ],
         exports:
         [
-            AdminUsuarioListaComponent,
+            AdminComponent,
+            AdminUsuarioCadastroComponent,
+            AdminUsuarioListaComponent
         ],
-        providers:[AdminGuard]
+        providers:[AdminGuard, AdminUsuarioService]
     })
 export class AdminModule { }

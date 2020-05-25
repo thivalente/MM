@@ -1,0 +1,22 @@
+.lista-usuarios .panel                          { height: calc(100vh - 100px); margin: 10px; }
+.lista-usuarios .panel .panel-heading           { line-height: 40px; }
+.lista-usuarios .panel .panel-heading .btn      { margin-right: 20px; }
+.lista-usuarios .panel .panel-heading .btn i    { margin-right: 10px; }
+.lista-usuarios .panel perfect-scrollbar        { height: calc(100vh - 200px); }
+.lista-usuarios .panel .panel-footer            { background-color: #EEE; line-height: 30px; margin-top: 5px; }
+
+.lista-usuarios .panel .panel-body .flex-table                          { margin: 1em auto; width: 90%; border-collapse: collapse; }
+.lista-usuarios .panel .panel-body .flex-table .flex-header             { color: #313442; font-size: 1rem; font-weight: 600; }
+.lista-usuarios .panel .panel-body .flex-table .flex-row                { line-height: 40px; }
+.lista-usuarios .panel .panel-body .flex-table .flex-row:nth-child(odd) { background-color: whitesmoke; }
+.lista-usuarios .panel .panel-body .flex-table .flex-row:hover          { background-color: rgb(216, 191, 216, 0.5);}
+
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(1),
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(2)  { width: 35%; }
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(3)  { width: 20%; }
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(4)  { cursor: pointer; text-align: center; width: 50px; }
+
+@media only screen and (max-width: 767px)
+{
+    .lista-usuarios .panel .panel-body .flex-table .flex-cell { width: 100%; }
+}

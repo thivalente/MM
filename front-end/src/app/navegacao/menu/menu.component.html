@@ -9,18 +9,18 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngbCollapse]="isCollapsed">
 
-                <!-- <app-menu-login></app-menu-login> -->
-
+                <app-menu-login></app-menu-login>
+                
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['/dashboard']" [ngClass]="router.url === '/dashboard' ? 'active' : ''">Dashboard</a>
+                    <li class="nav-item" *ngIf="usuario_logado && !usuario_is_admin">
+                        <a class="nav-link" [routerLink]="['/cliente/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" [routerLink]="['/simulador']" [ngClass]="router.url === '/simulador' ? 'active' : ''">Simulador</a>
+                    <li class="nav-item" *ngIf="usuario_logado && !usuario_is_admin">
+                        <a class="nav-link" [routerLink]="['/cliente/simulador']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Simulador</a>
                     </li>
-                    <!-- <li class=" nav-item ">
-                        <a class="nav-link" [routerLink]="['/produtos/listar-todos']">Produtos</a>
-                    </li> -->
+                    <li class=" nav-item" *ngIf="usuario_is_admin">
+                        <a class="nav-link" [routerLink]="['/admin/usuario']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">Usuários</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { RouterModule } from '@angular/router';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ChartsModule } from 'ng2-charts';
@@ -12,15 +15,16 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { AdminModule } from './admin/admin.module';
 import { ClienteModule } from './cliente/cliente.module';
-import { NavegacaoModule } from './navegacao/navegacao.module';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './conta/login/login.component';
 
 import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CommonModule } from '@angular/common';
 
 import { SettingsService } from './_services/settings.service';
+import { AppLogadoRoutingModule } from './conta/app-logado-routing.module';
 
 
 registerLocaleData(localePt, 'pt');
@@ -28,13 +32,21 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
+    AppLogadoRoutingModule,
     AppRoutingModule,
+    
     BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    RouterModule,
+    ToastrModule.forRoot({ closeButton: true, positionClass: 'toast-bottom-right' }),
 
     ChartsModule,
     NgbModule,
@@ -43,8 +55,7 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
     PerfectScrollbarModule,
     
     AdminModule,
-    ClienteModule,
-    NavegacaoModule
+    ClienteModule
   ],
   providers: 
   [

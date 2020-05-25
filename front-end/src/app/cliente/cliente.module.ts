@@ -9,7 +9,9 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { ClienteRoutingModule } from './cliente-routing.module';
+import { NavegacaoModule } from './../navegacao/navegacao.module';
 
+import { ClienteComponent } from './cliente.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SimuladorComponent } from './simulador/simulador.component';
 
@@ -23,6 +25,7 @@ import { ClienteGuard } from './_services/cliente.guard';
     {
         declarations:
         [
+            ClienteComponent,
             DashboardComponent,
             SimuladorComponent,
 
@@ -36,6 +39,7 @@ import { ClienteGuard } from './_services/cliente.guard';
            FormsModule,
 
            ClienteRoutingModule,
+           NavegacaoModule,
 
            ChartsModule,
            NgbModule,
@@ -45,8 +49,9 @@ import { ClienteGuard } from './_services/cliente.guard';
         ],
         exports:
         [
+            ClienteComponent,
             DashboardComponent,
-            SimuladorComponent,
+            SimuladorComponent
         ],
         providers: [ClienteGuard]
     })

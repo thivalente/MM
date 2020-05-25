@@ -9,6 +9,8 @@ import { ValidationMessages, GenericValidator, DisplayMessage } from './../../..
 import { Usuario } from './../../../_models/usuario';
 import { ContaService } from 'src/app/conta/conta.service';
 
+declare const isEmpty: any;
+
 @Component({ selector: 'admin-usuario-cadastro', templateUrl: './cadastro.component.html', styleUrls: ['./cadastro.component.css'] })
 export class AdminUsuarioCadastroComponent implements OnInit, AfterViewInit
 {
@@ -16,6 +18,8 @@ export class AdminUsuarioCadastroComponent implements OnInit, AfterViewInit
 
   cadastroForm: FormGroup;
   usuario: Usuario;
+  usuario_id: string;
+  mudancasNaoSalvas: boolean;
 
   displayMessage: DisplayMessage = {};
   errors: any[] = [];
@@ -26,12 +30,14 @@ export class AdminUsuarioCadastroComponent implements OnInit, AfterViewInit
 
   constructor(private contaService: ContaService, private fb: FormBuilder)
   {
+    this.mudancasNaoSalvas = false;
+
     this.validationMessages = 
     {
       nome: { required: "Informe o nome" },
       cpf: { required: "Informe o CPF", cpf: "Formato do CPF inválido" },
       email: { required: "Informe o e-mail", email: "Formato do e-mail inválido" },
-      taxa_acima_di: { required: "Informe a taxa acima do CDI" }
+      taxa_acima_cdi: { required: "Informe a taxa acima do CDI" }
     };
 
     this.genericValidator = new GenericValidator(this.validationMessages);
@@ -42,24 +48,27 @@ export class AdminUsuarioCadastroComponent implements OnInit, AfterViewInit
     this.cadastroForm = this.fb.group(
       {
         nome: ['', Validators.required],
-        cpf: ['', Validators.required, NgBrazilValidators.cpf],
-        email: ['', Validators.required, Validators.email],
-        taxa_acima_di: ['', Validators.required]
+        cpf: ['', [Validators.required, NgBrazilValidators.cpf]],
+        email: ['', [Validators.required, Validators.email]],
+        taxa_acima_cdi: ['', Validators.required]
       });
   }
 
   ngAfterViewInit(): void
   {
     let controlBlurs: Observable<any>[] = this.formInputElements.map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
-    merge(...controlBlurs).subscribe(() => { this.displayMessage = this.genericValidator.processarMensagens(this.cadastroForm); });
+    merge(...controlBlurs).subscribe(() => { this.displayMessage = this.genericValidator.processarMensagens(this.cadastroForm); this.mudancasNaoSalvas = true; });
   }
 
   salvar()
   {
+    console.log('salvar', this.cadastroForm);
     if (this.cadastroForm.dirty && this.cadastroForm.valid)
     {
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
-      this.contaService.salvarUsuario(this.usuario);
+      //this.contaService.salvarUsuario(this.usuario);
     }
+
+    // this.mudancasNaoSalvas = false;
   }
 }

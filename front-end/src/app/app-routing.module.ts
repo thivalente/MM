@@ -1,29 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AcessoNegadoComponent } from './navegacao/acesso-negado/acesso-negado.component';
+import { LoginComponent } from './conta/login/login.component';
 import { NotFoundComponent } from './navegacao/not-found/not-found.component';
-
-import { AdminGuard } from './admin/_services/admin.guard';
-import { ClienteGuard } from './cliente/_services/cliente.guard';
 
 const routes: Routes = 
 [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  
-  {
-    path: '',
-      loadChildren: () => import ('./cliente/cliente.module')
-      .then(m => m.ClienteModule),
-      canActivate: [ClienteGuard]
-  },
+  { path: '', redirectTo: '/conta/login', pathMatch: 'full' },
+  { path: 'conta/login', component: LoginComponent },
 
-  {
-    path: 'admin',
-      loadChildren: () => import ('./admin/admin.module')
-      .then(m => m.AdminModule),
-      canLoad: [AdminGuard]
-  },
-
+  { path: 'acesso-negado', component: AcessoNegadoComponent },
+  { path: 'nao-encontrado', component: NotFoundComponent },
 	{ path: '**', component: NotFoundComponent }
 ];
 

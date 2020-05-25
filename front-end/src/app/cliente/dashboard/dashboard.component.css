@@ -1,16 +1,16 @@
 .body-container .cards                      { margin-bottom: 10px; }
 .body-container .cards h4                   { font-size: 1rem; margin-bottom: 0; }
 .body-container .dados                      { margin-left: 0px; }
-.body-container .dados .panel.panel-default { height: calc(100vh - 240px); }
-.body-container .dados .panel-body          { height: calc(100vh - 300px); }
+.body-container .dados .panel.panel-default { height: calc(100vh - 200px); }
+.body-container .dados .panel-body          { height: calc(100vh - 250px); }
 .body-container .dados .panel.panel-default .chart-container { left: 50%; margin-top: 10px; position: absolute; top: 50%; transform: translate(-50%, -50%); width: calc(90vh); }
 
 .body-container .dados .extrato fieldset            { margin-top: 10px; }
 .body-container .dados .extrato fieldset legend     { border-bottom: dashed 1px #ddd; font-size: 14px; text-align: center; }
 .body-container .dados .extrato fieldset tr td      { padding-bottom: 0; }
 
-.body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 385px); }
-.body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 415px); }
+.body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 325px); }
+.body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 355px); }
 
 tr.table-row-header                                 { background-color: transparent; font-size: 10px; line-height: 10px; text-align: center; }
 tr.table-row-header > td > span                     { background-color: lavender; border: solid 1px transparent; border-radius: 10px; padding: 3px; }
@@ -25,8 +25,8 @@ tr.table-row-header > td > span                     { background-color: lavender
 @media (max-width: 992px)
 {
     .body-container .cards h4                   { font-size: 0.8rem; }
-    .body-container .dados > div                { margin-bottom: 10px; }
-    .body-container .dados .panel.panel-default { height: calc(100vh - 220px); min-height: 400px; }
+    /* .body-container .dados > div                { margin-bottom: 10px; } */
+    .body-container .dados .panel.panel-default { height: calc(100vh - 190px); min-height: 400px; }
     .body-container .dados .chart perfect-scrollbar    { min-height: 360px; }
     .body-container .dados .extrato { flex: 100%; max-width: 100%; }
     .body-container .dados .extrato .historico perfect-scrollbar    { min-height: 250px; }
@@ -38,7 +38,7 @@ tr.table-row-header > td > span                     { background-color: lavender
 {
     .body-container .dados .panel.panel-default .chart-container    { height: 150px; width: 250px; }
     .body-container .dados .chart                                   { display: none; }
-    .body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 370px); }
-    .body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 400px); }
+    .body-container .dados .extrato .historico perfect-scrollbar    { height: calc(100vh - 340px); }
+    .body-container .dados .extrato .mensal perfect-scrollbar       { height: calc(100vh - 370px); }
     .body-container .dados .extrato perfect-scrollbar table         { width: 90%; }
 }

@@ -60,9 +60,9 @@ export class DashboardComponent implements OnInit
     };
 
     this.lineChartLabels = [];
-    this.userChartLine = { data: [], label: this.contaService.usuarioLogado.primeiro_nome, borderColor: '#2D003E', pointBackgroundColor: '#2D003E' };
-    this.cdiChartLine = { data: [], label: 'CDI', borderColor: '#742688', pointBackgroundColor: '#742688' };
-    this.poupancaChartLine = { data: [], label: 'Poupança', borderColor: '#9FA2B7', pointBackgroundColor: '#9FA2B7' };
+    this.userChartLine = { data: [], label: this.contaService.usuarioLogado.primeiro_nome, borderColor: '#742688', pointBackgroundColor: '#742688' };
+    this.cdiChartLine = { data: [], label: 'CDI', borderColor: '#808080', pointBackgroundColor: '#808080' };
+    this.poupancaChartLine = { data: [], label: 'Poupança', borderColor: '#CCC', pointBackgroundColor: '#CCC' };
     this.lineChartData = [ this.userChartLine, this.cdiChartLine, this.poupancaChartLine ];
 
     this.cards = { hoje: 0, primeiro: 0, segundo: 0 };

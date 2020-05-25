@@ -4,11 +4,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SimuladorComponent } from './simulador/simulador.component';
 
-const clienteRouterConfig: Routes = [
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+import { ClienteGuard } from './_services/cliente.guard';
 
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'simulador', component: SimuladorComponent },
+const clienteRouterConfig: Routes = [
+    { path: '', redirectTo: '/cliente/dashboard', pathMatch: 'full' },
+
+    {
+        path: '',
+        children:
+        [
+            { path: 'dashboard', component: DashboardComponent, canActivate: [ClienteGuard] },
+            { path: 'simulador', component: SimuladorComponent, canActivate: [ClienteGuard] }
+        ]
+    }
 ];
 
 @NgModule({

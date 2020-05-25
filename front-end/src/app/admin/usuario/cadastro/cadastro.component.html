@@ -1,64 +1,77 @@
-<div class="container main-container">
-    <h1>Cadastro</h1>
+<div class="cadastro-usuario" ngxUiLoaderBlurred [loaderId]="'loader-principal'">
 
-    <form novalidate (ngSubmit)="salvar()" [formGroup]="cadastroForm">
-
-        <h4>Cadastro de Usuário</h4>
-        <hr />
-
-        <div class="alert alert-danger" *ngIf="errors.length > 0">
-            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
-            <ul>
-                <li *ngFor="let error of errors">{{ error }}</li>
-            </ul>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span *ngIf="usuario_id">Cadastro Novo Usuário</span>
+            <span *ngIf="!usuario_id">Editar Usuário</span>
         </div>
 
-        <div class="form-group">
-            <label class="col-md-2 control-label">Nome</label>
-            <div class="col-md-10">
-                <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)" formControlName="nome" [ngClass]="{'is-invalid': displayMessage.nome }" />
-                <span class="text-danger" *ngIf="displayMessage.nome">
-                    <p [innerHTML]="displayMessage.nome"></p>
-                </span>
+        <form novalidate (ngSubmit)="salvar()" [formGroup]="cadastroForm">
+            <div class="panel-body">
+                <perfect-scrollbar>
+                    <div class="alert alert-danger" *ngIf="errors.length > 0">
+                        <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                        <ul>
+                            <li *ngFor="let error of errors">{{ error }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="container-cadastro">
+                        <div class="row">
+                            <div class="form-group col">
+                                <label class="col-md-12 control-label">Nome</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)" formControlName="nome" [ngClass]="{'is-invalid': displayMessage.nome }" />
+                                    <span class="text-danger" *ngIf="displayMessage.nome">
+                                        <p [innerHTML]="displayMessage.nome"></p>
+                                    </span>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group col">
+                                <label class="col-md-12 control-label">CPF</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="cpf" type="text" placeholder="CPF (requerido)" formControlName="cpf" [ngClass]="{'is-invalid': displayMessage.cpf }" cpf [textMask]="{mask: MASKS.cpf.textMask}" />
+                                    <span class="text-danger" *ngIf="displayMessage.cpf">
+                                        <p [innerHTML]="displayMessage.cpf"></p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <div class="form-group col">
+                                <label class="col-md-12 control-label">E-mail</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
+                                    <span class="text-danger" *ngIf="displayMessage.email">
+                                        <p [innerHTML]="displayMessage.email"></p>
+                                    </span>
+                                </div>
+                            </div>
+                    
+                            <div class="form-group col">
+                                <label class="col-md-12 control-label">Taxa Acima CDI (em %)</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="taxa_acima_cdi" type="text" placeholder="Taxa Acima CDI(requerido)" formControlName="taxa_acima_cdi" [ngClass]="{'is-invalid': displayMessage.taxa_acima_cdi }" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="6" />
+                                    <span class="text-danger" *ngIf="displayMessage.taxa_acima_cdi">
+                                        <p [innerHTML]="displayMessage.taxa_acima_cdi"></p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="!usuario_id">
+                            
+                        </div>
+                    </div>
+                </perfect-scrollbar>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">CPF</label>
-            <div class="col-md-10">
-                <input class="form-control" id="cpf" type="text" placeholder="CPF (requerido)" formControlName="cpf" [ngClass]="{'is-invalid': displayMessage.cpf }" cpf [textMask]="{mask: MASKS.cpf.textMask}" />
-                <span class="text-danger" *ngIf="displayMessage.cpf">
-                    <p [innerHTML]="displayMessage.cpf"></p>
-                </span>
+            <div class="panel-footer">
+                <button class="btn btn-sm btn-outline-secondary" [routerLink]="['/admin/usuario']">Voltar</button>
+                <button class="btn btn-sm btn-primary" [attr.disabled]="!cadastroForm.valid ? 'disabled' : null" type="submit">Salvar</button>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">E-mail</label>
-            <div class="col-md-10">
-                <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
-                <span class="text-danger" *ngIf="displayMessage.email">
-                    <p [innerHTML]="displayMessage.email"></p>
-                </span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-md-2 control-label">Taxa Acima CDI (em %)</label>
-            <div class="col-md-10">
-                <input class="form-control" id="taxa_acima_cdi" type="text" placeholder="Taxa Acima CDI(requerido)" formControlName="taxa_acima_cdi" [ngClass]="{'is-invalid': displayMessage.taxa_acima_cdi }" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="6" />
-                <span class="text-danger" *ngIf="displayMessage.taxa_acima_cdi">
-                    <p [innerHTML]="displayMessage.taxa_acima_cdi"></p>
-                </span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-4 col-md-offset-2">
-                <span>
-                    <button class="btn btn-success" [disabled]="!cadastroForm.valid" type="submit">Salvar</button>
-                </span>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+<ngx-ui-loader [loaderId]="'loader-principal'" [hasProgressBar]="true"></ngx-ui-loader>

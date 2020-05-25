@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-@Component({ selector: 'app-root', templateUrl: './app.component.html', styles: [] })
+@Component({ selector: 'app-root', template: '<router-outlet></router-outlet>' })
 
 export class AppComponent
 {
-  title = 'front-end';
+  title = 'MM Investimentos';
 }

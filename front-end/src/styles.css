@@ -4,7 +4,7 @@ body { background-color: #f5f5f5; }
 
 input, select, file, textarea { max-width: 400px; }
 
-.app-loading                { align-items: center; background-color: #742688 !important; display: flex; flex-direction: column; height: calc(100vh); justify-content: center; position: relative; width: calc(100vw); z-index: 100; }
+.app-loading                { align-items: center; background-color: #6B5195 !important; display: flex; flex-direction: column; height: calc(100vh); justify-content: center; position: relative; width: calc(100vw); z-index: 100; }
 .app-loading .logo          { animation: fadein 2s linear infinite; max-height: 25px; }
 .app-loading .spinner       { animation: rotate 2s linear infinite; bottom: 0; height: 200px; left: 0; margin: auto; position: absolute; right: 0; transform-origin: center center; top: 0; width: 200px; }
 .app-loading .spinner .path { animation: dash 1.5s ease-in-out infinite; stroke: #ddd; stroke-dasharray: 1, 200; stroke-dashoffset: 0; stroke-linecap: round; }
@@ -27,7 +27,16 @@ div.site-container .panel .panel-heading    { border-bottom: solid 1px #ccc; }
 div.site-container .panel .panel-heading h3 { font-size: 1.1rem; font-weight: normal; }
 div.site-container .panel.panel-default     { border-color: transparent; border-radius: 8px; border-top-width: 3px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); padding: 10px; -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); }
 
-.body-container { height: calc(100vh - 110px); padding-top: 10px; }
+.body-container { height: calc(100vh - 90px); padding-top: 10px; }
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: #8064A2 !important;
+    border-color: #8064A2 !important;
+}
 
 .border-top     { border-top: 1px solid #e5e5e5; }
 .border-bottom  { border-bottom: 1px solid #e5e5e5; }
@@ -37,11 +46,19 @@ button.accept-policy    { font-size: 1rem; line-height: inherit; }
 .header     { background-color: #fafbfc; border-bottom: solid 1px #cfdbe2;color: #929292; display: flex; justify-content: left; margin-left: -20px; margin-right: -20px; padding: 10px; }
 .header h4  { font-size: 1.2rem; font-weight: 400; margin-bottom: 0; }
 
+.input-group-text { background-color: #fff; color: #9aa0ac; }
+
 .nav-link         { border: none !important; }
-.nav-link.active  { border-bottom: solid 2px #10174C !important; }
+.nav-link.active  { border-bottom: solid 2px #6B5195 !important; }
 .nav-link .tab-label-content { color: rgba(0,0,0,.87); display: inline-flex; justify-content: center; align-items: center; white-space: nowrap; }
 
-.dashboard .tab-pane  { height: calc(100vh - 330px); }
+.ngx-pagination .current { background: #6B5195 !important; }
+
+.toast-container .toast-title   { font-size: 0.9rem; }
+.toast-container .toast-message { font-size: 0.85rem; }
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid    { background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogPGc+CiAgPHRpdGxlPmJhY2tncm91bmQ8L3RpdGxlPgogIDxyZWN0IGZpbGw9Im5vbmUiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIgaGVpZ2h0PSI0MDIiIHdpZHRoPSI1ODIiIHk9Ii0xIiB4PSItMSIvPgogPC9nPgogPGc+CiAgPHRpdGxlPkxheWVyIDE8L3RpdGxlPgogIDxwYXRoIGZpbGw9IiNkYzM1NDUiIGlkPSJzdmdfMSIgZD0ibTE3LjQxNCw2LjU4NmMtMC43OCwtMC43ODEgLTIuMDQ4LC0wLjc4MSAtMi44MjgsMGwtMi41ODYsMi41ODZsLTIuNTg2LC0yLjU4NmMtMC43OCwtMC43ODEgLTIuMDQ4LC0wLjc4MSAtMi44MjgsMGMtMC43ODEsMC43ODEgLTAuNzgxLDIuMDQ3IDAsMi44MjhsMi41ODUsMi41ODZsLTIuNTg1LDIuNTg2Yy0wLjc4MSwwLjc4MSAtMC43ODEsMi4wNDcgMCwyLjgyOGMwLjM5LDAuMzkxIDAuOTAyLDAuNTg2IDEuNDE0LDAuNTg2czEuMDI0LC0wLjE5NSAxLjQxNCwtMC41ODZsMi41ODYsLTIuNTg2bDIuNTg2LDIuNTg2YzAuMzksMC4zOTEgMC45MDIsMC41ODYgMS40MTQsMC41ODZzMS4wMjQsLTAuMTk1IDEuNDE0LC0wLjU4NmMwLjc4MSwtMC43ODEgMC43ODEsLTIuMDQ3IDAsLTIuODI4bC0yLjU4NSwtMi41ODZsMi41ODUsLTIuNTg2YzAuNzgxLC0wLjc4MSAwLjc4MSwtMi4wNDcgMCwtMi44Mjh6Ii8+CiA8L2c+Cjwvc3ZnPg=="); }
 
 @media (max-width: 992px)
 {
@@ -49,5 +66,5 @@ button.accept-policy    { font-size: 1rem; line-height: inherit; }
 }
 
 /* ******* Footer ******* */
-.footer       { background-color: #fff; bottom: 0; color: #2D003E !important; font-size: 0.6rem; height: 20px; line-height: 20px; position: fixed; width: 100%; white-space: nowrap; }
+.footer       { background-color: #fff; bottom: 0; color: #2e2e2e !important; font-size: 0.6rem; height: 20px; line-height: 20px; position: fixed; width: 100%; white-space: nowrap; }
 .footer > div { margin-top: -1px; }

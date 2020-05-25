@@ -1,29 +1,43 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router, CanDeactivate } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router, CanDeactivate, Route } from '@angular/router';
 
 import { BaseGuard } from 'src/app/_services/base.guard';
 
+import { AdminUsuarioCadastroComponent } from './../usuario/cadastro/cadastro.component';
+
 @Injectable()
-export class AdminGuard extends BaseGuard implements CanActivate //, CanDeactivate<NovoComponent>
+export class AdminGuard extends BaseGuard implements CanActivate, CanDeactivate<AdminUsuarioCadastroComponent>
 {
     constructor(protected router: Router) { super(router); }
 
-    // canDeactivate(component: NovoComponent)
-    // {
-    //     if(component.mudancasNaoSalvas)
-    //     {
-    //         return window.confirm('Tem certeza que deseja abandonar o preenchimento do formulario?');
-    //     }        
-    //     return true
-    // }
-
-    canLoad(routeAc: ActivatedRouteSnapshot)
-    {
-        return false;
-    }  
-
     canActivate(routeAc: ActivatedRouteSnapshot)
     {
+        console.log('canActivate');
         return super.validarClaims(routeAc);
-    }  
+    }
+
+    canDeactivate(component: AdminUsuarioCadastroComponent)
+    {
+        if(component.mudancasNaoSalvas)
+            return window.confirm('Tem certeza que deseja abandonar o preenchimento do formulario?');
+
+        return true
+    }
+
+    canLoad(route: Route)
+    {
+        console.log('load', route.path);
+        this.verificarAdmin(route);
+
+        return true;
+    }
+
+    private verificarAdmin(route)
+    {
+        let user = this.localStorageUtils.obterUsuario();
+        var isPathAdmin = route.path === 'admin';
+
+        if (!user.is_admin && isPathAdmin)
+            this.navegarAcessoNegado();
+    }
 }

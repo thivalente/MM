@@ -1,29 +1,36 @@
-export class LocalStorageUtils {
-    
-    public obterUsuario() {
-        return JSON.parse(localStorage.getItem('devio.user'));
+import { Usuario } from '../_models/usuario';
+
+export class LocalStorageUtils
+{
+    public limparDadosLocaisUsuario()
+    {
+        localStorage.removeItem('mm.token');
+        localStorage.removeItem('mm.user');
     }
 
-    public salvarDadosLocaisUsuario(response: any) {
+    public obterTokenUsuario(): string
+    {
+        return localStorage.getItem('mm.token');
+    }
+
+    public obterUsuario() : Usuario
+    {
+        return JSON.parse(localStorage.getItem('mm.user'));
+    }
+
+    public salvarDadosLocaisUsuario(response: any)
+    {
         this.salvarTokenUsuario(response.accessToken);
         this.salvarUsuario(response.userToken);
     }
 
-    public limparDadosLocaisUsuario() {
-        localStorage.removeItem('devio.token');
-        localStorage.removeItem('devio.user');
+    public salvarTokenUsuario(token: string)
+    {
+        localStorage.setItem('mm.token', token);
     }
 
-    public obterTokenUsuario(): string {
-        return localStorage.getItem('devio.token');
+    public salvarUsuario(user: string)
+    {
+        localStorage.setItem('mm.user', JSON.stringify(user));
     }
-
-    public salvarTokenUsuario(token: string) {
-        localStorage.setItem('devio.token', token);
-    }
-
-    public salvarUsuario(user: string) {
-        localStorage.setItem('devio.user', JSON.stringify(user));
-    }
-
 }
