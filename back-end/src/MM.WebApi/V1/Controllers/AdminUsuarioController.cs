@@ -11,7 +11,7 @@ namespace MM.WebApi.V1.Controllers
     //[Authorize]
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/admin/usuario")]
+    [Route("api/v{version:apiVersion}/admin")]
     public class AdminUsuarioController : Controller
     {
         private readonly IAdminService _adminService;
@@ -21,7 +21,8 @@ namespace MM.WebApi.V1.Controllers
             this._adminService = adminService;
         }
 
-        [HttpGet("{usuario_id:guid}")]
+        [Route("usuario/{usuario_id:guid}")]
+        [HttpGet()]
         public async Task<UsuarioViewModel> Obter(Guid usuario_id)
         {
             // Busca o usuário
@@ -30,6 +31,7 @@ namespace MM.WebApi.V1.Controllers
             return usuario.ToUsuarioViewModel();
         }
 
+        [Route("usuario")]
         [HttpGet()]
         public async Task<IEnumerable<UsuarioViewModel>> Listar()
         {

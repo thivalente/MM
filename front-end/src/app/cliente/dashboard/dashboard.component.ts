@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, AfterViewInit } from '@angular/core';
 
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal'; 
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { ClienteService } from '../_services/cliente.service';
-import { ContaService } from 'src/app/conta/conta.service';
+import { ContaService } from 'src/app/conta/_services/conta.service';
 import { DashboardService } from './dashboard.service';
 
 declare const obterNomeMesAno: any;
@@ -15,7 +16,7 @@ declare const sortByKey_Date: any;
 
 @Component({ selector: 'app-dashboard', templateUrl: './dashboard.component.html', styleUrls: ['./dashboard.component.css'] })
 
-export class DashboardComponent implements OnInit
+export class DashboardComponent implements OnInit, AfterViewInit
 {
   private cdiChartLine: ChartDataSets;
   private poupancaChartLine: ChartDataSets;
@@ -33,7 +34,15 @@ export class DashboardComponent implements OnInit
   public saldo: number;
   public taxa_di_mensal: number;
 
-  constructor(private contaService: ContaService, private clienteService: ClienteService, private dashboardService: DashboardService, private ngxLoader: NgxUiLoaderService) { }
+  public aceitou: boolean;
+
+  modalRef: BsModalRef;
+
+  @ViewChild('templateDisclaimer') templateDisclaimer : TemplateRef<any>;
+
+  constructor(private contaService: ContaService, private clienteService: ClienteService, 
+    private dashboardService: DashboardService, private modalService: BsModalService, 
+    private ngxLoader: NgxUiLoaderService) { }
 
   ngOnInit(): void 
   {
@@ -70,9 +79,54 @@ export class DashboardComponent implements OnInit
     this.carregarTela(0);
   }
 
+  ngAfterViewInit(): void
+  {
+    if (!this.contaService.usuarioLogado.aceitou_termos)
+      this.disclaimerAbrirModal();
+  }
+
+  disclaimerAbrirModal()
+  {
+    let options: ModalOptions = new ModalOptions();
+    options.class = 'termos-de-uso modal-lg';
+    options.backdrop = 'static';
+    options.keyboard = false;
+
+    this.modalRef = this.modalService.show(this.templateDisclaimer, options);
+  }
+
+  disclaimerAceitarTermos(nAttempts)
+  {
+    this.dashboardService.aceitarTermos().subscribe(response =>
+      {
+          if (response != null)
+          {
+            let usuarioLogado = this.contaService.usuarioLogado;
+            usuarioLogado.aceitou_termos = true;
+            usuarioLogado.data_aceitou_termos = new Date();
+
+            this.contaService.atualizarDadosUsuarioLogado(usuarioLogado);
+            this.modalRef.hide();
+          }
+      },
+      error =>
+      {
+        nAttempts = nAttempts || 1;
+        console.log(error, nAttempts);
+
+        if (nAttempts >= 5)
+        {
+            return;
+        }
+
+        this.disclaimerAceitarTermos(++nAttempts);
+      });
+  }
+
   carregarTela(nAttempts: number): void
   {
-    this.ngxLoader.startLoader('loader-principal');
+    if (this.contaService.usuarioLogado.aceitou_termos)
+      this.ngxLoader.startLoader('loader-principal');
 
     var taxa_di_mensal = 3/(12*100);
     this.dashboardService.obter().subscribe(response =>

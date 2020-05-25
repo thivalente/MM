@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ContaService } from 'src/app/conta/conta.service';
+import { ContaService } from 'src/app/conta/_services/conta.service';
 
 import { ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';

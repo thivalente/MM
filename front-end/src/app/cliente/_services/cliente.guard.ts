@@ -33,7 +33,7 @@ export class ClienteGuard extends BaseGuard implements CanActivate //, CanDeacti
     {
         let user = this.localStorageUtils.obterUsuario();
 
-        if (!user)
+        if (!user || user.is_admin)
             this.navegarAcessoNegado();
     }
 }

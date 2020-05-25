@@ -46,13 +46,14 @@ namespace MM.WebApi.Configuration
             }
             else
             {
-                app.UseCors("Development"); // Usar apenas nas demos => Configuração Ideal: Production
+                app.UseCors("Production");
                 app.UseHsts();
             }
 
             // Ativando middlewares para uso do Swagger
             app.UseSwagger();
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MM Investimentos V1");
             });
 

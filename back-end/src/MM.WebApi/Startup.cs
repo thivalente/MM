@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MM.WebApi.Configuration;
 using MM.WebApi.Setup;
+using System.Linq;
 
 namespace MM.WebApi
 {
@@ -92,6 +93,8 @@ namespace MM.WebApi
                             Email = "thiago.valente@fitideias.com.br"
                         }
                     });
+
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
 

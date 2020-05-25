@@ -9,7 +9,7 @@ import { ClienteComponent } from './../cliente/cliente.component';
 
 const routes: Routes = 
 [
-  { path: '', redirectTo: '/cliente/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   {
     path: 'cliente', component: ClienteComponent,

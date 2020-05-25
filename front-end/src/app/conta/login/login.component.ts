@@ -1,3 +1,4 @@
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControlName } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,12 +9,16 @@ import { Observable, fromEvent, merge } from 'rxjs';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/utils/generic-form-validation';
 
 import { Usuario } from 'src/app/_models/usuario';
-import { ContaService } from '../conta.service';
+import { ContaService } from '../_services/conta.service';
+
+declare const isEmpty: any;
 
 @Component({ selector: 'app-login', templateUrl: './login.component.html', styleUrls: ['./login.component.css']})
 export class LoginComponent implements OnInit
 {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
+
+  loading_login: boolean = false;
 
   errors: any[] = [];
   loginForm: FormGroup;
@@ -26,7 +31,7 @@ export class LoginComponent implements OnInit
   returnUrl: string;
 
   constructor(private contaService: ContaService, private route: ActivatedRoute, private fb: FormBuilder,
-    private router: Router, private toastr: ToastrService)
+    private ngxService: NgxUiLoaderService, private router: Router, private toastr: ToastrService)
   {
       this.validationMessages = {
         email: {
@@ -71,6 +76,8 @@ export class LoginComponent implements OnInit
       //   is_admin: false, data_criacao: '', aceitou_termos: false, data_aceitou_termos: null, taxa_acima_cdi: 2 }
       // });
 
+      this.loading_login = true;
+
       this.contaService.efetuarLogin(this.usuario.email, this.usuario.senha)
       .subscribe(
           sucesso => {this.processarSucesso(sucesso)},
@@ -84,21 +91,29 @@ export class LoginComponent implements OnInit
     this.loginForm.reset();
     this.errors = [];
 
+    if (isEmpty(response) || isEmpty(response.data.userToken))
+    {
+      this.processarFalha({ error: { errors: ['Erro desconhecido. Tente novamente'] }});
+      return;
+    }
+
     this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!');
 
     var dados = response.data;
 
+    var pagina_inicial = this.contaService.obterPaginaInicial(dados.userToken);
+    dados.userToken.pagina_inicial = pagina_inicial;
+
     this.contaService.LocalStorage.salvarDadosLocaisUsuario(dados);
+    this.loading_login = false;
 
-    let is_admin = dados.userToken.is_admin;
-
-    this.returnUrl ? this.router.navigate([this.returnUrl])
-        : (is_admin ? this.router.navigate(['/admin/usuario']) : this.router.navigate(['/cliente/dashboard']));
+    this.returnUrl ? this.router.navigate([this.returnUrl]) : this.router.navigate([pagina_inicial]);
   }
 
   processarFalha(fail: any)
   {
     this.errors = fail.error.errors;
     this.toastr.error(this.errors[0], 'Não foi possível realizar o login');
+    this.loading_login = false;
   }
 }

@@ -9,7 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
+import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         // HomeComponent,
         FooterComponent,
         NotFoundComponent,
-        // AcessoNegadoComponent
+        AcessoNegadoComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         // HomeComponent,
         FooterComponent,
         NotFoundComponent,
-        // AcessoNegadoComponent
+        AcessoNegadoComponent
     ]
 })
 export class NavegacaoModule { }

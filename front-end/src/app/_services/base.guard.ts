@@ -11,37 +11,37 @@ export abstract class BaseGuard
     {
         if(!this.localStorageUtils.obterTokenUsuario())
         {
-            this.router.navigate(['/conta/login/'], { queryParams: { returnUrl: this.router.url }});
+            this.router.navigate(['/login/'], { queryParams: { returnUrl: this.router.url }});
         }
 
-        let claim: any = routeAc.data[0];
+        //let claim: any = routeAc.data[0];
 
-        if (claim !== undefined)
-        {
-            let claim = routeAc.data[0]['claim'];
+        // if (claim !== undefined)
+        // {
+        //     let claim = routeAc.data[0]['claim'];
 
-            // if (claim)
-            // {
-            //     if (!user.claims)
-            //     {
-            //         this.navegarAcessoNegado();
-            //     }
+        //     if (claim)
+        //     {
+        //         if (!user.claims)
+        //         {
+        //             this.navegarAcessoNegado();
+        //         }
                 
-            //     let userClaims = user.claims.find(x => x.type === claim.nome);
+        //         let userClaims = user.claims.find(x => x.type === claim.nome);
                 
-            //     if(!userClaims)
-            //     {
-            //         this.navegarAcessoNegado();
-            //     }
+        //         if(!userClaims)
+        //         {
+        //             this.navegarAcessoNegado();
+        //         }
                 
-            //     let valoresClaim = userClaims.value as string;
+        //         let valoresClaim = userClaims.value as string;
 
-            //     if (!valoresClaim.includes(claim.valor))
-            //     {
-            //         this.navegarAcessoNegado();
-            //     }
-            // }
-        }
+        //         if (!valoresClaim.includes(claim.valor))
+        //         {
+        //             this.navegarAcessoNegado();
+        //         }
+        //     }
+        // }
 
         return true;  
     }

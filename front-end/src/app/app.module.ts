@@ -3,6 +3,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxLoadingModule } from 'ngx-loading';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
@@ -23,6 +26,7 @@ import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData, CommonModule } from '@angular/common';
 
+import { ContaGuard } from './conta/_services/conta.guard';
 import { SettingsService } from './_services/settings.service';
 import { AppLogadoRoutingModule } from './conta/app-logado-routing.module';
 
@@ -44,6 +48,7 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
     CommonModule,
     FormsModule,
     HttpClientModule,
+    ModalModule.forRoot(),
     ReactiveFormsModule,
     RouterModule,
     ToastrModule.forRoot({ closeButton: true, positionClass: 'toast-bottom-right' }),
@@ -51,6 +56,7 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
     ChartsModule,
     NgbModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    NgxLoadingModule.forRoot({}),
     NgxUiLoaderModule,
     PerfectScrollbarModule,
     
@@ -59,6 +65,7 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
   ],
   providers: 
   [
+    ContaGuard,
     SettingsService
     //{ provide: LOCALE_ID, deps: [SettingsService], useFactory: (settingsService) => settingsService.getLocale() }
   ],

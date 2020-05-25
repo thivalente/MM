@@ -18,12 +18,14 @@ namespace MM.WebApi.Setup
             services.AddScoped<ILogErroRepository, LogErroRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IMovimentacaoRepository, MovimentacaoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             // Services
             //services.AddScoped<IApiLoggingService, ApiLoggingService>();
             services.AddScoped<ILogErroService, LogErroService>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IMovimentacaoService, MovimentacaoService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
         }
     }
 }

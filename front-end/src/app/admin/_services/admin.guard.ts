@@ -12,7 +12,6 @@ export class AdminGuard extends BaseGuard implements CanActivate, CanDeactivate<
 
     canActivate(routeAc: ActivatedRouteSnapshot)
     {
-        console.log('canActivate');
         return super.validarClaims(routeAc);
     }
 
@@ -26,7 +25,6 @@ export class AdminGuard extends BaseGuard implements CanActivate, CanDeactivate<
 
     canLoad(route: Route)
     {
-        console.log('load', route.path);
         this.verificarAdmin(route);
 
         return true;
@@ -37,7 +35,7 @@ export class AdminGuard extends BaseGuard implements CanActivate, CanDeactivate<
         let user = this.localStorageUtils.obterUsuario();
         var isPathAdmin = route.path === 'admin';
 
-        if (!user.is_admin && isPathAdmin)
+        if (!user || (!user.is_admin && isPathAdmin))
             this.navegarAcessoNegado();
     }
 }

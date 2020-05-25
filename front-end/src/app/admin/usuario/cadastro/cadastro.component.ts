@@ -7,7 +7,7 @@ import { MASKS, NgBrazilValidators } from 'ng-brazil';
 import { ValidationMessages, GenericValidator, DisplayMessage } from './../../../utils/generic-form-validation';
 
 import { Usuario } from './../../../_models/usuario';
-import { ContaService } from 'src/app/conta/conta.service';
+import { ContaService } from 'src/app/conta/_services/conta.service';
 
 declare const isEmpty: any;
 

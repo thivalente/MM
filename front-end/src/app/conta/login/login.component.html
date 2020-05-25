@@ -47,12 +47,16 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group text-center botoes">
                         <button class="btn btn-primary" id="Login" [disabled]="!loginForm.valid" type="submit">Entrar</button>
+                        <a [routerLink]="'/esqueci-senha'">Esqueci Minha Senha</a>
                     </div>
                 </div>
             </form>
+
+            <ngx-loading [show]="loading_login" [template]="templatePanel"></ngx-loading>
         </div>
     </div>
 
 </div>
+<ng-template #templatePanel></ng-template>

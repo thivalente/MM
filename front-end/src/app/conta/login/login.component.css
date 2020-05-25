@@ -12,4 +12,5 @@
 .login-usuario .panel form .panel-body .alert h3                    { font-size: 1.2rem; }
 .login-usuario .panel form .panel-body .alert ul li                 { font-size: 0.9rem; }
 
-.login-usuario .panel form .panel-body .form-group .btn             { width: 100%; }
+.login-usuario .panel form .panel-body .form-group.botoes .btn      { width: 100%; }
+.login-usuario .panel form .panel-body .form-group.botoes > a       { font-size: 0.9rem; }

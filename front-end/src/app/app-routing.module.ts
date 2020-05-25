@@ -5,10 +5,12 @@ import { AcessoNegadoComponent } from './navegacao/acesso-negado/acesso-negado.c
 import { LoginComponent } from './conta/login/login.component';
 import { NotFoundComponent } from './navegacao/not-found/not-found.component';
 
+import { ContaGuard } from './conta/_services/conta.guard';
+
 const routes: Routes = 
 [
-  { path: '', redirectTo: '/conta/login', pathMatch: 'full' },
-  { path: 'conta/login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [ContaGuard] },
 
   { path: 'acesso-negado', component: AcessoNegadoComponent },
   { path: 'nao-encontrado', component: NotFoundComponent },

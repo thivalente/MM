@@ -12,4 +12,5 @@ export interface Usuario
     ativo: boolean;
 
     primeiro_nome: string;
+    pagina_inicial: string;
 }

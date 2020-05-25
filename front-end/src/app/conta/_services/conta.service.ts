@@ -3,9 +3,11 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { LocalStorageUtils } from 'src/app/utils/localstorage';
-import { Usuario } from '../_models/usuario';
+import { Usuario } from '../../_models/usuario';
 
-import { SettingsService } from './../_services/settings.service';
+import { SettingsService } from '../../_services/settings.service';
+
+declare const isEmpty: any;
 
 @Injectable({ providedIn: 'root' })
 export class ContaService
@@ -29,9 +31,28 @@ export class ContaService
         return this.usuarioLogadoSubject.value;
     }
 
+    public atualizarDadosUsuarioLogado(usuario: any)
+    {
+        this.LocalStorage.salvarUsuario(usuario);
+    }
+
     public efetuarLogin(email: string, senha: string)
     {
         const body = { email, senha };
         return this.http.post(this.config.getApiUrl() + 'conta/login', body);
+    }
+
+    public obterPaginaInicial(usuario: Usuario = null) : string
+    {
+        if (!usuario)
+            usuario = this.usuarioLogado;
+
+        if (!usuario)
+            return '/login';
+
+        if (!isEmpty(usuario.pagina_inicial))
+            return usuario.pagina_inicial;
+
+        return (usuario.is_admin) ? '/admin/usuario' : '/cliente/dashboard';
     }
 }
