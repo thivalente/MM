@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ContaService } from 'src/app/conta/_services/conta.service';
 
-import { ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { LocalStorageUtils } from 'src/app/utils/localstorage';
+
+declare const isEmpty: any;
 
 @Component({ selector: 'app-simulador', templateUrl: './simulador.component.html', styleUrls: ['./simulador.component.css'] })
-
 export class SimuladorComponent implements OnInit
 {
   public taxa_cdi: number;
   public taxa_poupanca: number;
   public dados: any;
+
+  private localStorage: LocalStorageUtils = new LocalStorageUtils();
 
   constructor(private contaService: ContaService) { }
 
@@ -27,8 +29,10 @@ export class SimuladorComponent implements OnInit
       rendimento: { total: 0, cdi: 0, poupanca: 0 }
     };
 
-    this.taxa_cdi = 3/1200;
-    this.taxa_poupanca = this.taxa_cdi * 0.7;
+    var taxas = this.localStorage.obterTaxasAtualizadas();
+
+    this.taxa_cdi = !isEmpty(taxas) ? taxas.taxa_mensal_di / 100 : 0;
+    this.taxa_poupanca = !isEmpty(taxas) ? taxas.taxa_mensal_poupanca / 100 : 0;
   }
 
   atualizarCalculos(): void

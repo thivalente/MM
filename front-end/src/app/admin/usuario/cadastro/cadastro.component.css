@@ -1,10 +1,14 @@
-.cadastro-usuario .panel                    { height: calc(100vh - 100px); margin: 10px; }
-.cadastro-usuario .panel .panel-heading     { line-height: 40px; }
-.cadastro-usuario .panel form .panel-body   { padding-bottom: 10px; }
-.cadastro-usuario .panel .panel-footer      { align-items: center; background-color: #EEE; display: flex; height: 40px; justify-content: center; margin-top: 5px; }
-.cadastro-usuario .panel .panel-footer .btn { margin-right: 5px;}
+.cadastro-usuario .panel                        { height: calc(100vh - 100px); margin: 10px; padding: 20px; }
+.cadastro-usuario .panel .panel-heading         { line-height: 40px; }
+.cadastro-usuario .panel .panel-heading .btn    { margin-right: 20px; }
+.cadastro-usuario .panel .panel-heading .btn i  { margin-right: 10px; }
 
-.cadastro-usuario .panel form .panel-body perfect-scrollbar         { height: calc(100vh - 210px); }
+.cadastro-usuario .panel form .panel-body       { padding-bottom: 10px; }
+.cadastro-usuario .panel .panel-footer          { align-items: center; background-color: #EEE; display: flex; height: 40px; justify-content: center; margin-top: 5px; }
+.cadastro-usuario .panel .panel-footer .btn     { margin-right: 5px; min-width: 120px; }
+
+.cadastro-usuario .panel form .panel-body perfect-scrollbar         { height: calc(100vh - 220px); }
 .cadastro-usuario .panel form .panel-body .container-cadastro       { padding: 20px; }
+.cadastro-usuario .panel form .panel-body .form-group.col           { min-height: 94px; }
 .cadastro-usuario .panel form .panel-body .form-group div.col-md-12 { height: 62px; }
 

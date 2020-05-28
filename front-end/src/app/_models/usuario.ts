@@ -1,3 +1,5 @@
+import { Movimentacao } from './movimentacao';
+
 export interface Usuario
 {
     id: string;
@@ -13,4 +15,6 @@ export interface Usuario
 
     primeiro_nome: string;
     pagina_inicial: string;
+
+    movimentacoes: Movimentacao[];
 }

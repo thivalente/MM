@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MM.Business.Models
 {
@@ -18,14 +20,22 @@ namespace MM.Business.Models
         public bool is_admin                    { get; private set; }
         public bool ativo                       { get; private set; }
 
+        public string cpf_somente_numeros       { get { return String.IsNullOrEmpty(this.cpf) ? this.cpf : new String(this.cpf.Where(Char.IsDigit).ToArray()); } }
+
+        private List<Movimentacao> _movimentacoes;
+        public IReadOnlyCollection<Movimentacao> Movimentacoes => _movimentacoes;
+
         #endregion [ FIM - Propriedades ]
 
         #region [ Construtores ]
 
-        public Usuario() { }
+        public Usuario()
+        {
+            this._movimentacoes = new List<Movimentacao>();
+        }
 
         public Usuario(Guid id, string nome, string cpf, string email, string senha, bool aceitou_termos, DateTime? data_aceitou_termos, DateTime data_criacao, decimal taxa_acima_cdi,
-            bool is_admin, bool ativo)
+            bool is_admin, bool ativo) : this()
         {
             this.id = id;
             this.nome = nome;
@@ -41,5 +51,10 @@ namespace MM.Business.Models
         }
 
         #endregion [ FIM - Construtores ]
+
+        public void SetarListaMovimentacoes(List<Movimentacao> movimentacoes)
+        {
+            this._movimentacoes = movimentacoes;
+        }
     }
 }

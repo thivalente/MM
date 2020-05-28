@@ -39,11 +39,15 @@ namespace MM.WebApi.V1.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var result = await this._adminService.EfetuarLogin(loginUser.Email, loginUser.Senha);
+            var taxas = await this._adminService.ObterTaxasAtualizadas();
 
             if (result != null)
             {
+                var taxa_mensal_di = taxas != null ? taxas.Item1 : 0;
+                var taxa_mensal_poupanca = taxas != null ? taxas.Item2 : 0;
+
                 //_logger.LogInformation("Usuario " + loginUser.Email + " logado com sucesso");
-                return CustomResponse(await GerarJwt(result));
+                return CustomResponse(await GerarJwt(result, taxa_mensal_di, taxa_mensal_poupanca));
             }
             //if (result.IsLockedOut)
             //{
@@ -55,7 +59,7 @@ namespace MM.WebApi.V1.Controllers
             return CustomResponse(loginUser);
         }
 
-        private async Task<LoginResponseViewModel> GerarJwt(Usuario usuario)
+        private async Task<LoginResponseViewModel> GerarJwt(Usuario usuario, decimal taxaDI, decimal taxaPoupanca)
         {
             var user = usuario.ToUsuarioViewModel();
             var claims = new List<Claim>();
@@ -90,7 +94,12 @@ namespace MM.WebApi.V1.Controllers
             {
                 AccessToken = encodedToken,
                 ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
-                UserToken = user
+                UserToken = user,
+                Taxas = new TaxaViewModel()
+                {
+                    Taxa_mensal_di = taxaDI,
+                    Taxa_mensal_poupanca = taxaPoupanca
+                }
             };
 
             return await Task.FromResult(response);

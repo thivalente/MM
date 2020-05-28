@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Router } from '@angular/router';
 
-import { AdminUsuarioService } from '../usuario.service';
+import { AdminUsuarioService } from '../_services/usuario.service';
 
 import { Usuario } from './../../../_models/usuario';
 
@@ -29,6 +29,7 @@ export class AdminUsuarioListaComponent implements OnInit
           if (response != null)
           {
             this.usuarios = response;
+            this.usuarioService.listaUsuarios = this.usuarios;
           }
 
           this.ngxLoader.stopLoader('loader-principal');
@@ -51,5 +52,10 @@ export class AdminUsuarioListaComponent implements OnInit
   goToEditar(id: string)
   {
     this.router.navigate(['/admin/usuario/editar/' + id]);
+  }
+
+  goToNovo()
+  {
+    this.router.navigate(['/admin/usuario/novo']);
   }
 }

@@ -3,22 +3,30 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             Lista de Usuários
-            <button class="btn btn-sm btn-primary pull-right"><i class="fa fa-plus"></i>Novo Usuário</button>
+            <button class="btn btn-sm btn-primary pull-right" (click)="goToNovo()"><i class="fa fa-plus"></i>Novo Usuário</button>
         </div>
         <div class="panel-body">
             <perfect-scrollbar>
                 <div class="flex-table" role="table" aria-label="Usuários">
                     <div class="flex-header header" role="rowgroup">
                         <div class="flex-cell first" role="columnheader">Nome</div>
-                        <div class="flex-cell" role="columnheader">E-mail</div>
-                        <div class="flex-cell" role="columnheader">CPF</div>
+                        <div class="flex-cell d-none d-md-block" role="columnheader">E-mail</div>
+                        <div class="flex-cell d-none d-md-block" role="columnheader">CPF</div>
+                        <div class="flex-cell d-none d-md-block" role="columnheader">Admin</div>
+                        <div class="flex-cell d-none d-md-block" role="columnheader">Ativo</div>
                         <div class="flex-cell" role="columnheader"></div>
                     </div>
                     <div class="flex-row row" role="rowgroup" *ngFor="let usuario of usuarios | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
                         <div class="flex-cell first" role="cell">{{ usuario.nome }}</div>
-                        <div class="flex-cell" role="cell">{{ usuario.email }}</div>
-                        <div class="flex-cell" role="cell">{{ usuario.cpf }}</div>
-                        <div class="flex-cell" role="cell"><i class="fa fa-pencil" (click)="goToEditar(usuario.id)"></i></div>
+                        <div class="flex-cell d-none d-md-block" role="cell">{{ usuario.email }}</div>
+                        <div class="flex-cell d-none d-md-block" role="cell">{{ usuario.cpf | cpf }}</div>
+                        <div class="flex-cell d-none d-md-block" role="cell">
+                            <i class="fa fa-1-2x" [ngClass]="usuario.is_admin ? 'fa-check-square-o' : 'fa-square-o'" aria-hidden="true"></i>
+                        </div>
+                        <div class="flex-cell d-none d-md-block" role="cell">
+                            <i class="fa fa-1-2x" [ngClass]="usuario.ativo ? 'fa-check-square-o' : 'fa-square-o'" aria-hidden="true"></i>
+                        </div>
+                        <div class="flex-cell" role="cell"><i class="fa fa-1-2x fa-pencil" (click)="goToEditar(usuario.id)"></i></div>
                     </div>
                 </div>
             </perfect-scrollbar>

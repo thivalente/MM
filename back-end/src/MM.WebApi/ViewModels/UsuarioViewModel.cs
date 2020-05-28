@@ -1,6 +1,7 @@
 ﻿using MM.WebApi.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MM.WebApi.ViewModels
 {
@@ -8,19 +9,27 @@ namespace MM.WebApi.ViewModels
     {
         #region [ Propriedades ]
 
-        public Guid id                          { get; private set; }
-        public string nome                      { get; private set; }
-        public string cpf                       { get; private set; }
-        public string email                     { get; private set; }
-        public string senha                     { get; private set; }
-        public bool aceitou_termos              { get; private set; }
-        public DateTime? data_aceitou_termos    { get; private set; }
-        public DateTime data_criacao            { get; private set; }
-        public decimal taxa_acima_cdi           { get; private set; }
-        public bool is_admin                    { get; private set; }
-        public bool ativo                       { get; private set; }
+        public Guid id                          { get; set; }
+        [Required(ErrorMessage = "O nome é obrigatório")]
+        public string nome                      { get; set; }
+        [Required(ErrorMessage = "O cpf é obrigatório")]
+        public string cpf                       { get; set; }
+        [Required(ErrorMessage = "O e-mail é obrigatório")]
+        [EmailAddress(ErrorMessage = "Formato do e-mail inválido")]
+        public string email                     { get; set; }
+        public string senha                     { get; set; }
+        public bool aceitou_termos              { get; set; }
+        public DateTime? data_aceitou_termos    { get; set; }
+        public DateTime data_criacao            { get; set; }
+        [Required(ErrorMessage = "A taxa acima do cdi é obrigatória")]
+        public decimal taxa_acima_cdi           { get; set; }
+        public bool is_admin                    { get; set; }
+        public bool ativo                       { get; set; }
 
         public string primeiro_nome             { get { return this.nome.GetFirstName(); } }
+
+        private List<MovimentacaoViewModel> _movimentacoes;
+        public IReadOnlyCollection<MovimentacaoViewModel> Movimentacoes => _movimentacoes;
 
         private List<ClaimViewModel> _claims;
         public IReadOnlyCollection<ClaimViewModel> Claims => _claims;
@@ -29,8 +38,13 @@ namespace MM.WebApi.ViewModels
 
         #region [ Construtores ]
 
+        public UsuarioViewModel()
+        {
+            this._movimentacoes = new List<MovimentacaoViewModel>();
+        }
+
         public UsuarioViewModel(Guid id, string nome, string cpf, string email, string senha, bool aceitou_termos, DateTime? data_aceitou_termos, DateTime data_criacao, 
-            decimal taxa_acima_cdi, bool is_admin, bool ativo)
+            decimal taxa_acima_cdi, bool is_admin, bool ativo) : this()
         {
             this.id = id;
             this.nome = nome;
@@ -50,6 +64,11 @@ namespace MM.WebApi.ViewModels
         public void SetarListaClaims(List<ClaimViewModel> claims)
         {
             this._claims = claims;
+        }
+
+        public void SetarListaMovimentacoes(List<MovimentacaoViewModel> movimentacoes)
+        {
+            this._movimentacoes = movimentacoes;
         }
     }
 }

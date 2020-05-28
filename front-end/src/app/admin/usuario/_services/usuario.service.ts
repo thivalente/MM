@@ -11,6 +11,8 @@ export class AdminUsuarioService
 {
     constructor(private http: HttpClient, private config: SettingsService) { }
 
+    public listaUsuarios: Usuario[] = [];
+
     public obter(usuario_id) : Observable<Usuario>
     {
         return this.http.get<any>(`${this.config.getApiUrl()}admin/usuario/` + usuario_id);
@@ -19,5 +21,10 @@ export class AdminUsuarioService
     public listar() : Observable<Usuario[]>
     {
         return this.http.get<any>(`${this.config.getApiUrl()}admin/usuario`);
+    }
+
+    public salvarUsuario(usuario: Usuario)
+    {
+        return this.http.post(this.config.getApiUrl() + 'admin/usuario/salvar', usuario);
     }
 }

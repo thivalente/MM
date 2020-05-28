@@ -1,8 +1,8 @@
-.lista-usuarios .panel                          { height: calc(100vh - 100px); margin: 10px; }
+.lista-usuarios .panel                          { height: calc(100vh - 100px); margin: 10px; padding: 20px; }
 .lista-usuarios .panel .panel-heading           { line-height: 40px; }
 .lista-usuarios .panel .panel-heading .btn      { margin-right: 20px; }
 .lista-usuarios .panel .panel-heading .btn i    { margin-right: 10px; }
-.lista-usuarios .panel perfect-scrollbar        { height: calc(100vh - 200px); }
+.lista-usuarios .panel perfect-scrollbar        { height: calc(100vh - 210px); }
 .lista-usuarios .panel .panel-footer            { background-color: #EEE; line-height: 30px; margin-top: 5px; }
 
 .lista-usuarios .panel .panel-body .flex-table                          { margin: 1em auto; width: 90%; border-collapse: collapse; }
@@ -13,8 +13,17 @@
 
 .lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(1),
 .lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(2)  { width: 35%; }
-.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(3)  { width: 20%; }
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(3)  { width: 15%; }
 .lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(4)  { cursor: pointer; text-align: center; width: 50px; }
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(5)  { cursor: pointer; text-align: center; width: 50px; }
+.lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(6)  { cursor: pointer; text-align: center; width: 50px; }
+
+@media only screen and (max-width: 1024px)
+{
+    .lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(1),
+    .lista-usuarios .panel .panel-body .flex-table .flex-cell:nth-child(2)  { width: 30%; }
+    .lista-usuarios .panel .panel-body .flex-table .flex-row                { font-size: 0.8rem; }
+}
 
 @media only screen and (max-width: 767px)
 {

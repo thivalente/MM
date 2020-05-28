@@ -1,0 +1,19 @@
+.lista-movimentacoes .panel                         { height: calc(100vh - 100px); margin: 10px; padding: 20px; }
+.lista-movimentacoes .panel .panel-heading          { line-height: 40px; }
+.lista-movimentacoes .panel .panel-heading .btn     { margin-right: 20px; }
+.lista-movimentacoes .panel .panel-heading .btn i   { margin-right: 10px; }
+.lista-movimentacoes .panel perfect-scrollbar       { height: calc(100vh - 210px); }
+.lista-movimentacoes .panel .panel-footer           { background-color: #EEE; line-height: 30px; margin-top: 5px; }
+
+.lista-movimentacoes .panel .panel-body .flex-table                             { margin: 1em auto; width: 60%; border-collapse: collapse; }
+.lista-movimentacoes .panel .panel-body .flex-table .flex-header                { color: #313442; font-size: 1rem; font-weight: 600; }
+.lista-movimentacoes .panel .panel-body .flex-table .flex-row                   { line-height: 40px; }
+.lista-movimentacoes .panel .panel-body .flex-table .flex-row:nth-child(odd)    { background-color: whitesmoke; }
+.lista-movimentacoes .panel .panel-body .flex-table .flex-row:hover             { background-color: rgb(216, 191, 216, 0.5);}
+.lista-movimentacoes .panel .panel-body .flex-table .flex-row .col .fa          { margin-right: 5px; }
+
+@media only screen and (max-width: 1024px)
+{
+    .lista-movimentacoes .panel .panel-body .flex-table             { width: 100%; }
+    .lista-movimentacoes .panel .panel-body .flex-table .flex-row   { font-size: 0.8rem; }
+}

@@ -1,0 +1,38 @@
+<div class="lista-movimentacoes" ngxUiLoaderBlurred [loaderId]="'loader-principal'">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Movimentações do {{usuario.primeiro_nome}}
+            <button class="btn btn-sm btn-primary pull-right" ><i class="fa fa-plus"></i>Adicionar Movimentação</button>
+            <button class="btn btn-sm btn-outline-secondary pull-right" (click)="goToCadastro()">Voltar</button>
+        </div>
+        <div class="panel-body">
+            <perfect-scrollbar>
+                <div class="flex-table" role="table" aria-label="Movimentações">
+                    <div class="flex-header header" role="rowgroup">
+                        <div class="flex-cell col first" role="columnheader">Tipo</div>
+                        <div class="flex-cell col" role="columnheader">Data</div>
+                        <div class="flex-cell col" role="columnheader">Valor</div>
+                        <!-- <div class="flex-cell" role="columnheader"></div> -->
+                    </div>
+                    <div class="flex-row row" role="rowgroup" *ngFor="let movimentacao of usuario.movimentacoes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
+                        <div class="flex-cell col first" role="cell">
+                            <i class="fa" [ngClass]="movimentacao.entrada ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i>
+                            {{ movimentacao.tipo }}</div>
+                        <div class="flex-cell col" role="cell">{{ movimentacao.data_criacao | date: 'dd/MM/yyyy' }}</div>
+                        <div class="flex-cell col" [ngClass]="movimentacao.valor < 0 ? 'text-danger' : ''" role="cell">{{ movimentacao.valor | currency:'R$ ':true }}</div>
+                        <!-- <div class="flex-cell" role="cell"><i class="fa fa-1-2x fa-pencil" (click)="goToEditar(usuario.id)"></i></div> -->
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </div>
+        <div class="panel-footer text-center">
+            <pagination-controls (pageChange)="paginaAtual = $event"
+                previousLabel="Anterior"
+                nextLabel="Próximo"
+            ></pagination-controls>
+        </div>
+    </div>
+
+</div>
+<ngx-ui-loader [loaderId]="'loader-principal'" [hasProgressBar]="true"></ngx-ui-loader>

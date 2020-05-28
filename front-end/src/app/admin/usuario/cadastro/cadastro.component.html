@@ -2,11 +2,12 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span *ngIf="usuario_id">Cadastro Novo Usuário</span>
-            <span *ngIf="!usuario_id">Editar Usuário</span>
+            <span *ngIf="is_novo">Cadastro Novo Usuário</span>
+            <span *ngIf="!is_novo">Editar Usuário</span>
+            <button class="btn btn-sm btn-primary pull-right" *ngIf="!is_novo && !is_admin" (click)="goToMovimentacoes()"><i class="fa fa-search"></i>Ver Movimentações</button>
         </div>
 
-        <form novalidate (ngSubmit)="salvar()" [formGroup]="cadastroForm">
+        <form novalidate (ngSubmit)="salvar(0)" [formGroup]="cadastroForm">
             <div class="panel-body">
                 <perfect-scrollbar>
                     <div class="alert alert-danger" *ngIf="errors.length > 0">
@@ -49,27 +50,48 @@
                                     </span>
                                 </div>
                             </div>
-                    
+
                             <div class="form-group col">
-                                <label class="col-md-12 control-label">Taxa Acima CDI (em %)</label>
+                                <label class="col-md-12 control-label">Perfil</label>
                                 <div class="col-md-12">
-                                    <input class="form-control" id="taxa_acima_cdi" type="text" placeholder="Taxa Acima CDI(requerido)" formControlName="taxa_acima_cdi" [ngClass]="{'is-invalid': displayMessage.taxa_acima_cdi }" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="6" />
-                                    <span class="text-danger" *ngIf="displayMessage.taxa_acima_cdi">
-                                        <p [innerHTML]="displayMessage.taxa_acima_cdi"></p>
-                                    </span>
+                                    <select class="form-control" formControlName="is_admin">
+                                        <option value="false" selected>Cliente</option>
+                                        <option value="true">Administrador</option>
+                                    </select>
                                 </div>
                             </div>
+
                         </div>
 
-                        <div class="row" *ngIf="!usuario_id">
-                            
+                        <div class="row">
+                    
+                            <div class="form-group col">
+                                <div *ngIf="!is_admin">
+                                    <label class="col-md-12 control-label">Taxa Acima CDI (em %)</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control" id="taxa_acima_cdi" type="text" placeholder="Taxa Acima CDI (requerido)" formControlName="taxa_acima_cdi" [ngClass]="{'is-invalid': displayMessage.taxa_acima_cdi }" currencyMask [options]="{ prefix: '', allowNegative: false, nullable: false }" maxlength="6" />
+                                        <span class="text-danger" *ngIf="displayMessage.taxa_acima_cdi">
+                                            <p [innerHTML]="displayMessage.taxa_acima_cdi"></p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div class="form-group col" *ngIf="!is_novo">
+                                <div class="col-md-12">
+                                    <label class="control control-checkbox"> Ativo?
+                                        <input type="checkbox" formControlName="ativo" />
+                                        <div class="control_indicator"></div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </perfect-scrollbar>
             </div>
             <div class="panel-footer">
                 <button class="btn btn-sm btn-outline-secondary" [routerLink]="['/admin/usuario']">Voltar</button>
-                <button class="btn btn-sm btn-primary" [attr.disabled]="!cadastroForm.valid ? 'disabled' : null" type="submit">Salvar</button>
+                <button class="btn btn-sm btn-primary" [attr.disabled]="!cadastroForm.valid || !cadastroForm.dirty ? 'disabled' : null" type="submit">Salvar</button>
             </div>
         </form>
     </div>

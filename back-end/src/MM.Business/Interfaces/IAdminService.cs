@@ -10,5 +10,7 @@ namespace MM.Business.Interfaces
         Task<Usuario> EfetuarLogin(string email, string senha);
         Task<List<Usuario>> Listar();
         Task<Usuario> Obter(Guid usuario_id);
+        Task<Tuple<decimal, decimal>> ObterTaxasAtualizadas();
+        Task<bool> Salvar(Usuario usuario);
     }
 }

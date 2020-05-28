@@ -13,11 +13,13 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { NavegacaoModule } from '../navegacao/navegacao.module';
 
 import { AdminGuard } from './_services/admin.guard';
-import { AdminUsuarioService } from './usuario/usuario.service';
+import { AdminUsuarioResolve } from './usuario/_services/usuario.resolve';
+import { AdminUsuarioService } from './usuario/_services/usuario.service';
 
 import { AdminComponent } from './admin.component';
 import { AdminUsuarioCadastroComponent } from './usuario/cadastro/cadastro.component';
 import { AdminUsuarioListaComponent } from './usuario/lista/lista.component';
+import { AdminUsuarioMovimentacaoComponent } from './usuario/movimentacao/movimentacao.component';
 
 @NgModule(
     {
@@ -25,7 +27,8 @@ import { AdminUsuarioListaComponent } from './usuario/lista/lista.component';
         [
             AdminComponent,
             AdminUsuarioCadastroComponent,
-            AdminUsuarioListaComponent
+            AdminUsuarioListaComponent,
+            AdminUsuarioMovimentacaoComponent
         ],
         imports:
         [
@@ -48,6 +51,6 @@ import { AdminUsuarioListaComponent } from './usuario/lista/lista.component';
             AdminUsuarioCadastroComponent,
             AdminUsuarioListaComponent
         ],
-        providers:[AdminGuard, AdminUsuarioService]
+        providers:[AdminGuard, AdminUsuarioResolve, AdminUsuarioService]
     })
 export class AdminModule { }

@@ -13,7 +13,7 @@
 .simulador .box-white .s-esq .config .item-config .valor input[name="aporte"],
 .simulador .box-white .s-esq .config .item-config .valor input[name="capInicial"],
 .simulador .box-white .s-esq .config .item-config .valor input[type="text"],
-.simulador .box-white .s-esq .config .item-config .valor input[type="number"] { color: #313442; flex: 1 1 auto; font-family: 'Roboto',sans-serif; font-weight: 500; line-height: 1; transition: all .3s; }
+.simulador .box-white .s-esq .config .item-config .valor input[type="number"] { color: #313442; flex: 1 1 auto; font-family: 'Roboto',sans-serif; font-weight: 500; line-height: 1; outline: none; transition: all .3s; }
 
 .simulador .box-white .s-esq .config .item-config .valor > span         { align-items: center; background-color: whitesmoke; border: solid 1px #CCC; border-radius: 7px; bottom: 0 !important; display: flex; height: 40px; padding-left: 5px; }
 .simulador .box-white .s-esq .config .item-config .valor > span.esq     { border-right: none; border-bottom-right-radius: 0 !important; border-top-right-radius: 0 !important; margin-right: 0; width: 35px; }
@@ -28,7 +28,7 @@
 
 .simulador .box-white .s-dir .box-calculo                   { border-radius: 15px; height: calc(100vh - 160px); overflow: hidden; }
 /* .simulador .box-white .s-dir .box-calculo .topo             { align-items: center; background-image: linear-gradient(77deg,#742688,#2D003E); display: flex; flex-direction: column; justify-content: center; width: 100%; } */
-.simulador .box-white .s-dir .box-calculo .topo             { align-items: center; background-image: linear-gradient( 135deg,rgba(60,8,118,0.8) 0%,rgba(250,0,118,0.8) 100%); display: flex; flex-direction: column; justify-content: center; width: 100%; }
+.simulador .box-white .s-dir .box-calculo .topo             { align-items: center; background-image: linear-gradient( 135deg,rgba(69,35,95,0.8) 0%,rgba(129,50,129,0.8) 100%); display: flex; flex-direction: column; justify-content: center; width: 100%; }
 .simulador .box-white .s-dir .box-calculo .topo label.taxa  { color: #FFF; font-size: 0.8rem; margin-bottom: 10px; margin-top: 10px; }
 .simulador .box-white .s-dir .box-calculo .topo span        { color: #fff; font-size: 1rem; font-weight: 600; height: 20px !important; line-height: 1.13; margin-bottom: 10px; margin-top: 10px; text-align: center; }
 .simulador .box-white .s-dir .box-calculo .topo .valor      { align-items: flex-end; display: flex; }
@@ -49,7 +49,7 @@
 .simulador .panel-footer ul li              { margin-left: 43px; }
 .simulador .panel-footer ul li span         { color: #75757c; font-family: 'Roboto',sans-serif; font-size: 0.9rem; }
 .simulador .panel-footer ul li span strong  { color: #75757c; font-family: 'Roboto',sans-serif; font-weight: 500; }
-.simulador .panel-footer ul li .traco       { border: solid 1px #742688; height: 1px; margin-top: 7.6px; width: 100%; }
+.simulador .panel-footer ul li .traco       { border: solid 1px #6B2D75; height: 1px; margin-top: 7.6px; width: 100%; }
 
 @media (min-height: 800px)
 {
