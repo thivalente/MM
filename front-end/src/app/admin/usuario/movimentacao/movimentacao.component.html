@@ -2,36 +2,87 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            Movimentações do {{usuario.primeiro_nome}}
-            <button class="btn btn-sm btn-primary pull-right" ><i class="fa fa-plus"></i>Adicionar Movimentação</button>
-            <button class="btn btn-sm btn-outline-secondary pull-right" (click)="goToCadastro()">Voltar</button>
+            <span *ngIf="!edit_mode">Movimentações do {{usuario.primeiro_nome}}</span>
+            <span *ngIf="edit_mode">Cadastro de Movimentação</span>
+            <button *ngIf="!edit_mode" class="btn btn-sm btn-primary pull-right" (click)="edit_mode = true"><i class="fa fa-plus"></i>Adicionar Movimentação</button>
+            <button *ngIf="!edit_mode" class="btn btn-sm btn-outline-secondary pull-right" (click)="goToCadastro()">Voltar</button>
         </div>
-        <div class="panel-body">
-            <perfect-scrollbar>
-                <div class="flex-table" role="table" aria-label="Movimentações">
-                    <div class="flex-header header" role="rowgroup">
-                        <div class="flex-cell col first" role="columnheader">Tipo</div>
-                        <div class="flex-cell col" role="columnheader">Data</div>
-                        <div class="flex-cell col" role="columnheader">Valor</div>
-                        <!-- <div class="flex-cell" role="columnheader"></div> -->
+        <form novalidate (ngSubmit)="salvar(0)" [formGroup]="cadastroForm">
+            <div class="panel-body">
+                <perfect-scrollbar>
+                    <div *ngIf="!edit_mode" class="flex-table" role="table" aria-label="Movimentações">
+                        <div class="flex-header header" role="rowgroup">
+                            <div class="flex-cell col first" role="columnheader">Tipo</div>
+                            <div class="flex-cell col" role="columnheader">Data</div>
+                            <div class="flex-cell col" role="columnheader">Valor</div>
+                            <!-- <div class="flex-cell" role="columnheader"></div> -->
+                        </div>
+                        <div class="flex-row row" role="rowgroup" *ngFor="let movimentacao of usuario.movimentacoes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
+                            <div class="flex-cell col first" role="cell">
+                                <i class="fa" [ngClass]="movimentacao.entrada ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i>
+                                {{ movimentacao.tipo }}</div>
+                            <div class="flex-cell col" role="cell">{{ movimentacao.data_criacao | date: 'dd/MM/yyyy' }}</div>
+                            <div class="flex-cell col" [ngClass]="movimentacao.valor < 0 ? 'text-danger' : ''" role="cell">{{ movimentacao.valor | currency:'R$ ':true }}</div>
+                            <!-- <div class="flex-cell" role="cell"><i class="fa fa-1-2x fa-pencil" (click)="goToEditar(usuario.id)"></i></div> -->
+                        </div>
                     </div>
-                    <div class="flex-row row" role="rowgroup" *ngFor="let movimentacao of usuario.movimentacoes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
-                        <div class="flex-cell col first" role="cell">
-                            <i class="fa" [ngClass]="movimentacao.entrada ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i>
-                            {{ movimentacao.tipo }}</div>
-                        <div class="flex-cell col" role="cell">{{ movimentacao.data_criacao | date: 'dd/MM/yyyy' }}</div>
-                        <div class="flex-cell col" [ngClass]="movimentacao.valor < 0 ? 'text-danger' : ''" role="cell">{{ movimentacao.valor | currency:'R$ ':true }}</div>
-                        <!-- <div class="flex-cell" role="cell"><i class="fa fa-1-2x fa-pencil" (click)="goToEditar(usuario.id)"></i></div> -->
+    
+                    <div *ngIf="edit_mode" class="container-cadastro">
+                        <div class="alert alert-danger" *ngIf="errors.length > 0">
+                            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                            <ul>
+                                <li *ngFor="let error of errors">{{ error }}</li>
+                            </ul>
+                        </div>
+    
+                        <div class="form-group col">
+                            <label class="col-md-12 control-label">Tipo</label>
+                            <div class="col-md-12">
+                                <select class="form-control" formControlName="entrada">
+                                    <option value="true" selected>Aporte</option>
+                                    <option value="false">Retirada</option>
+                                </select>
+                            </div>
+                        </div>
+        
+                        <div class="form-group col">
+                            <label class="col-md-12 control-label">Data</label>
+                            <div class="col-md-12">
+                                <input class="form-control" id="data_criacao" type="text" mask="d0/M0/0000" [validation]="true" formControlName="data_criacao" [ngClass]="{'is-invalid': displayMessage.data_criacao }" />
+                                <span class="text-danger" *ngIf="displayMessage.data_criacao">
+                                    <p [innerHTML]="displayMessage.data_criacao"></p>
+                                </span>
+                            </div>
+                        </div>
+    
+                        <div class="form-group col">
+                            <label class="col-md-12 control-label">Valor</label>
+                            <div class="col-md-12">
+                                <input class="form-control" id="valor" type="text" placeholder="Valor (requerido)" formControlName="valor" [ngClass]="{'is-invalid': displayMessage.valor }" currencyMask [options]="{ prefix: '', allowNegative: true, nullable: false }" maxlength="9" />
+                                <span class="text-danger" *ngIf="displayMessage.valor">
+                                    <p [innerHTML]="displayMessage.valor"></p>
+                                </span>
+                            </div>
+                        </div>
+
+                        cadastroForm.dirty: {{ cadastroForm.dirty ? 'true' : 'false' }}
+                        cadastroForm.valid: {{ cadastroForm.valid ? 'true' : 'false' }}
+                        cadastroForm.value: {{ obtervalue() }}
                     </div>
-                </div>
-            </perfect-scrollbar>
-        </div>
-        <div class="panel-footer text-center">
-            <pagination-controls (pageChange)="paginaAtual = $event"
-                previousLabel="Anterior"
-                nextLabel="Próximo"
-            ></pagination-controls>
-        </div>
+                    
+                </perfect-scrollbar>
+            </div>
+            <div class="panel-footer text-center">
+                <pagination-controls *ngIf="!edit_mode" (pageChange)="paginaAtual = $event"
+                    previousLabel="Anterior"
+                    nextLabel="Próximo"
+                ></pagination-controls>
+
+                <button *ngIf="edit_mode" class="btn btn-sm btn-outline-secondary" (click)="cancelarEdicao()">Voltar</button>
+                <button *ngIf="edit_mode" class="btn btn-sm btn-primary" [attr.disabled]="!cadastroForm.valid || !cadastroForm.dirty ? 'disabled' : null" type="submit">Salvar</button>
+            </div>         
+        </form>
+        
     </div>
 
 </div>

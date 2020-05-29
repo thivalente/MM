@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxLoadingModule } from 'ngx-loading';
 import { NgModule } from '@angular/core';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { RouterModule } from '@angular/router';
@@ -33,6 +34,7 @@ import { AppLogadoRoutingModule } from './conta/app-logado-routing.module';
 
 registerLocaleData(localePt, 'pt');
 export const customCurrencyMaskConfig = { align: "right", allowNegative: true, allowZero: true, decimal: ",", precision: 2, prefix: "R$ ", suffix: "", thousands: ".", nullable: true, min: null, max: null, inputMode: CurrencyMaskInputMode.FINANCIAL };
+export const maskConfigFunction: () => Partial<IConfig> = () => { return { validation: true }; };
 
 @NgModule({
   declarations: [
@@ -54,9 +56,10 @@ export const customCurrencyMaskConfig = { align: "right", allowNegative: true, a
     ToastrModule.forRoot({ closeButton: true, positionClass: 'toast-bottom-right' }),
 
     ChartsModule,
-    NgbModule,
+    NgbModule,    
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     NgxLoadingModule.forRoot({}),
+    NgxMaskModule.forRoot(maskConfigFunction),
     NgxUiLoaderModule,
     PerfectScrollbarModule,
     

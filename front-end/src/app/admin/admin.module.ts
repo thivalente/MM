@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgBrazil } from 'ng-brazil'
 import { NgxCurrencyModule } from 'ngx-currency';
+import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -36,6 +37,7 @@ import { AdminUsuarioMovimentacaoComponent } from './usuario/movimentacao/movime
            FormsModule,
            NgBrazil,
            NgxCurrencyModule,
+           NgxMaskModule,
            NgxPaginationModule,
            NgxUiLoaderModule,
            PerfectScrollbarModule,
