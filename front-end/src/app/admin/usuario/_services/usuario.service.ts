@@ -1,3 +1,4 @@
+import { Movimentacao } from './../../../_models/movimentacao';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -26,5 +27,10 @@ export class AdminUsuarioService
     public salvarUsuario(usuario: Usuario)
     {
         return this.http.post(this.config.getApiUrl() + 'admin/usuario/salvar', usuario);
+    }
+
+    public salvarMovimentacao(movimentacao: Movimentacao)
+    {
+        return this.http.post(this.config.getApiUrl() + 'admin/usuario/salvarMovimentacao', movimentacao);
     }
 }

@@ -11,8 +11,11 @@
 .lista-movimentacoes .panel .panel-body .flex-table .flex-row:nth-child(odd)    { background-color: whitesmoke; }
 .lista-movimentacoes .panel .panel-body .flex-table .flex-row .col .fa          { margin-right: 5px; }
 
-.lista-movimentacoes .panel .panel-body .container-cadastro { transform: translateX(50%); padding: 20px; width: 50%; }
-.lista-movimentacoes .panel .panel-footer .btn              { margin-right: 5px; min-width: 120px; }
+.lista-movimentacoes .panel .panel-body .container-cadastro         { transform: translateX(50%); padding: 20px; width: 50%; }
+.lista-movimentacoes .panel .panel-body .container-cadastro .col    { min-height: 94px; }
+.lista-movimentacoes .panel .panel-footer .btn                      { margin-right: 5px; min-width: 120px; }
+
+.label-warning { display: flex; justify-content: center; }
 
 @media only screen and (max-width: 1024px)
 {

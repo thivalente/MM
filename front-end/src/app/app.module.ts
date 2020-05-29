@@ -56,7 +56,7 @@ export const maskConfigFunction: () => Partial<IConfig> = () => { return { valid
     ToastrModule.forRoot({ closeButton: true, positionClass: 'toast-bottom-right' }),
 
     ChartsModule,
-    NgbModule,    
+    NgbModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     NgxLoadingModule.forRoot({}),
     NgxMaskModule.forRoot(maskConfigFunction),
@@ -69,8 +69,8 @@ export const maskConfigFunction: () => Partial<IConfig> = () => { return { valid
   providers: 
   [
     ContaGuard,
-    SettingsService
-    //{ provide: LOCALE_ID, deps: [SettingsService], useFactory: (settingsService) => settingsService.getLocale() }
+    SettingsService,
+    { provide: LOCALE_ID, useValue: "pt-BR" }
   ],
   bootstrap: [AppComponent]
 })

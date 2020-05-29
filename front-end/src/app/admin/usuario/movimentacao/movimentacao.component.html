@@ -2,9 +2,9 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span *ngIf="!edit_mode">Movimentações do {{usuario.primeiro_nome}}</span>
+            <span *ngIf="!edit_mode">Movimentações do {{usuario?.primeiro_nome}}</span>
             <span *ngIf="edit_mode">Cadastro de Movimentação</span>
-            <button *ngIf="!edit_mode" class="btn btn-sm btn-primary pull-right" (click)="edit_mode = true"><i class="fa fa-plus"></i>Adicionar Movimentação</button>
+            <button *ngIf="!edit_mode" class="btn btn-sm btn-primary pull-right" (click)="edicao_Iniciar()"><i class="fa fa-plus"></i>Adicionar Movimentação</button>
             <button *ngIf="!edit_mode" class="btn btn-sm btn-outline-secondary pull-right" (click)="goToCadastro()">Voltar</button>
         </div>
         <form novalidate (ngSubmit)="salvar(0)" [formGroup]="cadastroForm">
@@ -17,7 +17,7 @@
                             <div class="flex-cell col" role="columnheader">Valor</div>
                             <!-- <div class="flex-cell" role="columnheader"></div> -->
                         </div>
-                        <div class="flex-row row" role="rowgroup" *ngFor="let movimentacao of usuario.movimentacoes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
+                        <div class="flex-row row" role="rowgroup" *ngFor="let movimentacao of usuario?.movimentacoes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
                             <div class="flex-cell col first" role="cell">
                                 <i class="fa" [ngClass]="movimentacao.entrada ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i>
                                 {{ movimentacao.tipo }}</div>
@@ -38,7 +38,7 @@
                         <div class="form-group col">
                             <label class="col-md-12 control-label">Tipo</label>
                             <div class="col-md-12">
-                                <select class="form-control" formControlName="entrada">
+                                <select class="form-control" #entrada formControlName="entrada">
                                     <option value="true" selected>Aporte</option>
                                     <option value="false">Retirada</option>
                                 </select>
@@ -48,7 +48,12 @@
                         <div class="form-group col">
                             <label class="col-md-12 control-label">Data</label>
                             <div class="col-md-12">
-                                <input class="form-control" id="data_criacao" type="text" mask="d0/M0/0000" [validation]="true" formControlName="data_criacao" [ngClass]="{'is-invalid': displayMessage.data_criacao }" />
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Selecione a data ao lado" name="data_criacao" readonly formControlName="data_criacao" ngbDatepicker #d="ngbDatepicker" [ngClass]="{'is-invalid': displayMessage.data_criacao }">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()" type="button"></button>
+                                    </div>
+                                </div>
                                 <span class="text-danger" *ngIf="displayMessage.data_criacao">
                                     <p [innerHTML]="displayMessage.data_criacao"></p>
                                 </span>
@@ -65,9 +70,9 @@
                             </div>
                         </div>
 
-                        cadastroForm.dirty: {{ cadastroForm.dirty ? 'true' : 'false' }}
-                        cadastroForm.valid: {{ cadastroForm.valid ? 'true' : 'false' }}
-                        cadastroForm.value: {{ obtervalue() }}
+                        <br>
+
+                        <label class="label-warning" [ngClass]="(!cadastroForm.dirty || !cadastroForm.valid) ? '' : (isEntrada() ? 'text-success' : 'text-danger')">{{ textoMovimentacao() }}</label>
                     </div>
                     
                 </perfect-scrollbar>
@@ -78,7 +83,7 @@
                     nextLabel="Próximo"
                 ></pagination-controls>
 
-                <button *ngIf="edit_mode" class="btn btn-sm btn-outline-secondary" (click)="cancelarEdicao()">Voltar</button>
+                <button *ngIf="edit_mode" class="btn btn-sm btn-outline-secondary" (click)="edicao_Cancelar()">Voltar</button>
                 <button *ngIf="edit_mode" class="btn btn-sm btn-primary" [attr.disabled]="!cadastroForm.valid || !cadastroForm.dirty ? 'disabled' : null" type="submit">Salvar</button>
             </div>         
         </form>
