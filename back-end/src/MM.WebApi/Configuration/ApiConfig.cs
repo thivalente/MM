@@ -43,19 +43,19 @@ namespace MM.WebApi.Configuration
             {
                 app.UseCors("Development");
                 app.UseDeveloperExceptionPage();
+
+                // Ativando middlewares para uso do Swagger
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MM Investimentos V1");
+                });
             }
             else
             {
                 app.UseCors("Production");
                 app.UseHsts();
             }
-
-            // Ativando middlewares para uso do Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MM Investimentos V1");
-            });
 
             //app.UseMiddleware<ApiLoggingMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();

@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.4" />
+    <PackageReference Include="SendGrid" Version="9.15.1" />
     <PackageReference Include="TGV.Framework.Core" Version="1.0.0" />
   </ItemGroup>
 

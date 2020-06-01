@@ -21,6 +21,18 @@ namespace MM.Data.Repositories
     {
         public MovimentacaoRepository(IConfiguration configuration) : base(configuration) { }
 
+
+        public Task ApagarRendimentoDiario(Guid usuario_id, DateTime data_criacao)
+        {
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                db.Execute("DELETE FROM movimentacao_diaria WHERE rendimento = 1 AND usuario_id = @usuario_id AND data_criacao >= @data_criacao;",
+                            new { usuario_id, data_criacao = data_criacao.Date });
+            }
+
+            return Task.CompletedTask;
+        }
+
         public Task AtualizarTaxaDI(decimal taxa_di, decimal taxa_poupanca, List<DateTime> diasUteis)
         {
             using (var db = new SqlConnection(this.ConnectionString))
@@ -88,6 +100,16 @@ namespace MM.Data.Repositories
                     ", new { usuario_id })).ToList();
 
                 return await Task.FromResult(lista);
+            }
+        }
+
+        public async Task<DateTime> ObterMenorDataTaxaDI()
+        {
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var taxa = (db.Query<DateTime>(@"SELECT TOP 1 td.data_criacao FROM taxa_diaria td ORDER BY td.data_criacao")).FirstOrDefault();
+
+                return await Task.FromResult(taxa);
             }
         }
 

@@ -55,4 +55,18 @@ export class ContaService
 
         return (usuario.is_admin) ? '/admin/usuario' : '/cliente/dashboard';
     }
+
+    public recuperarSenha(email: string)
+    {
+        const body = { email, senha: 'senha' };
+        return this.http.post(this.config.getApiUrl() + 'conta/recuperarsenha', body);
+    }
+
+    public trocarSenha(senhaAtual: string, novaSenha: string)
+    {
+        let usuarioLogado = this.LocalStorage.obterUsuario();
+
+        const body = { email: usuarioLogado.email, senhaAtual, novaSenha };
+        return this.http.post(this.config.getApiUrl() + 'conta/trocarsenha', body);
+    }
 }

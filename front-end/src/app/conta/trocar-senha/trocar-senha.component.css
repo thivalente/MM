@@ -1,0 +1,17 @@
+.trocar-senha                      { background-image: url('../../../assets/imagens/bg_auth.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover; min-height: 100vh; }
+.trocar-senha .container           { align-items: center; display: flex; display: -webkit-box; display: -webkit-flex; display: -moz-box; display: -ms-flexbox; flex-wrap: wrap; justify-content: center; height: 100vh; min-width: 100vw; overflow-y: auto; width: 100vw; }
+.trocar-senha .panel               { background: #fff; border-radius: 10px; height: 530px; overflow: hidden; margin: 20px; padding: 35px 55px 54px 55px; width: 500px; }
+
+.trocar-senha .panel .panel-heading                            { border-bottom: solid 1px #ccc; }
+.trocar-senha .panel .panel-heading .card-title                { font-size: 1.125rem; font-weight: 400; line-height: 1.2; }
+.trocar-senha .panel .panel-heading .card-title .site-logo     { padding-bottom: 20px; }
+.trocar-senha .panel .panel-heading .card-title .site-logo img { max-height: 100px; }
+
+.trocar-senha .panel .panel-body                                   { margin-top: 20px; }
+.trocar-senha .panel form .panel-body .form-group div.col-md-12    { height: 62px; }
+.trocar-senha .panel form .panel-body .alert h3                    { font-size: 1.2rem; }
+.trocar-senha .panel form .panel-body .alert ul li                 { font-size: 0.9rem; }
+
+.trocar-senha .panel form .panel-body .form-group.botoes           { margin-top: 40px; }
+.trocar-senha .panel form .panel-body .form-group.botoes .btn      { width: 100%; }
+.trocar-senha .panel form .panel-body .form-group.botoes > a       { font-size: 0.9rem; }

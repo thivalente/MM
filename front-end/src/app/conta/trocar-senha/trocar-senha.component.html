@@ -1,0 +1,76 @@
+<div class="trocar-senha">
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="card-title text-center">
+                    <div class="site-logo">
+                        <a href="javascript:void(0)">
+                        <img src="assets/imagens/logo_texto_preto.png" alt="logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <form novalidate (ngSubmit)="trocar()" [formGroup]="loginForm">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control" id="senha" type="password" placeholder="Senha Atual (requerido)" formControlName="senha" [ngClass]="{'is-invalid': displayMessage.senha }" />
+                            </div>
+                            <span class="text-danger" *ngIf="displayMessage.senha">
+                                <p [innerHTML]="displayMessage.senha"></p>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control" id="novasenha" type="password" placeholder="Nova Senha (requerido)" formControlName="novasenha" [ngClass]="{'is-invalid': displayMessage.novasenha }" />
+                            </div>
+                            <span class="text-danger" *ngIf="displayMessage.novasenha">
+                                <p [innerHTML]="displayMessage.novasenha"></p>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control" id="confirmacaosenha" type="password" placeholder="Confirmação de Senha (requerido)" formControlName="confirmacaosenha" [ngClass]="{'is-invalid': displayMessage.confirmacaosenha }" />
+                            </div>
+                            <span class="text-danger" *ngIf="displayMessage.confirmacaosenha">
+                                <p [innerHTML]="displayMessage.confirmacaosenha"></p>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group text-center botoes">
+                        <button class="btn btn-primary" id="Login" [disabled]="!loginForm.valid" type="submit">Atualizar Senha</button>
+                    </div>
+                </div>
+            </form>
+
+            <ngx-loading [show]="loading_login" [template]="templatePanel"></ngx-loading>
+        </div>
+    </div>
+
+</div>
+<ng-template #templatePanel></ng-template>

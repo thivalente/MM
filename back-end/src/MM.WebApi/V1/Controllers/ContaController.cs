@@ -33,6 +33,17 @@ namespace MM.WebApi.V1.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("contato")]
+        public async Task<ActionResult> Contato(ContatoViewModel model)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await this._adminService.EnviarEmailContato(model.nome, model.email, model.assunto, model.mensagem);
+
+            return CustomResponse();
+        }
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginUsuarioViewModel loginUser)
         {
@@ -57,6 +68,31 @@ namespace MM.WebApi.V1.Controllers
 
             NotificarErro("Usuário ou Senha incorretos");
             return CustomResponse(loginUser);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("recuperarsenha")]
+        public async Task<ActionResult> RecuperarSenha(LoginUsuarioViewModel loginUser)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await this._adminService.RecuperarSenha(loginUser.Email);
+
+            return CustomResponse();
+        }
+
+        [HttpPost("trocarsenha")]
+        public async Task<ActionResult> TrocarSenha(TrocarSenhaViewModel model)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var result = await this._adminService.TrocarSenha(model.email, model.senhaAtual, model.novaSenha);
+
+            if (result)
+                return CustomResponse();
+
+            NotificarErro("Senha Atual incorreta");
+            return CustomResponse(model);
         }
 
         private async Task<LoginResponseViewModel> GerarJwt(Usuario usuario, decimal taxaDI, decimal taxaPoupanca)

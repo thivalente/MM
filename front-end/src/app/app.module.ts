@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CustomFormsModule } from 'ngx-custom-validators'
 import { NgxLoadingModule } from 'ngx-loading';
 import { NgModule } from '@angular/core';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
@@ -22,12 +23,15 @@ import { ClienteModule } from './cliente/cliente.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './conta/login/login.component';
+import { EsqueciSenhaComponent } from './conta/esqueci-senha/esqueci-senha.component';
+import { TrocarSenhaComponent } from './conta/trocar-senha/trocar-senha.component';
 
 import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData, CommonModule } from '@angular/common';
 
 import { ContaGuard } from './conta/_services/conta.guard';
+import { ContaTrocaSenhaGuard } from './conta/_services/conta-troca-senha.guard';
 import { SettingsService } from './_services/settings.service';
 import { AppLogadoRoutingModule } from './conta/app-logado-routing.module';
 
@@ -39,7 +43,9 @@ export const maskConfigFunction: () => Partial<IConfig> = () => { return { valid
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    EsqueciSenhaComponent,
+    TrocarSenhaComponent
   ],
   imports: [
     AppLogadoRoutingModule,
@@ -48,6 +54,7 @@ export const maskConfigFunction: () => Partial<IConfig> = () => { return { valid
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
+    CustomFormsModule,
     FormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
@@ -69,6 +76,7 @@ export const maskConfigFunction: () => Partial<IConfig> = () => { return { valid
   providers: 
   [
     ContaGuard,
+    ContaTrocaSenhaGuard,
     SettingsService,
     { provide: LOCALE_ID, useValue: "pt-BR" }
   ],

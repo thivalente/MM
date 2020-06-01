@@ -24,6 +24,7 @@ namespace MM.WebApi.ViewModels
         [Required(ErrorMessage = "A taxa acima do cdi é obrigatória")]
         public decimal taxa_acima_cdi           { get; set; }
         public bool is_admin                    { get; set; }
+        public bool trocar_senha                { get; set; }
         public bool ativo                       { get; set; }
 
         public string primeiro_nome             { get { return this.nome.GetFirstName(); } }
@@ -44,7 +45,7 @@ namespace MM.WebApi.ViewModels
         }
 
         public UsuarioViewModel(Guid id, string nome, string cpf, string email, string senha, bool aceitou_termos, DateTime? data_aceitou_termos, DateTime data_criacao, 
-            decimal taxa_acima_cdi, bool is_admin, bool ativo) : this()
+            decimal taxa_acima_cdi, bool is_admin, bool trocar_senha, bool ativo) : this()
         {
             this.id = id;
             this.nome = nome;
@@ -56,6 +57,7 @@ namespace MM.WebApi.ViewModels
             this.data_criacao = data_criacao;
             this.taxa_acima_cdi = taxa_acima_cdi;
             this.is_admin = is_admin;
+            this.trocar_senha = trocar_senha;
             this.ativo = ativo;
         }
 

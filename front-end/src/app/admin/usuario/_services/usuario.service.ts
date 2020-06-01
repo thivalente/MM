@@ -7,6 +7,8 @@ import { SettingsService } from 'src/app/_services/settings.service';
 
 import { Usuario } from 'src/app/_models/usuario';
 
+declare const isEmpty: any;
+
 @Injectable({ providedIn: 'root' })
 export class AdminUsuarioService
 {
@@ -31,6 +33,9 @@ export class AdminUsuarioService
 
     public salvarMovimentacao(movimentacao: Movimentacao)
     {
+        if (isEmpty(movimentacao.id))
+            movimentacao.id = '00000000-0000-0000-0000-000000000000';
+
         return this.http.post(this.config.getApiUrl() + 'admin/usuario/salvarMovimentacao', movimentacao);
     }
 }

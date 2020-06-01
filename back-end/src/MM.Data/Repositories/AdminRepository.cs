@@ -34,6 +34,7 @@ namespace MM.Data.Repositories
 		                        data_aceitou_termos,
 		                        aceitou_termos,
 		                        is_admin,
+                                trocar_senha,
 		                        ativo
                         FROM	usuario u
                         WHERE   u.email = @email
@@ -61,6 +62,7 @@ namespace MM.Data.Repositories
 		                        data_aceitou_termos,
 		                        aceitou_termos,
 		                        is_admin,
+                                trocar_senha,
 		                        ativo
                         FROM	usuario u
                         ORDER BY u.nome;
@@ -109,10 +111,38 @@ namespace MM.Data.Repositories
 		                        data_aceitou_termos,
 		                        aceitou_termos,
 		                        is_admin,
+                                trocar_senha,
 		                        ativo
                         FROM	usuario u
                         WHERE   u.id = @usuario_id;
                     ", new { usuario_id })).FirstOrDefault();
+
+                return await Task.FromResult(usuario);
+            }
+        }
+
+        public async Task<Usuario> ObterPorEmail(string email)
+        {
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var usuario = (db.Query<Usuario>(
+                    @" 
+                        SELECT	DISTINCT
+                                id,
+		                        nome,
+		                        cpf,
+		                        email,
+		                        senha,
+		                        taxa_acima_cdi,
+		                        data_criacao,
+		                        data_aceitou_termos,
+		                        aceitou_termos,
+		                        is_admin,
+                                trocar_senha,
+		                        ativo
+                        FROM	usuario u
+                        WHERE   u.email = @email;
+                    ", new { email })).FirstOrDefault();
 
                 return await Task.FromResult(usuario);
             }
@@ -130,8 +160,8 @@ namespace MM.Data.Repositories
                 var data_criacao = DateTime.Now;
 
                 var query = @"
-                    INSERT INTO usuario (id, cpf, email, nome, senha, taxa_acima_cdi, data_criacao, data_aceitou_termos, aceitou_termos, is_admin, ativo)
-                    VALUES (@id, @cpf, @email, @nome, @senha, @taxa_acima_cdi, @data_criacao, NULL, 0, @is_admin, 1);
+                    INSERT INTO usuario (id, cpf, email, nome, senha, taxa_acima_cdi, data_criacao, data_aceitou_termos, aceitou_termos, is_admin, trocar_senha, ativo)
+                    VALUES (@id, @cpf, @email, @nome, @senha, @taxa_acima_cdi, @data_criacao, NULL, 0, @is_admin, 0, 1);
                 ";
 
                 db.Execute(query, new { id, cpf = usuario.cpf_somente_numeros, usuario.email, usuario.nome, senha, usuario.taxa_acima_cdi, data_criacao, is_admin = (usuario.is_admin ? 1 : 0) });
@@ -159,6 +189,67 @@ namespace MM.Data.Repositories
                 ";
 
                 db.Execute(query, new { usuario.id, cpf = usuario.cpf_somente_numeros, usuario.email, usuario.nome, usuario.taxa_acima_cdi, is_admin = (usuario.is_admin ? 1 : 0), ativo = (usuario.ativo ? 1 : 0) });
+            }
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> Salvar_TrocarSenha(Usuario usuario)
+        {
+            if (usuario == null)
+                return false;
+
+            var senhaCripto = usuario.senha.Criptografar(BaseRepository.ParametroSistema);
+
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var query = @"UPDATE usuario SET senha = @senhaCripto, trocar_senha = @trocar_senha WHERE id = @id;"; db.Execute(query, new { usuario.id, senhaCripto, trocar_senha = usuario.trocar_senha ? 1 : 0 });
+            }
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> SalvarMovimentacao_Cadastrar(Movimentacao movimentacao)
+        {
+            if (movimentacao == null)
+                return false;
+
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var id = Guid.NewGuid();
+                var data_criacao = DateTime.Now;
+
+                var query = @"
+                    INSERT INTO movimentacao (id, usuario_id, valor, data_criacao, entrada, ativo)
+                    VALUES (@id, @usuario_id, @valor, @data_criacao, @entrada, 1);
+
+                    INSERT INTO movimentacao_diaria (id, usuario_id, valor, valor_di, valor_poupanca, data_criacao, entrada, rendimento, ativo)
+                    VALUES (@id, @usuario_id, @valor, 0, 0, @data_criacao, @entrada, 0, 1);
+                ";
+
+                db.Execute(query, new { id, movimentacao.usuario_id, movimentacao.valor, movimentacao.data_criacao, entrada = (movimentacao.entrada ? 1 : 0) });
+            }
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> SalvarMovimentacao_Editar(Movimentacao movimentacao)
+        {
+            if (movimentacao == null)
+                return false;
+
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var query = @"
+                    UPDATE  movimentacao
+                    SET     usuario_id = @usuario_id,
+                            valor = @valor,
+                            entrada = @entrada,
+                            ativo = @ativo
+                    WHERE   id = @id;
+                ";
+
+                db.Execute(query, new { movimentacao.id, movimentacao.usuario_id, movimentacao.valor, entrada = (movimentacao.entrada ? 1 : 0), ativo = (movimentacao.ativo ? 1 : 0) });
             }
 
             return await Task.FromResult(true);

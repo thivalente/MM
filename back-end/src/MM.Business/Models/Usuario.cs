@@ -18,6 +18,7 @@ namespace MM.Business.Models
         public DateTime data_criacao            { get; private set; }
         public decimal taxa_acima_cdi           { get; private set; }
         public bool is_admin                    { get; private set; }
+        public bool trocar_senha                { get; private set; }
         public bool ativo                       { get; private set; }
 
         public string cpf_somente_numeros       { get { return String.IsNullOrEmpty(this.cpf) ? this.cpf : new String(this.cpf.Where(Char.IsDigit).ToArray()); } }
@@ -35,7 +36,7 @@ namespace MM.Business.Models
         }
 
         public Usuario(Guid id, string nome, string cpf, string email, string senha, bool aceitou_termos, DateTime? data_aceitou_termos, DateTime data_criacao, decimal taxa_acima_cdi,
-            bool is_admin, bool ativo) : this()
+            bool is_admin, bool trocar_senha, bool ativo) : this()
         {
             this.id = id;
             this.nome = nome;
@@ -47,6 +48,7 @@ namespace MM.Business.Models
             this.data_criacao = data_criacao;
             this.taxa_acima_cdi = taxa_acima_cdi;
             this.is_admin = is_admin;
+            this.trocar_senha = trocar_senha;
             this.ativo = ativo;
         }
 
@@ -55,6 +57,12 @@ namespace MM.Business.Models
         public void SetarListaMovimentacoes(List<Movimentacao> movimentacoes)
         {
             this._movimentacoes = movimentacoes;
+        }
+
+        public void TrocarSenha(string novaSenha, bool trocar_senha = true)
+        {
+            this.senha = novaSenha;
+            this.trocar_senha = trocar_senha;
         }
     }
 }

@@ -115,6 +115,7 @@ export class AdminUsuarioCadastroComponent implements OnInit, AfterViewInit
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
       this.usuario.is_admin = this.is_admin;
       this.usuario.taxa_acima_cdi = this.is_admin ? 0 : this.usuario.taxa_acima_cdi / 100;
+      this.usuario.trocar_senha = false;
 
       this.adminService.salvarUsuario(this.usuario).subscribe(response =>
         {

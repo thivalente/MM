@@ -49,7 +49,10 @@
                             <label class="col-md-12 control-label">Data</label>
                             <div class="col-md-12">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Selecione a data ao lado" name="data_criacao" readonly formControlName="data_criacao" ngbDatepicker #d="ngbDatepicker" [ngClass]="{'is-invalid': displayMessage.data_criacao }">
+                                    <input class="form-control" placeholder="Selecione a data ao lado" name="data_criacao" readonly formControlName="data_criacao" ngbDatepicker #d="ngbDatepicker" 
+                                        [minDate]="minDate"
+                                        [maxDate]="maxDate"
+                                        [ngClass]="{'is-invalid': displayMessage.data_criacao }">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()" type="button"></button>
                                     </div>

@@ -2,8 +2,8 @@
 using MM.Business.Interfaces;
 using MM.Business.Notificacoes;
 using MM.Business.Services;
+using MM.Data.Email;
 using MM.Data.Repositories;
-using MM.WebApi.Helpers;
 
 namespace MM.WebApi.Setup
 {
@@ -12,6 +12,9 @@ namespace MM.WebApi.Setup
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<INotificador, Notificador>();
+
+            // Email
+            services.AddScoped<ISendGridEmail, SendGridEmail>();
 
             // Repositórios
             //services.AddScoped<CotacaoContext>();

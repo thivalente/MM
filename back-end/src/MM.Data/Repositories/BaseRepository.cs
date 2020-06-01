@@ -25,6 +25,13 @@ namespace MM.Data.Repositories
             ConnectionString = GetSqlConnectionStringDapper();
         }
 
+        public EmailSettings GetEmailSettings()
+        {
+            var emailSettings = Options.Create<EmailSettings>(_config.GetSection("EmailSettings").Get<EmailSettings>());
+
+            return emailSettings.Value;
+        }
+
         private string GetSqlConnectionStringDapper()
         {
             // Verifica se está criptografada

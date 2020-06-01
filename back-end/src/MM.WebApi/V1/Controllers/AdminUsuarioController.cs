@@ -58,5 +58,19 @@ namespace MM.WebApi.V1.Controllers
             NotificarErro("Houve um erro ao tentar salvar este usuário");
             return CustomResponse();
         }
+
+        [HttpPost("usuario/salvarmovimentacao")]
+        public async Task<ActionResult> SalvarMovimentacao(MovimentacaoViewModel movimentacao)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var result = await this._adminService.SalvarMovimentacao(movimentacao.ToMovimentacaoModel());
+
+            if (result)
+                return CustomResponse();
+
+            NotificarErro("Houve um erro ao tentar salvar este usuário");
+            return CustomResponse();
+        }
     }
 }

@@ -97,23 +97,32 @@ export class LoginComponent implements OnInit
       return;
     }
 
-    this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!');
-
     var dados = response.data;
+    this.loading_login = false;
 
     var pagina_inicial = this.contaService.obterPaginaInicial(dados.userToken);
     dados.userToken.pagina_inicial = pagina_inicial;
 
     this.contaService.LocalStorage.salvarDadosLocaisUsuario(dados);
-    this.loading_login = false;
 
-    this.returnUrl ? this.router.navigate([this.returnUrl]) : this.router.navigate([pagina_inicial]);
+    if (!dados.userToken.trocar_senha)
+    {
+      this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!');
+      this.returnUrl ? this.router.navigate([this.returnUrl]) : this.router.navigate([pagina_inicial]); 
+    }
+    else
+      this.router.navigate(['/trocar-senha']);
   }
 
   processarFalha(fail: any)
   {
     this.errors = fail.error.errors;
-    this.toastr.error(this.errors[0], 'Não foi possível realizar o login');
+    var erro = "Erro Desconhecido";
+
+    if (!isEmpty(this.errors) && this.errors.length > 0)
+      erro = this.errors[0];
+
+    this.toastr.error(erro, 'Não foi possível realizar o login');
     this.loading_login = false;
   }
 }

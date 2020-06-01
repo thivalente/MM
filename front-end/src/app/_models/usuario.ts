@@ -11,6 +11,7 @@ export interface Usuario
     aceitou_termos: boolean;
     data_aceitou_termos: Date;
     is_admin: boolean;
+    trocar_senha: boolean;
     ativo: boolean;
 
     primeiro_nome: string;

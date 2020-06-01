@@ -31,6 +31,14 @@ namespace MM.WebApi.Helpers
             return lista.ConvertAll(l => new MovimentacaoDiariaViewModel(l.id, l.entrada, l.rendimento, l.valor, l.valor_di, l.valor_poupanca, l.data_criacao));
         }
 
+        public static Movimentacao ToMovimentacaoModel(this MovimentacaoViewModel movimentacao)
+        {
+            if (movimentacao == null)
+                return null;
+
+            return new Movimentacao(movimentacao.id, movimentacao.usuario_id, movimentacao.valor, movimentacao.data_criacao, movimentacao.entrada, movimentacao.ativo);
+        }
+
         public static MovimentacaoViewModel ToMovimentacaoViewModel (this Movimentacao movimentacao)
         {
             if (movimentacao == null)
@@ -45,7 +53,7 @@ namespace MM.WebApi.Helpers
                 return null;
 
             return new Usuario(usuario.id, usuario.nome, usuario.cpf, usuario.email, usuario.senha, usuario.aceitou_termos, usuario.data_aceitou_termos, usuario.data_criacao,
-                usuario.taxa_acima_cdi, usuario.is_admin, usuario.ativo);
+                usuario.taxa_acima_cdi, usuario.is_admin, usuario.trocar_senha, usuario.ativo);
         }
 
         public static UsuarioViewModel ToUsuarioViewModel(this Usuario usuario)
@@ -54,7 +62,7 @@ namespace MM.WebApi.Helpers
                 return null;
 
             var uvm = new UsuarioViewModel(usuario.id, usuario.nome, usuario.cpf, usuario.email, usuario.senha, usuario.aceitou_termos, usuario.data_aceitou_termos, usuario.data_criacao,
-                usuario.taxa_acima_cdi, usuario.is_admin, usuario.ativo);
+                usuario.taxa_acima_cdi, usuario.is_admin, usuario.trocar_senha, usuario.ativo);
 
             if (usuario.Movimentacoes.Count() > 0 && usuario.Movimentacoes.All(m => m != null))
                 uvm.SetarListaMovimentacoes(usuario.Movimentacoes.ToList().ConvertAll(m => m.ToMovimentacaoViewModel()));

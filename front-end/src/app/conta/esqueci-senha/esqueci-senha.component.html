@@ -1,0 +1,47 @@
+<div class="esqueci-senha">
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="card-title text-center">
+                    <div class="site-logo">
+                        <a href="javascript:void(0)">
+                        <img src="assets/imagens/logo_texto_preto.png" alt="logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+            <form novalidate (ngSubmit)="recuperar()" [formGroup]="loginForm">
+                <div class="panel-body">
+                    <div class="form-group">
+            
+                        <div class="col-md-12">
+                            <label class="col-md-12">Digite seu e-mail para recuperar a senha</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
+                            </div>
+                            <span class="text-danger" *ngIf="displayMessage.email">
+                                <p [innerHTML]="displayMessage.email"></p>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group text-center botoes">
+                        <button class="btn btn-primary" id="Login" [disabled]="!loginForm.valid" type="submit">Recuperar Senha</button>
+                        <a [routerLink]="'/login'">Voltar</a>
+                    </div>
+                </div>
+            </form>
+
+            <ngx-loading [show]="loading_login" [template]="templatePanel"></ngx-loading>
+        </div>
+    </div>
+
+</div>
+<ng-template #templatePanel></ng-template>

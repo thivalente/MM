@@ -77,5 +77,10 @@ namespace MM.Business.Services
         {
             return await this._movimentacaoRepository.Obter(usuario_id);
         }
+
+        public async Task<DateTime> ObterMenorDataTaxaDI()
+        {
+            return await this._movimentacaoRepository.ObterMenorDataTaxaDI();
+        }
     }
 }
