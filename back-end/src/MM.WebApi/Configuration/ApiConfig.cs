@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,19 +44,19 @@ namespace MM.WebApi.Configuration
             {
                 app.UseCors("Development");
                 app.UseDeveloperExceptionPage();
-
-                // Ativando middlewares para uso do Swagger
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MM Investimentos V1");
-                });
             }
             else
             {
                 app.UseCors("Production");
                 app.UseHsts();
             }
+
+            // Ativando middlewares para uso do Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API MM Investimentos V1");
+            });
 
             //app.UseMiddleware<ApiLoggingMiddleware>();
             app.UseMiddleware<ExceptionMiddleware>();
@@ -64,29 +65,14 @@ namespace MM.WebApi.Configuration
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-
-                //endpoints.MapHealthChecks("/api/hc", new HealthCheckOptions()
-                //{
-                //    Predicate = _ => true,
-                //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                //});
-                //endpoints.MapHealthChecksUI(options =>
-                //{
-                //    options.UIPath = "/api/hc-ui";
-                //    options.ResourcesPath = "/api/hc-ui-resources";
-
-                //    options.UseRelativeApiPath = false;
-                //    options.UseRelativeResourcesPath = false;
-                //    options.UseRelativeWebhookPath = false;
-                //});
             });
 
             return app;

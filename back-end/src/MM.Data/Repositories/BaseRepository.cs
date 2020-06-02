@@ -27,9 +27,10 @@ namespace MM.Data.Repositories
 
         public EmailSettings GetEmailSettings()
         {
+            bool isEncripted = _config.GetSection("Criptografada").Exists() ? _config.GetSection("Criptografada").Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) : false;
             var emailSettings = Options.Create<EmailSettings>(_config.GetSection("EmailSettings").Get<EmailSettings>());
 
-            return emailSettings.Value;
+            return isEncripted ? emailSettings.Value.Decripted() : emailSettings.Value;
         }
 
         private string GetSqlConnectionStringDapper()

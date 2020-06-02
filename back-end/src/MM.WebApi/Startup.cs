@@ -56,7 +56,7 @@ namespace MM.WebApi
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            var originUrl = Configuration.GetSection("AllowedUrls").Value;
+            var originUrl = Configuration.GetSection("AllowedUrls").Value.Split(',');
 
             services.AddCors(options =>
             {
