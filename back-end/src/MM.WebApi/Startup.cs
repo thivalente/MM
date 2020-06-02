@@ -67,14 +67,21 @@ namespace MM.WebApi
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 
+                //options.AddPolicy("Production",
+                //    builder =>
+                //        builder
+                //            .WithMethods("GET")
+                //            .WithOrigins(originUrl)
+                //            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                //            //.WithHeaders(HeaderNames.ContentType, "x-custom-header")
+                //            .AllowAnyHeader());
+
                 options.AddPolicy("Production",
                     builder =>
                         builder
-                            .WithMethods("GET")
-                            .WithOrigins(originUrl)
-                            .SetIsOriginAllowedToAllowWildcardSubdomains()
-                            //.WithHeaders(HeaderNames.ContentType, "x-custom-header")
-                            .AllowAnyHeader());
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
             });
 
             services.AddApiConfig();
