@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MM.Business.Interfaces;
@@ -9,6 +10,7 @@ using MM.WebApi.Helpers;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using TGV.Framework.Core.Helper;
 
 namespace MM.WebApi.Setup
 {
@@ -23,7 +25,12 @@ namespace MM.WebApi.Setup
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
+
+            bool isEncripted = configuration.GetSection("Criptografada").Exists() ? configuration.GetSection("Criptografada").Value.Equals("true", StringComparison.InvariantCultureIgnoreCase) : false;
+
+            var secret = (isEncripted) ? appSettings.Secret.Descriptografar("MM1nv3st") : appSettings.Secret;
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
