@@ -1,0 +1,64 @@
+<!--Navbar Start-->
+<nav class="navbar navbar-expand-lg fixed-top navbar-custom navbar-light sticky sticky-dark"
+  (window:scroll)="windowScroll()" id="navbar">
+  <div class="container">
+    <!-- LOGO -->
+    <a class="navbar-brand logo" href="/">
+      <img src="assets/images/logo-dark.png" alt="" class="logo-dark" height="48" />
+      <img src="assets/images/logo-light.png" alt="" class="logo-light" height="48" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
+      <i class="mdi mdi-menu"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mx-auto navbar-center" id="mySidenav">
+        <li class="nav-item" [ngClass]="{'active':currentSection === 'home'}">
+          <a href="javascript: void(0);" [ngxScrollTo]="'#home'" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item" [ngClass]="{'active':currentSection === 'about-us'}">
+          <a href="javascript: void(0);" [ngxScrollTo]="'#about-us'" class="nav-link" [ngxScrollToOffset]="5">Sobre
+            Nós</a>
+        </li>
+        <li class="nav-item" [ngClass]="{'active':currentSection === 'services'}">
+          <a href="javascript: void(0);" [ngxScrollTo]="'#services'" class="nav-link"
+            [ngxScrollToOffset]="5">Serviços</a>
+        </li>
+        <li class="nav-item" [ngClass]="{'active':currentSection === 'contact'}">
+          <a href="javascript: void(0);" [ngxScrollTo]="'#contact'" class="nav-link" [ngxScrollToOffset]="5">Contato
+          </a>
+        </li>
+        <li class="nav-item" [ngClass]="{'active':currentSection === 'plataforma'}">
+          <a href="javascript: void(0);" (click)="goToPlataforma()" class="nav-link">Acesse a Plataforma
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Navbar End -->
+<div appScrollspy [spiedTags]="['SECTION']" (sectionChange)="onSectionChange($event)">
+  <!-- Hero Start -->
+  <section class="hero-6-bg position-relative" style="background-image: url(assets/images/hero-6-bg-img.jpg)" id="home">
+    <div class="bg-overlay"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="text-center">
+            <h1 class="text-white hero-6-title mb-4 line-height-1_4">Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit.</h1>
+            <p class="text-white-50 w-75 mx-auto font-size-15">Et harum quidem rerum facilis est et expedita
+              distinctio nam libero tempore cumque nihil impedit quo minus quod maxime.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- Hero End -->
+
+  <app-features></app-features>
+  <app-services></app-services>
+  <app-contact></app-contact>
+  <app-footer></app-footer>
+</div>

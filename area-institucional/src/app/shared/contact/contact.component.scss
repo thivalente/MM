@@ -1,0 +1,17 @@
+.contact-form               { transition: transform 0.6s; transform-style: preserve-3d; }
+
+.contact-form.flip {
+    transform: rotateY(180deg);
+  }
+  
+.formulario                     { background-color: #f9f5fc; }
+.formulario.fliped              { display: none; }
+.mensagem-retorno               { align-items: center; border-radius: 4px; display: none; flex-flow: column; font-size: 24px; height: 288px; justify-content: center; padding: 20px; position: relative; transform: rotateY(180deg); width: 100%; }
+.mensagem-retorno.falha,
+.mensagem-retorno.sucesso       { display: flex; }
+
+.mensagem-retorno > div.pointer { cursor: pointer; text-align: center;  width: 100%; }
+.mensagem-retorno > div > a     { font-size: 14px; position: relative; top: -10px; }
+.mensagem-retorno > div.break   { width: 100%; }
+.mensagem-retorno.falha         { background-color: antiquewhite; border: solid 1px darkred; color: darkred; }
+.mensagem-retorno.sucesso       { background-color: aliceblue; border: solid 1px darkgreen; color: darkgreen; }
