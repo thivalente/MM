@@ -1,0 +1,8 @@
+.nav-link                       { font-size: 11px; }
+
+.wc-box:hover .nav-link,
+.nav-link:hover                 { color: #fff; text-decoration: underline !important; }
+
+.modal-body button              { position: absolute; right: 20px; top: 20px; }
+.modal-body button:focus        { outline: none; }
+.modal-body button span:focus   { outline: none; }

@@ -65,8 +65,8 @@ namespace MM.WebApi.Configuration
 
             app.UseRouting();
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseStaticFiles();
 

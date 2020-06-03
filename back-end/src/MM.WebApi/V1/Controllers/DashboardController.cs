@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MM.Business.Interfaces;
 using MM.WebApi.Controllers;
 using MM.WebApi.Helpers;
@@ -6,11 +7,10 @@ using MM.WebApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace MM.WebApi.V1.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}")]

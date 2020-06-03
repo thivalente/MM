@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CustomFormsModule } from 'ngx-custom-validators'
@@ -30,9 +30,15 @@ import { LOCALE_ID } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData, CommonModule } from '@angular/common';
 
+import { ErrorInterceptor } from './_services/error.handler.service';
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+];
+
 import { ContaGuard } from './conta/_services/conta.guard';
 import { ContaTrocaSenhaGuard } from './conta/_services/conta-troca-senha.guard';
 import { SettingsService } from './_services/settings.service';
+
 import { AppLogadoRoutingModule } from './conta/app-logado-routing.module';
 
 
@@ -78,7 +84,8 @@ export const maskConfigFunction: () => Partial<IConfig> = () => { return { valid
     ContaGuard,
     ContaTrocaSenhaGuard,
     SettingsService,
-    { provide: LOCALE_ID, useValue: "pt-BR" }
+    { provide: LOCALE_ID, useValue: "pt-BR" },
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

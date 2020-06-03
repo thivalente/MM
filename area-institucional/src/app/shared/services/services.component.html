@@ -27,6 +27,8 @@
               </div>
               <h5 class="font-weight-bold mb-2 wc-title mt-4">Estratégia 01</h5>
               <p class="text-muted mb-0 font-size-15 wc-subtitle">Taxa Pré Fixada (determina-se um valor pago ao ano. Exemplo: 10% a.a)</p>
+
+              <a href="javascript: void(0)" class="nav-link" (click)="serviceModal(service01)">CLIQUE AQUI PARA SABER MAIS</a>
             </div>
             <div class="wc-box rounded text-center wc-box-primary p-4">
               <div class="wc-box-icon">
@@ -34,6 +36,8 @@
               </div>
               <h5 class="font-weight-bold mb-2 wc-title mt-4">Estratégia 02</h5>
               <p class="text-muted mb-0 font-size-15 wc-subtitle">Taxa Pós Fixada (determina-se um valor de referência pago ao ano. Exemplo: Um percentual da taxa Selic)</p>
+
+              <a href="javascript: void(0)" class="nav-link" (click)="serviceModal(service02)">CLIQUE AQUI PARA SABER MAIS</a>
             </div>
           </div>
           <div class="col-md-6">
@@ -43,6 +47,8 @@
               </div>
               <h5 class="font-weight-bold mb-2 wc-title mt-4">Estratégia 03</h5>
               <p class="text-muted mb-0 font-size-15 wc-subtitle">Taxa Pré Fixada (investimento de longo prazo destinado a construção civil)</p>
+
+              <a href="javascript: void(0)" class="nav-link" (click)="serviceModal(service03)">CLIQUE AQUI PARA SABER MAIS</a>
             </div>
             <div class="wc-box rounded text-center wc-box-primary p-4">
               <div class="wc-box-icon">
@@ -50,6 +56,8 @@
               </div>
               <h5 class="font-weight-bold mb-2 wc-title mt-4">Estratégia 04</h5>
               <p class="text-muted mb-0 font-size-15 wc-subtitle">Taxa Pré / Pós Fixada (recurso destinado a pagamento antecipado de fornecedores)</p>
+
+              <a href="javascript: void(0)" class="nav-link" (click)="serviceModal(service04)">CLIQUE AQUI PARA SABER MAIS</a>
             </div>
           </div>
         </div>
@@ -58,3 +66,99 @@
   </div>
 </section>
 <!-- Why Choose Us End -->
+
+<ng-template #service01 let-c="close" let-d="dismiss" let-modal>
+  <div class="modal-body">
+    <div class="text-center">
+      <h4 class="text-uppercase text-primary"><b>Estratégia 01</b></h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="login-form mt-4">
+      <div class="text-center">
+        <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer venenatis in massa
+          et vestibulum.
+          Curabitur est nunc, facilisis ac leo a, tempus eleifend enim. Etiam ut eros aliquet, elementum quam vel,
+          accumsan leo. Vestibulum suscipit vehicula purus, sit amet dictum odio rhoncus vel. Suspendisse nec sapien
+          purus. Integer malesuada urna nec felis sagittis congue. Curabitur tempus interdum ante, eget facilisis
+          turpis luctus ut. Curabitur congue pulvinar erat at mollis. Phasellus euismod eu lectus placerat maximus.
+          Pellentesque laoreet dolor leo, a interdum est maximus vitae. Duis viverra mattis ligula et viverra. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec sagittis velit. Vestibulum luctus ex et
+          cursus aliquam.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #service02 let-c="close" let-d="dismiss" let-modal>
+  <div class="modal-body">
+    <div class="text-center">
+      <h4 class="text-uppercase text-primary"><b>Estratégia 02</b></h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="login-form mt-4">
+      <div class="text-center">
+        <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer venenatis in massa
+          et vestibulum.
+          Curabitur est nunc, facilisis ac leo a, tempus eleifend enim. Etiam ut eros aliquet, elementum quam vel,
+          accumsan leo. Vestibulum suscipit vehicula purus, sit amet dictum odio rhoncus vel. Suspendisse nec sapien
+          purus. Integer malesuada urna nec felis sagittis congue. Curabitur tempus interdum ante, eget facilisis
+          turpis luctus ut. Curabitur congue pulvinar erat at mollis. Phasellus euismod eu lectus placerat maximus.
+          Pellentesque laoreet dolor leo, a interdum est maximus vitae. Duis viverra mattis ligula et viverra. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec sagittis velit. Vestibulum luctus ex et
+          cursus aliquam.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #service03 let-c="close" let-d="dismiss" let-modal>
+  <div class="modal-body">
+    <div class="text-center">
+      <h4 class="text-uppercase text-primary"><b>Estratégia 03</b></h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="login-form mt-4">
+      <div class="text-center">
+        <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer venenatis in massa
+          et vestibulum.
+          Curabitur est nunc, facilisis ac leo a, tempus eleifend enim. Etiam ut eros aliquet, elementum quam vel,
+          accumsan leo. Vestibulum suscipit vehicula purus, sit amet dictum odio rhoncus vel. Suspendisse nec sapien
+          purus. Integer malesuada urna nec felis sagittis congue. Curabitur tempus interdum ante, eget facilisis
+          turpis luctus ut. Curabitur congue pulvinar erat at mollis. Phasellus euismod eu lectus placerat maximus.
+          Pellentesque laoreet dolor leo, a interdum est maximus vitae. Duis viverra mattis ligula et viverra. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec sagittis velit. Vestibulum luctus ex et
+          cursus aliquam.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #service04 let-c="close" let-d="dismiss" let-modal>
+  <div class="modal-body">
+    <div class="text-center">
+      <h4 class="text-uppercase text-primary"><b>Estratégia 04</b></h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="login-form mt-4">
+      <div class="text-center">
+        <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer venenatis in massa
+          et vestibulum.
+          Curabitur est nunc, facilisis ac leo a, tempus eleifend enim. Etiam ut eros aliquet, elementum quam vel,
+          accumsan leo. Vestibulum suscipit vehicula purus, sit amet dictum odio rhoncus vel. Suspendisse nec sapien
+          purus. Integer malesuada urna nec felis sagittis congue. Curabitur tempus interdum ante, eget facilisis
+          turpis luctus ut. Curabitur congue pulvinar erat at mollis. Phasellus euismod eu lectus placerat maximus.
+          Pellentesque laoreet dolor leo, a interdum est maximus vitae. Duis viverra mattis ligula et viverra. Lorem
+          ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec sagittis velit. Vestibulum luctus ex et
+          cursus aliquam.</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
