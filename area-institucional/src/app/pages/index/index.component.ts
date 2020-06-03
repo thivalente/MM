@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-index',
@@ -15,14 +14,14 @@ export class IndexComponent implements OnInit {
 
   currentSection = 'home';
 
-  constructor(@Inject(DOCUMENT) private document: Document, private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
   }
 
   goToPlataforma()
   {
-    this.document.location.href = 'https://app.mminvestimentos.com.br';
+    window.open('https://app.mminvestimentos.com.br', '_blank');
   }
 
   /**

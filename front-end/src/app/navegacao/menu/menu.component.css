@@ -1,4 +1,4 @@
-.menu                     { background-color: #2B2B2B; border: 0; border-bottom: 3px solid #808080; display: flex; align-items: center; }
+.menu                     { background-color: #2B2B2B; border: 0; border-bottom: 3px solid #813281; display: flex; align-items: center; }
 .menu .navbar             { width: 100%; }
 .menu .navbar .container  { margin: 0px; max-width: none; }
 .menu a                   { align-items: center; color: #FFF; display: flex; font-size: 0.8rem; text-decoration: none; text-transform: uppercase; }
