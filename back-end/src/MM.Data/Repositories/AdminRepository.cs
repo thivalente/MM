@@ -38,7 +38,8 @@ namespace MM.Data.Repositories
 		                        ativo
                         FROM	usuario u
                         WHERE   u.email = @email
-                        AND     u.senha = @senhaCripto;
+                        AND     u.senha = @senhaCripto
+                        AND     u.ativo = 1;
                     ", new { email, senhaCripto })).FirstOrDefault();
 
                 return await Task.FromResult(usuario);

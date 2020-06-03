@@ -76,7 +76,7 @@ namespace MM.Business.Services
             var usuario = await this._adminRepository.ObterPorEmail(email);
 
             // Se não existir, retorna
-            if (usuario == null)
+            if (usuario == null || !usuario.ativo)
                 await Task.CompletedTask;
 
             // Se existir, gera uma nova senha randomica
