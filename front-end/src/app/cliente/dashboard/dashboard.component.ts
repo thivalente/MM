@@ -8,7 +8,9 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ClienteService } from '../_services/cliente.service';
 import { ContaService } from 'src/app/conta/_services/conta.service';
 import { DashboardService } from './dashboard.service';
+import { LocalStorageUtils } from 'src/app/utils/localstorage';
 
+declare const isEmpty: any;
 declare const obterNomeMesAno: any;
 declare const obterNomeMesAnoReduzido: any;
 declare const sortByKey: any;
@@ -18,6 +20,7 @@ declare const sortByKey_Date: any;
 
 export class DashboardComponent implements OnInit, AfterViewInit
 {
+  private localStorage: LocalStorageUtils = new LocalStorageUtils();
   private cdiChartLine: ChartDataSets;
   private poupancaChartLine: ChartDataSets;
   private userChartLine: ChartDataSets;
@@ -125,43 +128,45 @@ export class DashboardComponent implements OnInit, AfterViewInit
 
   carregarTela(nAttempts: number): void
   {
-    if (this.contaService.usuarioLogado.aceitou_termos)
-      this.ngxLoader.startLoader('loader-principal');
+      if (this.contaService.usuarioLogado.aceitou_termos)
+        this.ngxLoader.startLoader('loader-principal');
 
-    var taxa_di_mensal = 3/(12*100);
-    this.dashboardService.obter().subscribe(response =>
-      {
-          if (response != null)
+      var taxas = this.localStorage.obterTaxasAtualizadas();
+      this.taxa_di_mensal = !isEmpty(taxas) ? taxas.taxa_mensal_di / 100 : 0;
+
+      this.dashboardService.obter().subscribe(response =>
+        {
+            if (response != null)
+            {
+              var listaMovimentacoes = response;
+
+              this.extratos = sortByKey_Date(listaMovimentacoes, 'data', false);
+              console.log(this.extratos);
+              this.saldo = this.extratos.map(e => e.valor).reduce((total, item) => total + item);
+          
+              this.montarCards();
+          
+              this.periodoSelecionado = Math.max.apply(Math, this.extratos.map(function(e) { return e.periodo; })).toString();
+              this.listaPeriodos = this.montarPeriodos(this.extratos.map(e => e.periodo).filter((value, index, self) => self.indexOf(value) === index));
+          
+              this.montarSeries(listaMovimentacoes);
+            }
+
+            this.ngxLoader.stopLoader('loader-principal');
+        },
+        error =>
+        {
+          nAttempts = nAttempts || 1;
+          console.log(error, nAttempts);
+
+          if (nAttempts >= 5)
           {
-            var listaMovimentacoes = response;
-            this.taxa_di_mensal = taxa_di_mensal;
-
-            this.extratos = sortByKey_Date(listaMovimentacoes, 'data', false);
-            this.saldo = this.extratos.map(e => e.valor).reduce((total, item) => total + item);
-        
-            this.montarCards();
-        
-            this.periodoSelecionado = Math.max.apply(Math, this.extratos.map(function(e) { return e.periodo; })).toString();
-            this.listaPeriodos = this.montarPeriodos(this.extratos.map(e => e.periodo).filter((value, index, self) => self.indexOf(value) === index));
-        
-            this.montarSeries(listaMovimentacoes);
+              this.ngxLoader.stopLoader('loader-principal');
+              return;
           }
 
-          this.ngxLoader.stopLoader('loader-principal');
-      },
-      error =>
-      {
-        nAttempts = nAttempts || 1;
-        console.log(error, nAttempts);
-
-        if (nAttempts >= 5)
-        {
-            this.ngxLoader.stopLoader('loader-principal');
-            return;
-        }
-
-        this.carregarTela(++nAttempts);
-      });
+          this.carregarTela(++nAttempts);
+        });
   }
 
   montarCards(): void

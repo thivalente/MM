@@ -1,3 +1,49 @@
+function findInArrayIndex(array, key, value)
+{
+    if (!array)
+        return null;
+
+    for (var i = 0, len = array.length; i < len; i++)
+    {
+        if (Array.isArray(key))
+        {
+            if (findInArrayValidateMultiple(array[i], key, value))
+                return i;
+        }
+        else if (eval('array[' + i + '].' + key) === value)
+            return i;
+    }
+
+    return null;
+}
+
+function findInArrayValidateMultiple(obj, key, value)
+{
+    var result = [];
+
+    for (var property in obj)
+    {
+        for (var i = 0; i <= key.length - 1; i++)
+        {
+            if (obj.hasOwnProperty(property) && property === key[i])
+            {
+                result.push((eval('obj.' + key[i]) === value[i]));
+            }
+        }
+    }
+
+    if (result.length !== key.length)
+        return false;
+
+    for (var i = 0; i <= result.length - 1; i++)
+    {
+        if (!result[i])
+            return false;
+    }
+
+    return true;
+}
+
 function isEmpty(obj)
 {
     return obj === null || obj === undefined || obj === '' || obj.toString().trim() === '' || isObjectEmpty(obj);

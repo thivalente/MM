@@ -90,33 +90,58 @@ namespace MM.Business.Services
             await this._sendGridEmail.EnviarEmailRecuperarSenha(email, BaseBusiness.GetFirstName(usuario.nome), novaSenha);
         }
 
-        public async Task<bool> Salvar (Usuario usuario)
+        public async Task<Tuple<bool, Guid>> Salvar (Usuario usuario)
         {
+            Guid id = usuario.id;
+
             if (usuario == null)
-                return false;
+                return new Tuple<bool, Guid>(false, id);
 
             if (usuario.id != Guid.Empty)
-                return await this._adminRepository.Salvar_Editar(usuario);
+                await this._adminRepository.Salvar_Editar(usuario);
+            else
+                id = await this._adminRepository.Salvar_Cadastrar(usuario);
 
-            return await this._adminRepository.Salvar_Cadastrar(usuario);
+            return new Tuple<bool, Guid>(true, id);
         }
 
-        public async Task<bool> SalvarMovimentacao(Movimentacao movimentacao)
+        public async Task<Tuple<bool, Guid>> SalvarMovimentacao(Movimentacao movimentacao)
         {
+            Guid id = movimentacao.id;
+
             if (movimentacao == null)
-                return false;
+                return new Tuple<bool, Guid>(false, id);
 
             // Verifica se a data de criação é maior do que hoje ou menor do que a menor taxa di do sistema
             DateTime menorDataTaxaDI = await this._movimentacaoService.ObterMenorDataTaxaDI();
 
             if (movimentacao.data_criacao.Date > DateTime.Today || movimentacao.data_criacao.Date < menorDataTaxaDI.Date)
-                return false;
+                return new Tuple<bool, Guid>(false, id);
 
             // Grava os dados da movimentação
             if (movimentacao.id != Guid.Empty)
                 await this._adminRepository.SalvarMovimentacao_Editar(movimentacao);
             else
-                await this._adminRepository.SalvarMovimentacao_Cadastrar(movimentacao);
+                id = await this._adminRepository.SalvarMovimentacao_Cadastrar(movimentacao);
+
+            // Apaga o rendimento diário a partir da data desta
+            await this._movimentacaoRepository.ApagarRendimentoDiario(movimentacao.usuario_id, movimentacao.data_criacao);
+
+            // Atualiza os dados de movimentação diária
+            await this._movimentacaoService.AtualizarMovimentacoesUsuario(movimentacao.usuario_id);
+
+            return new Tuple<bool, Guid>(true, id);
+        }
+
+        public async Task<bool> SalvarMovimentacao_Excluir(Guid id)
+        {
+            // Obtém os dados da movimentação
+            var movimentacao = await this._adminRepository.ObterMovimentacao(id);
+
+            if (movimentacao == null)
+                return false;
+
+            await this._adminRepository.SalvarMovimentacao_Excluir(id);
 
             // Apaga o rendimento diário a partir da data desta
             await this._movimentacaoRepository.ApagarRendimentoDiario(movimentacao.usuario_id, movimentacao.data_criacao);

@@ -122,6 +122,27 @@ namespace MM.Data.Repositories
             }
         }
 
+        public async Task<Movimentacao> ObterMovimentacao(Guid movimentacao_id)
+        {
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var movimentacao = (db.Query<Movimentacao>(
+                    @" 
+                        SELECT	DISTINCT
+                                id,
+		                        usuario_id,
+                                valor,
+                                data_criacao,
+                                entrada,
+                                ativo
+                        FROM	movimentacao m
+                        WHERE   m.id = @movimentacao_id;
+                    ", new { movimentacao_id })).FirstOrDefault();
+
+                return await Task.FromResult(movimentacao);
+            }
+        }
+
         public async Task<Usuario> ObterPorEmail(string email)
         {
             using (var db = new SqlConnection(this.ConnectionString))
@@ -149,10 +170,10 @@ namespace MM.Data.Repositories
             }
         }
 
-        public async Task<bool> Salvar_Cadastrar(Usuario usuario)
+        public async Task<Guid> Salvar_Cadastrar(Usuario usuario)
         {
             if (usuario == null)
-                return false;
+                return Guid.Empty;
 
             using (var db = new SqlConnection(this.ConnectionString))
             {
@@ -166,9 +187,9 @@ namespace MM.Data.Repositories
                 ";
 
                 db.Execute(query, new { id, cpf = usuario.cpf_somente_numeros, usuario.email, usuario.nome, senha, usuario.taxa_acima_cdi, data_criacao, is_admin = (usuario.is_admin ? 1 : 0) });
-            }
 
-            return await Task.FromResult(true);
+                return await Task.FromResult(id);
+            }
         }
 
         public async Task<bool> Salvar_Editar(Usuario usuario)
@@ -210,10 +231,10 @@ namespace MM.Data.Repositories
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> SalvarMovimentacao_Cadastrar(Movimentacao movimentacao)
+        public async Task<Guid> SalvarMovimentacao_Cadastrar(Movimentacao movimentacao)
         {
             if (movimentacao == null)
-                return false;
+                return Guid.Empty;
 
             using (var db = new SqlConnection(this.ConnectionString))
             {
@@ -229,9 +250,9 @@ namespace MM.Data.Repositories
                 ";
 
                 db.Execute(query, new { id, movimentacao.usuario_id, movimentacao.valor, movimentacao.data_criacao, entrada = (movimentacao.entrada ? 1 : 0) });
-            }
 
-            return await Task.FromResult(true);
+                return await Task.FromResult(id);
+            }
         }
 
         public async Task<bool> SalvarMovimentacao_Editar(Movimentacao movimentacao)
@@ -242,15 +263,27 @@ namespace MM.Data.Repositories
             using (var db = new SqlConnection(this.ConnectionString))
             {
                 var query = @"
-                    UPDATE  movimentacao
-                    SET     usuario_id = @usuario_id,
-                            valor = @valor,
-                            entrada = @entrada,
-                            ativo = @ativo
-                    WHERE   id = @id;
+                    UPDATE movimentacao SET usuario_id = @usuario_id, valor = @valor, entrada = @entrada, ativo = @ativo WHERE id = @id;
+
+                    UPDATE movimentacao_diaria SET usuario_id = @usuario_id, valor = @valor, entrada = @entrada, ativo = @ativo WHERE id = @id;
                 ";
 
                 db.Execute(query, new { movimentacao.id, movimentacao.usuario_id, movimentacao.valor, entrada = (movimentacao.entrada ? 1 : 0), ativo = (movimentacao.ativo ? 1 : 0) });
+            }
+
+            return await Task.FromResult(true);
+        }
+
+        public async Task<bool> SalvarMovimentacao_Excluir(Guid id)
+        {
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var query = @"
+                DELETE FROM movimentacao WHERE id = @id;
+
+                DELETE FROM movimentacao_diaria WHERE id = @id";
+
+                db.Execute(query, new { id });
             }
 
             return await Task.FromResult(true);

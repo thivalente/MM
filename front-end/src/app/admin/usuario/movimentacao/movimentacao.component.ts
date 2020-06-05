@@ -12,6 +12,7 @@ import { Usuario } from 'src/app/_models/usuario';
 
 import { AdminUsuarioService } from './../_services/usuario.service';
 
+declare const findInArrayIndex: any;
 declare const isEmpty: any;
 
 @Component({ selector: 'app-movimentacao', templateUrl: './movimentacao.component.html', styleUrls: ['./movimentacao.component.css']})
@@ -97,6 +98,39 @@ export class AdminUsuarioMovimentacaoComponent implements OnInit
     });
   }
 
+  excluir(nAttempts, id)
+  {
+    if (!confirm('Deseja realmente remover esta movimentação?'))
+      return;
+
+    this.adminService.excluirMovimentacao(id).subscribe(response =>
+      {
+          if (response != null)
+          {
+            var indice = findInArrayIndex(this.usuario.movimentacoes, 'id', id);
+
+            this.usuario.movimentacoes.splice(indice, 1);
+            this.toastr.success('Movimentação removida com sucesso!', 'Operação Realizada');
+          }
+
+          this.ngxLoader.stopLoader('loader-principal');
+      },
+      error =>
+      {
+        nAttempts = nAttempts || 1;
+        console.log(error, nAttempts);
+
+        if (nAttempts >= 5)
+        {
+            this.toastr.error('Não foi possível excluir esta movimentação', 'Operação Não Realizada');
+            this.ngxLoader.stopLoader('loader-principal');
+            return;
+        }
+
+        this.excluir(++nAttempts, id);
+      });
+  }
+
   goToCadastro()
   {
     this.router.navigate(['/admin/usuario/editar/' + this.usuario.id]);
@@ -130,12 +164,13 @@ export class AdminUsuarioMovimentacaoComponent implements OnInit
         tipo: tipo
       };
 
-      this.usuario.movimentacoes.unshift(movimentacao);
-
       this.adminService.salvarMovimentacao(movimentacao).subscribe(response =>
         {
             if (response != null)
             {
+              movimentacao.id = response.data.id;
+              this.usuario.movimentacoes.unshift(movimentacao);
+
               this.edicao_Cancelar();
               this.toastr.success('Movimentação adicionada com sucesso!', 'Operação Realizada');
             }

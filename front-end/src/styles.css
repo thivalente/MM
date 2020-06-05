@@ -45,6 +45,8 @@ div.site-container .panel.panel-default     { border-color: transparent; border-
 .box-shadow     { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 button.accept-policy    { font-size: 1rem; line-height: inherit; }
 
+.cursor-pointer { cursor: pointer; }
+
 .fa.fa-1-2x      { font-size: 1.2em; }
 
 .header     { background-color: #fafbfc; border-bottom: solid 1px #cfdbe2;color: #929292; display: flex; justify-content: left; margin-left: -20px; margin-right: -20px; padding: 10px; }

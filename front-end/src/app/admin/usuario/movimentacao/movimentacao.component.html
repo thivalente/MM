@@ -15,7 +15,7 @@
                             <div class="flex-cell col first" role="columnheader">Tipo</div>
                             <div class="flex-cell col" role="columnheader">Data</div>
                             <div class="flex-cell col" role="columnheader">Valor</div>
-                            <!-- <div class="flex-cell" role="columnheader"></div> -->
+                            <div class="flex-cell" role="columnheader"></div>
                         </div>
                         <div class="flex-row row" role="rowgroup" *ngFor="let movimentacao of usuario?.movimentacoes | paginate: { itemsPerPage: 10, currentPage: paginaAtual }">
                             <div class="flex-cell col first" role="cell">
@@ -23,7 +23,7 @@
                                 {{ movimentacao.tipo }}</div>
                             <div class="flex-cell col" role="cell">{{ movimentacao.data_criacao | date: 'dd/MM/yyyy' }}</div>
                             <div class="flex-cell col" [ngClass]="movimentacao.valor < 0 ? 'text-danger' : ''" role="cell">{{ movimentacao.valor | currency:'R$ ':true }}</div>
-                            <!-- <div class="flex-cell" role="cell"><i class="fa fa-1-2x fa-pencil" (click)="goToEditar(usuario.id)"></i></div> -->
+                            <div class="flex-cell" role="cell"><i class="fa fa-1-2x fa-trash cursor-pointer" (click)="excluir(0, movimentacao.id)"></i></div>
                         </div>
                     </div>
     

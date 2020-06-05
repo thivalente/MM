@@ -23,6 +23,21 @@ namespace MM.WebApi.V1.Controllers
             this._adminService = adminService;
         }
 
+        [Route("usuario/excluirmovimentacao/{movimentacao_id}")]
+        [HttpDelete()]
+        public async Task<ActionResult> ExcluirMovimentacao(Guid movimentacao_id)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var result = await this._adminService.SalvarMovimentacao_Excluir(movimentacao_id);
+
+            if (result)
+                return CustomResponse();
+
+            NotificarErro("Houve um erro ao tentar excluir esta movimentação");
+            return CustomResponse();
+        }
+
         [Route("usuario")]
         [HttpGet()]
         public async Task<IEnumerable<UsuarioViewModel>> Listar()
@@ -53,8 +68,8 @@ namespace MM.WebApi.V1.Controllers
 
             var result = await this._adminService.Salvar(usuario.ToUsuarioModel());
 
-            if (result)
-                return CustomResponse();
+            if (result.Item1)
+                return CustomResponse(new { id = result.Item2 });
 
             NotificarErro("Houve um erro ao tentar salvar este usuário");
             return CustomResponse();
@@ -67,8 +82,8 @@ namespace MM.WebApi.V1.Controllers
 
             var result = await this._adminService.SalvarMovimentacao(movimentacao.ToMovimentacaoModel());
 
-            if (result)
-                return CustomResponse();
+            if (result.Item1)
+                return CustomResponse(new { id = result.Item2 });
 
             NotificarErro("Houve um erro ao tentar salvar este usuário");
             return CustomResponse();

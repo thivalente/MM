@@ -13,8 +13,9 @@ namespace MM.Business.Interfaces
         Task<Usuario> Obter(Guid usuario_id);
         Task<Tuple<decimal, decimal>> ObterTaxasAtualizadas();
         Task RecuperarSenha(string email);
-        Task<bool> Salvar(Usuario usuario);
-        Task<bool> SalvarMovimentacao(Movimentacao movimentacao);
+        Task<Tuple<bool, Guid>> Salvar(Usuario usuario);
+        Task<Tuple<bool, Guid>> SalvarMovimentacao(Movimentacao movimentacao);
+        Task<bool> SalvarMovimentacao_Excluir(Guid id);
         Task<bool> TrocarSenha(string email, string senhaAtual, string novaSenha);
     }
 }

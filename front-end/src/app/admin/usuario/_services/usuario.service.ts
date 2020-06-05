@@ -17,6 +17,11 @@ export class AdminUsuarioService extends BaseService
 
     public listaUsuarios: Usuario[] = [];
 
+    public excluirMovimentacao(movimentacao_id)
+    {
+        return this.http.delete(this.config.getApiUrl() + 'admin/usuario/excluirMovimentacao/' + movimentacao_id, super.ObterAuthHeaderJson());
+    }
+
     public obter(usuario_id) : Observable<Usuario>
     {
         return this.http.get<any>(`${this.config.getApiUrl()}admin/usuario/` + usuario_id, super.ObterAuthHeaderJson());
@@ -32,7 +37,7 @@ export class AdminUsuarioService extends BaseService
         return this.http.post(this.config.getApiUrl() + 'admin/usuario/salvar', usuario, super.ObterAuthHeaderJson());
     }
 
-    public salvarMovimentacao(movimentacao: Movimentacao)
+    public salvarMovimentacao(movimentacao: Movimentacao) : Observable<any>
     {
         if (isEmpty(movimentacao.id))
             movimentacao.id = '00000000-0000-0000-0000-000000000000';
