@@ -6,3 +6,10 @@
 .modal-body button              { position: absolute; right: 20px; top: 20px; }
 .modal-body button:focus        { outline: none; }
 .modal-body button span:focus   { outline: none; }
+
+.degrade-purple {
+    background-image: linear-gradient(to bottom, #4527a0 , #b39ddb);
+    margin-bottom: 5px;
+    padding-top: 40px;
+    padding-bottom: 0px;
+  }

@@ -10,7 +10,7 @@ import { FeatherModule } from 'angular-feather';
 import { HttpClientModule } from '@angular/common/http';
 
 import {
-  Mail, Link, PhoneCall, Clock, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Calendar, User, Server, Rss, Layout, LifeBuoy,
+  Mail, Link, PhoneCall, Clock, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Calendar, User, Server, Star, Layout, LifeBuoy,
   ArrowRightCircle, PieChart, Triangle
 } from 'angular-feather/icons';
 import { ScrollspyDirective } from './scrollspy.directive';
@@ -20,7 +20,7 @@ import { ContactService } from './contact/contact.service';
 
 
 const icons = {
-  Mail, Link, PhoneCall, Clock, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Calendar, User, Server, Rss, Layout, LifeBuoy,
+  Mail, Link, PhoneCall, Clock, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Calendar, User, Server, Star, Layout, LifeBuoy,
   ArrowRightCircle, PieChart, Triangle
 };
 
