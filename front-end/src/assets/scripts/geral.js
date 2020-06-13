@@ -119,13 +119,28 @@ function obterDataJavascript(formattedDate) // Formato dd/MM/yyyy
 
     if (formattedDate.length > 10) // Obter o horário
     {
-        var time = formattedDate.substr(11);
-        var newDate = year + '-' + month + '-' + day + ' ' + time;
+        var time = formattedDate.substr(11).trim().split(':');
+        var hour = 0;
+        var min = 0;
+        var sec = 0;
+
+        if (time.length >= 1)
+        {
+            hour = time[0];
+
+            if (time.length >= 2)
+            {
+                min = time[1];
+
+                if (time.length >= 3)
+                    sec = time[2];
+            }
+        }
+
+        return new Date(year, month, day, hour, min, sec);
     }
     else // Sem horário
-        var newDate = year + '-' + month + '-' + day + ' 00:00:00';
-
-    return new Date(newDate);
+        return new Date(year, month, day, 0, 0, 0);
 }
 
 function obterNomeMesAno(anomes)

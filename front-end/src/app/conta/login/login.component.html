@@ -23,7 +23,7 @@
                                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <input class="form-control" id="email" type="text" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
+                                <input class="form-control" id="email" type="email" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }" />
                             </div>
                             <span class="text-danger" *ngIf="displayMessage.email">
                                 <p [innerHTML]="displayMessage.email"></p>

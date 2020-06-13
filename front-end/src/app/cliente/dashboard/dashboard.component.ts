@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit, AfterViewInit
               var listaMovimentacoes = response;
 
               this.extratos = sortByKey_Date(listaMovimentacoes, 'data', false);
-              console.log(this.extratos);
+
               this.saldo = this.extratos.map(e => e.valor).reduce((total, item) => total + item);
           
               this.montarCards();

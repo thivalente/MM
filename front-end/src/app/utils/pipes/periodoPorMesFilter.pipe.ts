@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'periodoPorMesFilter', pure: false })
+declare const sortByKey_Date: any;
 
+@Pipe({ name: 'periodoPorMesFilter', pure: false })
 export class PeriodoPorMesFilterPipe implements PipeTransform
 {
     transform(items: any[], filter: string): any
@@ -11,6 +12,9 @@ export class PeriodoPorMesFilterPipe implements PipeTransform
             return items;
         }
 
-        return items.filter(item => item.periodo.toString().indexOf(filter) !== -1);
+        var result = items.filter(item => item.periodo.toString().indexOf(filter) !== -1);
+
+        //return sortByKey_Date(result.map(m => Object.assign({}, m)), 'data', true);
+        return result;
     }
 }
