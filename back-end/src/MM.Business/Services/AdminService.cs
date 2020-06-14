@@ -35,7 +35,7 @@ namespace MM.Business.Services
         public async Task<List<Usuario>> Listar()
         {
             var usuarios = await this._adminRepository.Listar();
-            var movimentacoes = await this._adminRepository.ListarMovimentacoes();
+            var movimentacoes = await this._movimentacaoRepository.ListarMovimentacoes();
 
             foreach (var usuario in usuarios)
             {
@@ -51,7 +51,7 @@ namespace MM.Business.Services
         public async Task<Usuario> Obter(Guid usuario_id)
         {
             var usuario = await this._adminRepository.Obter(usuario_id);
-            var movimentacoes = await this._adminRepository.ListarMovimentacoes(usuario_id);
+            var movimentacoes = await this._movimentacaoRepository.ListarMovimentacoes(usuario_id);
 
             if (movimentacoes.Count > 0 && movimentacoes.All(m => m != null))
                 usuario.SetarListaMovimentacoes(movimentacoes);
@@ -100,7 +100,16 @@ namespace MM.Business.Services
             if (usuario.id != Guid.Empty)
                 await this._adminRepository.Salvar_Editar(usuario);
             else
+            {
+                // Se existir, gera uma nova senha randomica
+                var novaSenha = BaseBusiness.RandomString(6);
+                usuario.TrocarSenha(novaSenha);
+
                 id = await this._adminRepository.Salvar_Cadastrar(usuario);
+
+                // Envia a senha por e-mail ao usuário
+                await this._sendGridEmail.EnviarEmailCadastroUsuario(usuario.email, BaseBusiness.GetFirstName(usuario.nome), novaSenha);
+            }
 
             return new Tuple<bool, Guid>(true, id);
         }
@@ -125,10 +134,10 @@ namespace MM.Business.Services
                 id = await this._adminRepository.SalvarMovimentacao_Cadastrar(movimentacao);
 
             // Apaga o rendimento diário a partir da data desta
-            await this._movimentacaoRepository.ApagarRendimentoDiario(movimentacao.usuario_id, movimentacao.data_criacao);
+            await this._movimentacaoRepository.ApagarRendimentoDiario(movimentacao.usuario_id);
 
-            // Atualiza os dados de movimentação diária
-            await this._movimentacaoService.AtualizarMovimentacoesUsuario(movimentacao.usuario_id);
+            // Recria os dados de movimentação diária
+            await this._movimentacaoService.RecriarMovimentacoesUsuario(movimentacao.usuario_id);
 
             return new Tuple<bool, Guid>(true, id);
         }
@@ -143,11 +152,11 @@ namespace MM.Business.Services
 
             await this._adminRepository.SalvarMovimentacao_Excluir(id);
 
-            // Apaga o rendimento diário a partir da data desta
-            await this._movimentacaoRepository.ApagarRendimentoDiario(movimentacao.usuario_id, movimentacao.data_criacao);
+            // Apaga todo o rendimento diário
+            await this._movimentacaoRepository.ApagarRendimentoDiario(movimentacao.usuario_id);
 
-            // Atualiza os dados de movimentação diária
-            await this._movimentacaoService.AtualizarMovimentacoesUsuario(movimentacao.usuario_id);
+            // Recria os dados de movimentação diária
+            await this._movimentacaoService.RecriarMovimentacoesUsuario(movimentacao.usuario_id);
 
             return true;
         }

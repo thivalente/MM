@@ -83,6 +83,14 @@ namespace MM.Data.Email
         //    var response = await client.SendEmailAsync(msg);
         //}
 
+        public Task EnviarEmailCadastroUsuario(string emailTo, string nome, string senha)
+        {
+            var emailData = new RecuperarSenhaAttributes(nome, senha, this._emailSettings.UrlMM, this._emailSettings.UrlImagens);
+            _ = SendEmail(this._emailSettings.Templates.CadastroUsuarioId, emailData, "nao_responda@mminvestimentos.com.br", "MM - Não Responda", emailTo, nome);
+
+            return Task.CompletedTask;
+        }
+
         public Task EnviarEmailContato(string nome, string email, string assunto, string mensagem)
         {
             var emailData = new ContatoAttributes(email, nome, assunto, mensagem, this._emailSettings.UrlMM, this._emailSettings.UrlImagens);

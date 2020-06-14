@@ -22,12 +22,11 @@ namespace MM.Data.Repositories
         public MovimentacaoRepository(IConfiguration configuration) : base(configuration) { }
 
 
-        public Task ApagarRendimentoDiario(Guid usuario_id, DateTime data_criacao)
+        public Task ApagarRendimentoDiario(Guid usuario_id)
         {
             using (var db = new SqlConnection(this.ConnectionString))
             {
-                db.Execute("DELETE FROM movimentacao_diaria WHERE rendimento = 1 AND usuario_id = @usuario_id AND data_criacao >= @data_criacao;",
-                            new { usuario_id, data_criacao = data_criacao.Date });
+                db.Execute("DELETE FROM movimentacao_diaria WHERE rendimento = 1 AND usuario_id = @usuario_id;", new { usuario_id });
             }
 
             return Task.CompletedTask;
@@ -54,11 +53,42 @@ namespace MM.Data.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<List<TaxaDiaria>> ListarTaxasDesatualizadas(Guid usuario_id)
+        public async Task<List<Movimentacao>> ListarMovimentacoes(Guid? usuario_id = null)
         {
             using (var db = new SqlConnection(this.ConnectionString))
             {
-                var lista = (db.Query<TaxaDiaria>(
+                var lista = (db.Query<Movimentacao>(
+                    @" 
+                        SELECT	DISTINCT
+                                id,
+		                        usuario_id,
+                                valor,
+                                data_criacao,
+                                entrada,
+                                ativo
+                        FROM	movimentacao m
+                        WHERE   (@usuario_id IS NULL OR m.usuario_id = @usuario_id)
+                        ORDER BY m.usuario_id, m.data_criacao DESC;
+                    ", new { usuario_id })).ToList();
+
+                return await Task.FromResult(lista);
+            }
+        }
+
+        public async Task<List<TaxaDiaria>> ListarTaxasDesatualizadas(Guid usuario_id, bool recriar)
+        {
+            using (var db = new SqlConnection(this.ConnectionString))
+            {
+                var query = recriar ?
+                    @"
+                        SELECT	DISTINCT
+		                        td.data_criacao,
+		                        td.taxa_di,
+		                        td.taxa_poupanca,
+		                        td.ativo
+                        FROM	taxa_diaria td
+                        WHERE	td.data_criacao > (SELECT TOP 1 md.data_criacao FROM movimentacao_diaria md WHERE md.usuario_id = @usuario_id ORDER BY md.data_criacao);
+                    " :
                     @" 
                         SELECT	DISTINCT
 		                        td.data_criacao,
@@ -72,8 +102,10 @@ namespace MM.Data.Repositories
                             WHERE	(md.usuario_id = @usuario_id
                             AND		td.data_criacao <= md.data_criacao)
                             OR		0 = (SELECT COUNT(md.id) FROM movimentacao_diaria md WHERE md.usuario_id = @usuario_id))
-                        ORDER BY td.data_criacao
-                    ", new { usuario_id })).ToList();
+                        ORDER BY td.data_criacao;
+                    ";
+
+                var lista = (db.Query<TaxaDiaria>(query, new { usuario_id })).ToList();
 
                 return await Task.FromResult(lista);
             }
@@ -113,7 +145,7 @@ namespace MM.Data.Repositories
             }
         }
 
-        public async Task<dynamic> ObterSaldoETaxaUsuario(Guid usuario_id)
+        public async Task<dynamic> ObterSaldoETaxaUsuario(Guid usuario_id, bool recriar)
         {
             dynamic result = new ExpandoObject();
             result.Saldo = 0;
@@ -121,7 +153,16 @@ namespace MM.Data.Repositories
 
             using (var db = new SqlConnection(this.ConnectionString))
             {
-                var item = (db.Query<dynamic>(
+                var query = recriar ?
+                    @"
+                        SELECT	TOP 1
+		                        m.valor AS Saldo,
+		                        u.taxa_acima_cdi AS Taxa
+                        FROM	movimentacao m
+                        INNER JOIN usuario u ON m.usuario_id = u.id
+                        WHERE	u.id = @usuario_id
+                        ORDER BY m.data_criacao;
+                        " :
                     @" 
                         SELECT	SUM(valor) AS Saldo,
 		                        u.taxa_acima_cdi AS Taxa
@@ -129,7 +170,9 @@ namespace MM.Data.Repositories
                         INNER JOIN usuario u ON md.usuario_id = u.id
                         WHERE	md.usuario_id = @usuario_id
                         GROUP BY u.taxa_acima_cdi;
-                    ", new { usuario_id })).FirstOrDefault();
+                    ";
+
+                var item = (db.Query<dynamic>(query, new { usuario_id })).FirstOrDefault();
 
                 if (item == null)
                     return result;

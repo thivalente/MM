@@ -136,10 +136,10 @@ export class DashboardComponent implements OnInit, AfterViewInit
 
       this.dashboardService.obter().subscribe(response =>
         {
-            if (response != null)
-            {
-              var listaMovimentacoes = response;
+            var listaMovimentacoes = response;
 
+            if (!isEmpty(response))
+            {
               this.extratos = sortByKey_Date(listaMovimentacoes, 'data', false);
 
               this.saldo = this.extratos.map(e => e.valor).reduce((total, item) => total + item);

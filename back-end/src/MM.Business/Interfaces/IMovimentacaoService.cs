@@ -11,5 +11,6 @@ namespace MM.Business.Interfaces
         Task AtualizarTaxaDI();
         Task<List<MovimentacaoDiaria>> Obter(Guid usuario_id);
         Task<DateTime> ObterMenorDataTaxaDI();
+        Task RecriarMovimentacoesUsuario(Guid usuario_id);
     }
 }

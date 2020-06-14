@@ -17,18 +17,20 @@ namespace MM.Business.Services
             this._movimentacaoRepository = movimentacaoRepository;
         }
 
-        public async Task AtualizarMovimentacoesUsuario(Guid usuario_id)
+        private async Task AtualizarMovimentacoesUsuario(Guid usuario_id, List<TaxaDiaria> taxasDesatualizadas, bool recriar)
         {
-            // Lista as datas que estão desatualizadas deste usuário
-            List<TaxaDiaria> taxasDesatualizadas = await this._movimentacaoRepository.ListarTaxasDesatualizadas(usuario_id);
-
             if (taxasDesatualizadas.Count == 0)
                 return;
 
-            var usuarioInfo = await this._movimentacaoRepository.ObterSaldoETaxaUsuario(usuario_id);
+            List<Movimentacao> movimentacoesUsuario = await this._movimentacaoRepository.ListarMovimentacoes(usuario_id);
+
+            var usuarioInfo = await this._movimentacaoRepository.ObterSaldoETaxaUsuario(usuario_id, recriar);
             decimal saldoAtualUsuario = usuarioInfo.Saldo;
             decimal taxaUsuario = usuarioInfo.Taxa;
-            List<MovimentacaoDiaria> movimentacoes = new List<MovimentacaoDiaria>();
+            List<MovimentacaoDiaria> movimentacoesDiarias = new List<MovimentacaoDiaria>();
+
+            // Apaga todas as movimentações anteriores a primeira taxa desatualizada
+            movimentacoesUsuario.RemoveAll(m => taxasDesatualizadas.First().data_criacao.Date >= m.data_criacao.Date);
 
             foreach (var taxaDesatualizada in taxasDesatualizadas)
             {
@@ -36,12 +38,31 @@ namespace MM.Business.Services
                 var valor_di = (saldoAtualUsuario * taxaDesatualizada.taxa_di) / 100;
                 var valor_poupanca = (saldoAtualUsuario * taxaDesatualizada.taxa_poupanca) / 100;
 
-                movimentacoes.Add(new MovimentacaoDiaria(Guid.NewGuid(), usuario_id, taxaDesatualizada.data_criacao, true, true, valor, valor_di, valor_poupanca));
+                movimentacoesDiarias.Add(new MovimentacaoDiaria(Guid.NewGuid(), usuario_id, taxaDesatualizada.data_criacao, true, true, valor, valor_di, valor_poupanca));
 
                 saldoAtualUsuario += valor;
+
+                if (movimentacoesUsuario.Any(m => taxaDesatualizada.data_criacao.Date >= m.data_criacao.Date)) // Se a data da taxa for maior ou igual a de alguma movimentação, adiciona o saldo
+                {
+                    // Pega a movimentação que for igual ou mais antiga do que a taxa
+                    var movimentacaoUsuario = movimentacoesUsuario.OrderBy(m => m.data_criacao).First(m => m.data_criacao.Date <= taxaDesatualizada.data_criacao.Date);
+                    var valorMovimentacao = movimentacaoUsuario.valor;
+
+                    movimentacoesUsuario.Remove(movimentacaoUsuario); // Apaga a movimentação, pois já foi tratada
+                    saldoAtualUsuario += valorMovimentacao; // Adiciona o valor ao saldo do cliente
+                }
             }
 
-            await this._movimentacaoRepository.SalvarMovimentacoes(movimentacoes);
+            await this._movimentacaoRepository.SalvarMovimentacoes(movimentacoesDiarias);
+        }
+
+
+        public async Task AtualizarMovimentacoesUsuario(Guid usuario_id)
+        {
+            // Lista as datas que estão desatualizadas deste usuário
+            List<TaxaDiaria> taxasDesatualizadas = await this._movimentacaoRepository.ListarTaxasDesatualizadas(usuario_id, false);
+
+            await AtualizarMovimentacoesUsuario(usuario_id, taxasDesatualizadas, false);
         }
 
         public async Task AtualizarTaxaDI()
@@ -81,6 +102,14 @@ namespace MM.Business.Services
         public async Task<DateTime> ObterMenorDataTaxaDI()
         {
             return await this._movimentacaoRepository.ObterMenorDataTaxaDI();
+        }
+
+        public async Task RecriarMovimentacoesUsuario(Guid usuario_id)
+        {
+            // Lista as datas que estão desatualizadas deste usuário
+            List<TaxaDiaria> taxasDesatualizadas = await this._movimentacaoRepository.ListarTaxasDesatualizadas(usuario_id, true);
+
+            await AtualizarMovimentacoesUsuario(usuario_id, taxasDesatualizadas, true);
         }
     }
 }

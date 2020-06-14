@@ -73,28 +73,6 @@ namespace MM.Data.Repositories
             }
         }
 
-        public async Task<List<Movimentacao>> ListarMovimentacoes(Guid? usuario_id = null)
-        {
-            using (var db = new SqlConnection(this.ConnectionString))
-            {
-                var lista = (db.Query<Movimentacao>(
-                    @" 
-                        SELECT	DISTINCT
-                                id,
-		                        usuario_id,
-                                valor,
-                                data_criacao,
-                                entrada,
-                                ativo
-                        FROM	movimentacao m
-                        WHERE   (@usuario_id IS NULL OR m.usuario_id = @usuario_id)
-                        ORDER BY m.usuario_id, m.data_criacao DESC;
-                    ", new { usuario_id })).ToList();
-
-                return await Task.FromResult(lista);
-            }
-        }
-
         public async Task<Usuario> Obter(Guid usuario_id)
         {
             using (var db = new SqlConnection(this.ConnectionString))
@@ -183,10 +161,11 @@ namespace MM.Data.Repositories
 
                 var query = @"
                     INSERT INTO usuario (id, cpf, email, nome, senha, taxa_acima_cdi, data_criacao, data_aceitou_termos, aceitou_termos, is_admin, trocar_senha, ativo)
-                    VALUES (@id, @cpf, @email, @nome, @senha, @taxa_acima_cdi, @data_criacao, NULL, 0, @is_admin, 0, 1);
+                    VALUES (@id, @cpf, @email, @nome, @senha, @taxa_acima_cdi, @data_criacao, NULL, 0, @is_admin, @trocar_senha, 1);
                 ";
 
-                db.Execute(query, new { id, cpf = usuario.cpf_somente_numeros, usuario.email, usuario.nome, senha, usuario.taxa_acima_cdi, data_criacao, is_admin = (usuario.is_admin ? 1 : 0) });
+                db.Execute(query, new { id, cpf = usuario.cpf_somente_numeros, usuario.email, usuario.nome, senha, usuario.taxa_acima_cdi, data_criacao,
+                    is_admin = (usuario.is_admin ? 1 : 0), trocar_senha = (usuario.trocar_senha ? 1 : 0) });
 
                 return await Task.FromResult(id);
             }

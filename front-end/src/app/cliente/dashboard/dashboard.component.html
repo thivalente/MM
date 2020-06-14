@@ -61,7 +61,7 @@
                                                   <div class="col" *ngIf="extrato.cabecalho"><span>{{ extrato.data }}</span></div>
                                                   <div class="col first" *ngIf="!extrato.cabecalho"><i class="fa" [ngClass]="extrato.entrada ? (extrato.rendimento ? 'fa-usd text-primary' : 'fa-arrow-up text-primary') : 'fa-arrow-down text-danger'"></i></div>
                                                   <div class="col" *ngIf="!extrato.cabecalho">{{ extrato.entrada ? (extrato.rendimento ? 'Rendimento' : 'Aporte') : 'Retirada' }}</div>
-                                                  <div class="col text-right" *ngIf="!extrato.cabecalho"><span [ngClass]="extrato.entrada ? 'text-primary' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true }}</span></div>
+                                                  <div class="col text-right" *ngIf="!extrato.cabecalho"><span [ngClass]="extrato.entrada ? 'text-primary' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true:'1.2-3' }}</span></div>
                                                 </div>
                                               </section>
                                         </perfect-scrollbar>
@@ -92,7 +92,7 @@
                                                   <div class="col" *ngIf="extrato.cabecalho"><span>{{ extrato.data }}</span></div>
                                                   <div class="col first" *ngIf="!extrato.cabecalho"><i class="fa" [ngClass]="extrato.entrada ? (extrato.rendimento ? 'fa-usd text-primary' : 'fa-arrow-up text-primary') : 'fa-arrow-down text-danger'"></i></div>
                                                   <div class="col" *ngIf="!extrato.cabecalho">{{ extrato.entrada ? (extrato.rendimento ? 'Rendimento' : 'Aporte') : 'Retirada' }}</div>
-                                                  <div class="col text-right" *ngIf="!extrato.cabecalho"><span [ngClass]="extrato.entrada ? 'text-primary' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true }}</span></div>
+                                                  <div class="col text-right" *ngIf="!extrato.cabecalho"><span [ngClass]="extrato.entrada ? 'text-primary' : 'text-danger'">{{ extrato.valor | currency:'R$ ':true:'1.2-3' }}</span></div>
                                                 </div>
                                               </section>
                                         </perfect-scrollbar>

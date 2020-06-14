@@ -24,6 +24,7 @@ namespace MM.Data.Settings
 
         public struct TemplatesStruct
         {
+            public string CadastroUsuarioId { get; set; }
             public string ContatoId         { get; set; }
             public string RecuperarSenhaId  { get; set; }
         }
@@ -42,6 +43,7 @@ namespace MM.Data.Settings
                 },
                 Templates = new EmailSettings.TemplatesStruct()
                 {
+                    CadastroUsuarioId = emailSettings.Templates.CadastroUsuarioId.Descriptografar(BaseRepository.ParametroSistema),
                     ContatoId = emailSettings.Templates.ContatoId.Descriptografar(BaseRepository.ParametroSistema),
                     RecuperarSenhaId = emailSettings.Templates.RecuperarSenhaId.Descriptografar(BaseRepository.ParametroSistema)
                 },

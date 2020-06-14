@@ -5,18 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { LocalStorageUtils } from 'src/app/utils/localstorage';
 import { Usuario } from '../../_models/usuario';
 
+import { BaseService } from 'src/app/_services/base.service';
 import { SettingsService } from '../../_services/settings.service';
 
 declare const isEmpty: any;
 
 @Injectable({ providedIn: 'root' })
-export class ContaService
+export class ContaService extends BaseService
 {
     public LocalStorage: LocalStorageUtils;
     private usuarioLogadoSubject: BehaviorSubject<Usuario>;
 
     constructor(private config: SettingsService, private http: HttpClient)
     {
+        super();
         this.LocalStorage = new LocalStorageUtils();
     }
 
@@ -67,6 +69,6 @@ export class ContaService
         let usuarioLogado = this.LocalStorage.obterUsuario();
 
         const body = { email: usuarioLogado.email, senhaAtual, novaSenha };
-        return this.http.post(this.config.getApiUrl() + 'conta/trocarsenha', body);
+        return this.http.post(this.config.getApiUrl() + 'conta/trocarsenha', body, super.ObterAuthHeaderJson());
     }
 }
