@@ -20,5 +20,16 @@ namespace MM.Business.Models
         public string mensagem_erro     { get; private set; }
         public string inner_exception   { get; private set; }
         public string stack_trace       { get; private set; }
+
+        public static string ObterInnerExceptionMessage(Exception ex)
+        {
+            if (ex == null)
+                return String.Empty;
+
+            if (ex.InnerException == null)
+                return ex.Message;
+
+            return ObterInnerExceptionMessage(ex.InnerException);
+        }
     }
 }

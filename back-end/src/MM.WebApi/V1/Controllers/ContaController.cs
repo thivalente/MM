@@ -39,7 +39,15 @@ namespace MM.WebApi.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await this._adminService.EnviarEmailContato(model.nome, model.email, model.assunto, model.mensagem);
+            try
+            {
+                await this._adminService.EnviarEmailContato(model.nome, model.email, model.assunto, model.mensagem);
+            }
+            catch (Exception ex)
+            {
+                NotificarErro(ex.Message);
+                return CustomResponse(model);
+            }
 
             return CustomResponse();
         }

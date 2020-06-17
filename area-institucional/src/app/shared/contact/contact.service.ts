@@ -10,8 +10,8 @@ export class ContactService
 
     constructor(private http: HttpClient)
     {
-        //this.url = 'http://api.mminvestimentos.com.br.asp.hostazul.com.br/api/v1.0/';
-        this.url = 'https://localhost:44323/api/v1.0/';
+        this.url = 'https://api.mminvestimentos.com.br/api/v1.0/';
+        //this.url = 'https://localhost:44323/api/v1.0/';
     }
 
     public enviar(mensagem: Mensagem)

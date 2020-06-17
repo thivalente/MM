@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MM.Business.Interfaces;
+using MM.Business.Models;
 using MM.Data.Repositories;
 using MM.Data.Settings;
 using SendGrid;
@@ -61,10 +62,18 @@ namespace MM.Data.Email
             {
                 var response = await client.SendEmailAsync(msg);
 
-                return response;
+                if (response.StatusCode == System.Net.HttpStatusCode.Accepted)
+                    return response;
+
+                throw new Exception($"{response.StatusCode.ToString()}");
             }
             catch (System.Exception ex)
             {
+                var innerExceptionMessage = LogErro.ObterInnerExceptionMessage(ex.InnerException);
+
+                var logErro = new LogErro("/api/v1.0/conta/contato", ex.Message, innerExceptionMessage, ex.StackTrace);
+                await new LogErroRepository(this._config).Salvar(logErro);
+
                 throw ex;
             }
         }
@@ -94,7 +103,7 @@ namespace MM.Data.Email
         public Task EnviarEmailContato(string nome, string email, string assunto, string mensagem)
         {
             var emailData = new ContatoAttributes(email, nome, assunto, mensagem, this._emailSettings.UrlMM, this._emailSettings.UrlImagens);
-            _ = SendEmail(this._emailSettings.Templates.ContatoId, emailData, this._emailSettings.Emails.Contato, nome, this._emailSettings.Emails.Contato, String.Empty, email, email);
+            _ = SendEmail(this._emailSettings.Templates.ContatoId, emailData, "contato@mminvestimentos.com.br", nome, this._emailSettings.Emails.Contato, String.Empty, email, email);
             //_ = SendEmail();
 
             return Task.CompletedTask;
