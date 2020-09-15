@@ -11,6 +11,10 @@ namespace MM.Data.Settings
             this.Templates = new TemplatesStruct();
         }
 
+        public string SmtpServer            { get; set; }
+        public string SmtpUsername          { get; set; }
+        public string SmtpPassword          { get; set; }
+
         public string ApiKey                { get; set; }
         public EmailsStruct Emails          { get; set; }
         public TemplatesStruct Templates    { get; set; }
@@ -19,14 +23,14 @@ namespace MM.Data.Settings
 
         public struct EmailsStruct
         {
-            public string Contato           { get; set; }
+            public string Contato { get; set; }
         }
 
         public struct TemplatesStruct
         {
             public string CadastroUsuarioId { get; set; }
-            public string ContatoId         { get; set; }
-            public string RecuperarSenhaId  { get; set; }
+            public string ContatoId { get; set; }
+            public string RecuperarSenhaId { get; set; }
         }
     }
 
